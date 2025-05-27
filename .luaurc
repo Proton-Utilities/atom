@@ -1,5 +1,6 @@
 {
     "aliases": {
+        "games": "./src/core/games",
         "core": "./src/core",
         "modules": "./src/modules",
         "packages": "./src/packages"

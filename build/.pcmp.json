@@ -2,11 +2,11 @@
     "openComposedOutput": true,
 
     "deployment": {
-        "enabled": true,
+        "enabled": false,
         "github": {
             "apiKey": "",
             "owner": "Proton-Utilities",
-            "repo": "Atom"
+            "repo": "atom"
         }
     },
 

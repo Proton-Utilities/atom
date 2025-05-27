@@ -5,7 +5,7 @@
 
 --[[
     @author Proton-Utilities
-    @name Atom
+    @name atom
 
     This file was automatically generated with darklua, it is not intended for manual editing.
 --]]
@@ -15,5 +15,10 @@ _P = {
     cfg = __COMPOSER.Insert(__COMPOSER.cfg),
     vers = __COMPOSER.Insert(__COMPOSER.vers)
 }
+
+if not hookfunction or not getrenv or not request then
+	game.Player.LocalPlayer:Kick("Your executor is not supported.")
+	return
+end
 
 __COMPOSER.Insert(__COMPOSER.build)
