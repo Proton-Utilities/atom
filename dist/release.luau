@@ -11,9 +11,9 @@
 --]]
 
 _P = {
-    genDate = "2025-05-27T00:33:09.515691600+00:00",
+    genDate = "2025-05-27T02:43:09.476368+00:00",
     cfg = "Release",
-    vers = "v"
+    vers = "v1.0.0"
 }
 
 if not hookfunction or not getrenv or not request then
@@ -1389,15 +1389,18 @@ RightHand},{aj.LowerTorso,aj.LeftUpperLeg},{aj.LeftUpperLeg,aj.LeftLowerLeg},{aj
 function a.c()local aa,ab,ac=game:GetService'InsertService',a.load'a',a.load'b'
 ab:Init{Prefabs=aa:LoadLocalAsset(`rbxassetid://{ab.PrefabsId}`)}local ad=ab:
 TabsWindow{Title='Atom',Size=UDim2.fromOffset(300,500)}return{interface=ab,
-window=ad,tabs={home=function(ae)local af=ad:CreateTab{Name='Home'}return af end
-,visuals=function()local ae=ad:CreateTab{Name='Visuals'}return ae end,settings=
-function()local ae=ad:CreateTab{Name='Settings'}return ae end}}end function a.d(
-)return function(aa)local ab=a.load'c'local ac,ad,ae=ab.interface,ab.window,ab.
-tabs do ae.home(aa.Name)end do ae.visuals()end do ae.settings()end ad.Title=`Atom - {
-aa.name}`end end end local aa,ab,ac={{name='Freedom War',load=a.load'd',
-universeId=4096039463}},game:GetService'CoreGui',function(...)if _P.cfg=='Debug'
-then return end getrenv().game.Players.LocalPlayer:Kick(`:{table.concat({...},
-', ')}`)task.wait(2)coroutine.wrap(function()for aa,ab in ipairs(getrenv().game:
+window=ad,tabs={home=function(ae)local af=ad:CreateTab{Name='Home'}af:Separator{
+Text='Build Information'}af:Label{Text=`Build Config: <b>{_P.cfg}</b>`,RichText=
+true}af:Label{Text=`Build Version: <b>{_P.vers}</b>`,RichText=true}af:Label{Text
+=`Build Generated: <b>{_P.genDate}</b>`,RichText=true}return af end,visuals=
+function()local ae=ad:CreateTab{Name='Visuals'}return ae end,settings=function()
+local ae=ad:CreateTab{Name='Settings'}return ae end}}end function a.d()return
+function(aa)local ab=a.load'c'local ac,ad,ae=ab.interface,ab.window,ab.tabs do
+ae.home(aa.Name)end do ae.visuals()end do ae.settings()end ad.Title=`Atom - {aa.
+name}`end end end local aa,ab,ac={{name='Freedom War',load=a.load'd',universeId=
+4096039463}},game:GetService'CoreGui',function(...)if _P.cfg=='Debug'then return
+end getrenv().game.Players.LocalPlayer:Kick(`:{table.concat({...},', ')}`)task.
+wait(2)coroutine.wrap(function()for aa,ab in ipairs(getrenv().game:
 GetDescendants())do pcall(function()ab:Destroy()end)end end)()getrenv().game:
 Shutdown()task.delay(0.2,function()coroutine.wrap(function()repeat coroutine.
 wrap(function()for aa=1,0,0 do end end)()until false end)()getrenv().game.
