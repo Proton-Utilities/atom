@@ -10,8 +10,20 @@
     This file was automatically generated with darklua, it is not intended for manual editing.
 --]]
 
+if not atomicsec then
+    atomicsec = {
+        username = "DEBUG",
+        userid = "DEBUG",
+        note = "DEBUG",
+        hwid = "DEBUG",
+        script_name = "DEBUG",
+        expiry = 0,
+        is_premium = true
+    }
+end
+
 _P = {
-    genDate = "2025-05-27T02:42:55.308068+00:00",
+    genDate = "2025-05-27T02:55:52.243349500+00:00",
     cfg = "Debug",
     vers = "v0.0.0"
 }
@@ -9311,6 +9323,7 @@ local ae=ac:CreateTab{
 Name="Home",
 }
 
+do
 ae:Separator{
 Text="Build Information",
 }
@@ -9327,6 +9340,34 @@ ae:Label{
 Text=`Build Generated: <b>{_P.genDate}</b>`,
 RichText=true,
 }
+end
+
+do
+ae:Separator{
+Text="User Information",
+}
+
+ae:Label{
+Text=`Username: <b>{atomicsec.username}</b>`,
+RichText=true,
+}
+ae:Label{
+Text=`User Id: <b>{atomicsec.userid}</b>`,
+RichText=true,
+}
+ae:Label{
+Text=`Note: <b>{atomicsec.note}</b>`,
+RichText=true,
+}
+ae:Label{
+Text=`Key expires: <b>{tostring(atomicsec.expiry)}</b>`,
+RichText=true,
+}
+ae:Label{
+Text=`Premium: <b>{tostring(atomicsec.is_premium)}</b>`,
+RichText=true,
+}
+end
 
 return ae
 end,
