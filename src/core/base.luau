@@ -27,22 +27,51 @@ return {
 				Name = "Home",
 			})
 
-            tab:Separator({
-                Text = "Build Information",
-            })
+			do -- Build information
+				tab:Separator({
+					Text = "Build Information",
+				})
 
-			tab:Label({
-				Text = `Build Config: <b>{_P.cfg}</b>`,
-                RichText = true,
-			})
-            tab:Label({
-				Text = `Build Version: <b>{_P.vers}</b>`,
-                RichText = true,
-			})
-            tab:Label({
-				Text = `Build Generated: <b>{_P.genDate}</b>`,
-                RichText = true,
-			})
+				tab:Label({
+					Text = `Build Config: <b>{_P.cfg}</b>`,
+					RichText = true,
+				})
+				tab:Label({
+					Text = `Build Version: <b>{_P.vers}</b>`,
+					RichText = true,
+				})
+				tab:Label({
+					Text = `Build Generated: <b>{_P.genDate}</b>`,
+					RichText = true,
+				})
+			end
+
+			do -- User information
+				tab:Separator({
+					Text = "User Information",
+				})
+
+				tab:Label({
+					Text = `Username: <b>{atomicsec.username}</b>`,
+					RichText = true,
+				})
+				tab:Label({
+					Text = `User Id: <b>{atomicsec.userid}</b>`,
+					RichText = true,
+				})
+				tab:Label({
+					Text = `Note: <b>{atomicsec.note}</b>`,
+					RichText = true,
+				})
+				tab:Label({
+					Text = `Key expires: <b>{tostring(atomicsec.expiry)}</b>`,
+					RichText = true,
+				})
+				tab:Label({
+					Text = `Premium: <b>{tostring(atomicsec.is_premium)}</b>`,
+					RichText = true,
+				})
+			end
 			
 			return tab
 		end,
