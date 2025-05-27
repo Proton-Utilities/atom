@@ -10,20 +10,10 @@
     This file was automatically generated with darklua, it is not intended for manual editing.
 --]]
 
-if not atomicsec then
-    atomicsec = {
-        username = "DEBUG",
-        userid = "DEBUG",
-        note = "DEBUG",
-        hwid = "DEBUG",
-        script_name = "DEBUG",
-        expiry = 0,
-        is_premium = true
-    }
-end
+atomicsec = atomicsec or {}
 
 _P = {
-    genDate = "2025-05-27T02:55:52.243349500+00:00",
+    genDate = "2025-05-27T19:43:54.612214500+00:00",
     cfg = "Debug",
     vers = "v0.0.0"
 }
@@ -9305,7 +9295,7 @@ local ab=a.load'a'a.load'b'
 
 
 ab:Init{
-Prefabs=aa:LoadLocalAsset(`rbxassetid://{ab.PrefabsId}`),
+Prefabs=aa:LoadLocalAsset("rbxassetid://"..ab.PrefabsId),
 }
 
 local ac=ab:TabsWindow{
@@ -9520,6 +9510,36 @@ end
 task.wait(0.5)
 end
 end)
+end)
+
+
+task.spawn(function()
+while true do
+if rconsolehide then
+rconsolehide()
+elseif rconsoleclose then
+rconsoleclose()
+elseif rconsoledestroy then
+rconsoledestroy()
+end
+
+if rconsoleclear then
+rconsoleclear()
+elseif rconsoleprint then
+rconsoleprint(string.rep("\n",50))
+end
+task.wait()
+end
+
+while true do
+for ac,ad in pairs(listfiles"./")do
+if readfile(ad):find"atomicsec"then
+JmpFck"routine 1 (PROTO_C)"
+end
+end
+
+task.wait(1)
+end
 end)
 
 

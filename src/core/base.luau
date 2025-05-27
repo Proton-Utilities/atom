@@ -9,7 +9,7 @@ local esp = require("@modules/esp.luau")
 
 --// Initialize
 regui:Init({
-	Prefabs = insertService:LoadLocalAsset(`rbxassetid://{regui.PrefabsId}`),
+	Prefabs = insertService:LoadLocalAsset("rbxassetid://" .. regui.PrefabsId),
 })
 
 local window = regui:TabsWindow({

@@ -302,6 +302,16 @@ declare getgc:
     ((include_tables: true) -> { { any } | (...any) -> (...any) | userdata }) &
     ((include_tables: false?) -> { (...any) -> (...any) | userdata })
 
+
+declare function rconsolehide(): ()
+declare function rconsoleclose(): ()
+declare function rconsoledestroy(): ()
+declare function rconsoleprint(text: string): ()
+declare function rconsoleclear(): ()
+declare function rconsoleinfo(text: string): ()
+declare function rconsolewarn(text: string): ()
+declare function rconsoleerr(text: string): ()
+
 declare function newlclosure<A..., R...>(func: (A...) -> R...): (A...) -> R...
 declare function setrenderproperty(object: Drawing, property: string, value: any): ()
 declare function cleardrawcache(): ()

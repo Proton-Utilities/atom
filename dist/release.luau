@@ -10,20 +10,10 @@
     This file was automatically generated with darklua, it is not intended for manual editing.
 --]]
 
-if not atomicsec then
-    atomicsec = {
-        username = "DEBUG",
-        userid = "DEBUG",
-        note = "DEBUG",
-        hwid = "DEBUG",
-        script_name = "DEBUG",
-        expiry = 0,
-        is_premium = true
-    }
-end
+atomicsec = atomicsec or {}
 
 _P = {
-    genDate = "2025-05-27T02:52:03.852017900+00:00",
+    genDate = "2025-05-27T19:56:27.194867700+00:00",
     cfg = "Release",
     vers = "v1.0.0"
 }
@@ -1399,7 +1389,7 @@ RightHand},{aj.LowerTorso,aj.LeftUpperLeg},{aj.LeftUpperLeg,aj.LeftLowerLeg},{aj
 .LeftLowerLeg,aj.LeftFoot},{aj.LowerTorso,aj.RightUpperLeg},{aj.RightUpperLeg,aj
 .RightLowerLeg},{aj.RightLowerLeg,aj.RightFoot}}return aj,ak end return ah end
 function a.c()local aa,ab,ac=game:GetService'InsertService',a.load'a',a.load'b'
-ab:Init{Prefabs=aa:LoadLocalAsset(`rbxassetid://{ab.PrefabsId}`)}local ad=ab:
+ab:Init{Prefabs=aa:LoadLocalAsset('rbxassetid://'..ab.PrefabsId)}local ad=ab:
 TabsWindow{Title='Atom',Size=UDim2.fromOffset(300,500)}return{interface=ab,
 window=ad,tabs={home=function(ae)local af=ad:CreateTab{Name='Home'}do af:
 Separator{Text='Build Information'}af:Label{Text=`Build Config: <b>{_P.cfg}</b>`
@@ -1431,13 +1421,23 @@ then ad=true ac(af)ag:Destroy()end end),ab.ChildAdded:Connect(function()local af
 ,ag=ae()if af and not ad then ad=true ac(af)ag:Destroy()end end)task.spawn(
 function()while true do if not(af.Connected and ag.Connected)then ac'bypass 1'
 end local ah,ai=ae()if ah and not ad then ac('bypass 2',ah)ai:Destroy()end task.
-wait(0.5)end end)end)do local ad=loadstring hookfunction(loadstring,function(...
-)if checkcaller()then ac'illegal chunk 1'return end return ad(...)end)end if _P.
-cfg=='Release'then if getgenv().__Atom_Loaded then ac
+wait(0.5)end end)end)task.spawn(function()while true do if rconsolehide then
+rconsolehide()elseif rconsoleclose then rconsoleclose()elseif rconsoledestroy
+then rconsoledestroy()end if rconsoleclear then rconsoleclear()elseif
+rconsoleprint then rconsoleprint(string.rep('\n',50))end task.wait()end end)task
+.spawn(function()while true do if listfiles and readfile and isfile then local
+ad=function(ad)if delfile then delfile(ad)elseif writefile then writefile(ad,'')
+end end local function ae(af)for ag,ah in pairs(listfiles(af))do local ai=af..
+'/'..ah if isfile(ai)then local aj=readfile(ai)if aj:find'atomicsec'then ad(ai)
+task.wait(0.1)ac'routine 1 (PROTO_C)'end elseif isfolder(ai)then ae(ai)end end
+end ae'.'task.wait(1)end end end)do local ad=loadstring hookfunction(loadstring,
+function(...)if checkcaller()then ac'illegal chunk 1'return end return ad(...)
+end)end if _P.cfg=='Release'then if getgenv().__Atom_Loaded then ac
 'already loaded, rejoin the game to load again'end getgenv().__Atom_Loaded=true
-getgenv().print,getgenv().warn,getgenv().error=function()end,function()end,
-function()end end end do print('[DEBUG]',`Loading - Atom {_P.vers} | {_P.cfg}`)
-local ad=function(ad)print('[DEBUG]',`Atom - Found: {ad.name}`)ad:load()getgenv(
-).__Atom_Loaded=true end for ae,af in pairs(aa)do if af.places then for ag,ah in
-ipairs(af.places)do if ah==af.PlaceId then ad(af)return end end end if af.
-universeId and af.universeId==game.GameId then ad(af)return end end end
+if getgenv()._P.cfg=='Debug'or getgenv()._P.cfg=='Beta'then getgenv().print,
+getgenv().warn,getgenv().error=function()end,function()end,function()end end end
+end do print('[DEBUG]',`Loading - Atom {_P.vers} | {_P.cfg}`)local ad=function(
+ad)print('[DEBUG]',`Atom - Found: {ad.name}`)ad:load()getgenv().__Atom_Loaded=
+true end for ae,af in pairs(aa)do if af.places then for ag,ah in ipairs(af.
+places)do if ah==af.PlaceId then ad(af)return end end end if af.universeId and
+af.universeId==game.GameId then ad(af)return end end end

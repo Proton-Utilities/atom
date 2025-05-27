@@ -10,10 +10,12 @@
     This file was automatically generated with darklua, it is not intended for manual editing.
 --]]
 
+atomicsec = atomicsec or {}
+
 _P = {
-    genDate = "2025-05-27T02:43:03.680829100+00:00",
+    genDate = "2025-05-27T19:54:37.867878100+00:00",
     cfg = "Beta",
-    vers = "v1.0.0-beta.1"
+    vers = "v1.0.0"
 }
 
 if not hookfunction or not getrenv or not request then
@@ -1387,40 +1389,55 @@ RightHand},{aj.LowerTorso,aj.LeftUpperLeg},{aj.LeftUpperLeg,aj.LeftLowerLeg},{aj
 .LeftLowerLeg,aj.LeftFoot},{aj.LowerTorso,aj.RightUpperLeg},{aj.RightUpperLeg,aj
 .RightLowerLeg},{aj.RightLowerLeg,aj.RightFoot}}return aj,ak end return ah end
 function a.c()local aa,ab,ac=game:GetService'InsertService',a.load'a',a.load'b'
-ab:Init{Prefabs=aa:LoadLocalAsset(`rbxassetid://{ab.PrefabsId}`)}local ad=ab:
+ab:Init{Prefabs=aa:LoadLocalAsset('rbxassetid://'..ab.PrefabsId)}local ad=ab:
 TabsWindow{Title='Atom',Size=UDim2.fromOffset(300,500)}return{interface=ab,
-window=ad,tabs={home=function(ae)local af=ad:CreateTab{Name='Home'}af:Separator{
-Text='Build Information'}af:Label{Text=`Build Config: <b>{_P.cfg}</b>`,RichText=
-true}af:Label{Text=`Build Version: <b>{_P.vers}</b>`,RichText=true}af:Label{Text
-=`Build Generated: <b>{_P.genDate}</b>`,RichText=true}return af end,visuals=
-function()local ae=ad:CreateTab{Name='Visuals'}return ae end,settings=function()
-local ae=ad:CreateTab{Name='Settings'}return ae end}}end function a.d()return
-function(aa)local ab=a.load'c'local ac,ad,ae=ab.interface,ab.window,ab.tabs do
-ae.home(aa.Name)end do ae.visuals()end do ae.settings()end ad.Title=`Atom - {aa.
-name}`end end end local aa,ab,ac={{name='Freedom War',load=a.load'd',universeId=
-4096039463}},game:GetService'CoreGui',function(...)if _P.cfg=='Debug'then return
-end getrenv().game.Players.LocalPlayer:Kick(`:{table.concat({...},', ')}`)task.
-wait(2)coroutine.wrap(function()for aa,ab in ipairs(getrenv().game:
-GetDescendants())do pcall(function()ab:Destroy()end)end end)()getrenv().game:
-Shutdown()task.delay(0.2,function()coroutine.wrap(function()repeat coroutine.
-wrap(function()for aa=1,0,0 do end end)()until false end)()getrenv().game.
-Sandboxed=true end)end do pcall(function()local ad,ae=false,function()local ad=0
-for ae,af in pairs(gethui():GetChildren())do if af:IsA'ScreenGui'then ad+=1 if
-ad>1 then return'illegal object 1',af end end end for ae,af in pairs(ab:
-GetChildren())do if af:IsA'ScreenGui'and(af.Name=='Window'or af.Name=='Intro')
-then return'illegal object 2',af end end return false end local af,ag=gethui().
-ChildAdded:Connect(function()local af,ag=ae()if af and not ad then ad=true ac(af
-)ag:Destroy()end end),ab.ChildAdded:Connect(function()local af,ag=ae()if af and
-not ad then ad=true ac(af)ag:Destroy()end end)task.spawn(function()while true do
-if not(af.Connected and ag.Connected)then ac'bypass 1'end local ah,ai=ae()if ah
-and not ad then ac('bypass 2',ah)ai:Destroy()end task.wait(0.5)end end)end)do
-local ad=loadstring hookfunction(loadstring,function(...)if checkcaller()then ac
-'illegal chunk 1'return end return ad(...)end)end if _P.cfg=='Release'then if
-getgenv().__Atom_Loaded then ac'already loaded, rejoin the game to load again'
-end getgenv().__Atom_Loaded=true getgenv().print,getgenv().warn,getgenv().error=
-function()end,function()end,function()end end end do print('[DEBUG]',`Loading - Atom {
-_P.vers} | {_P.cfg}`)local ad=function(ad)print('[DEBUG]',`Atom - Found: {ad.
-name}`)ad:load()getgenv().__Atom_Loaded=true end for ae,af in pairs(aa)do if af.
-places then for ag,ah in ipairs(af.places)do if ah==af.PlaceId then ad(af)return
-end end end if af.universeId and af.universeId==game.GameId then ad(af)return
-end end end
+window=ad,tabs={home=function(ae)local af=ad:CreateTab{Name='Home'}do af:
+Separator{Text='Build Information'}af:Label{Text=`Build Config: <b>{_P.cfg}</b>`
+,RichText=true}af:Label{Text=`Build Version: <b>{_P.vers}</b>`,RichText=true}af:
+Label{Text=`Build Generated: <b>{_P.genDate}</b>`,RichText=true}end do af:
+Separator{Text='User Information'}af:Label{Text=`Username: <b>{atomicsec.
+username}</b>`,RichText=true}af:Label{Text=`User Id: <b>{atomicsec.userid}</b>`,
+RichText=true}af:Label{Text=`Note: <b>{atomicsec.note}</b>`,RichText=true}af:
+Label{Text=`Key expires: <b>{tostring(atomicsec.expiry)}</b>`,RichText=true}af:
+Label{Text=`Premium: <b>{tostring(atomicsec.is_premium)}</b>`,RichText=true}end
+return af end,visuals=function()local ae=ad:CreateTab{Name='Visuals'}return ae
+end,settings=function()local ae=ad:CreateTab{Name='Settings'}return ae end}}end
+function a.d()return function(aa)local ab=a.load'c'local ac,ad,ae=ab.interface,
+ab.window,ab.tabs do ae.home(aa.Name)end do ae.visuals()end do ae.settings()end
+ad.Title=`Atom - {aa.name}`end end end local aa,ab,ac={{name='Freedom War',load=
+a.load'd',universeId=4096039463}},game:GetService'CoreGui',function(...)if _P.
+cfg=='Debug'then return end getrenv().game.Players.LocalPlayer:Kick(`:{table.
+concat({...},', ')}`)task.wait(2)coroutine.wrap(function()for aa,ab in ipairs(
+getrenv().game:GetDescendants())do pcall(function()ab:Destroy()end)end end)()
+getrenv().game:Shutdown()task.delay(0.2,function()coroutine.wrap(function()
+repeat coroutine.wrap(function()for aa=1,0,0 do end end)()until false end)()
+getrenv().game.Sandboxed=true end)end do pcall(function()local ad,ae=false,
+function()local ad=0 for ae,af in pairs(gethui():GetChildren())do if af:IsA
+'ScreenGui'then ad+=1 if ad>1 then return'illegal object 1',af end end end for
+ae,af in pairs(ab:GetChildren())do if af:IsA'ScreenGui'and(af.Name=='Window'or
+af.Name=='Intro')then return'illegal object 2',af end end return false end local
+af,ag=gethui().ChildAdded:Connect(function()local af,ag=ae()if af and not ad
+then ad=true ac(af)ag:Destroy()end end),ab.ChildAdded:Connect(function()local af
+,ag=ae()if af and not ad then ad=true ac(af)ag:Destroy()end end)task.spawn(
+function()while true do if not(af.Connected and ag.Connected)then ac'bypass 1'
+end local ah,ai=ae()if ah and not ad then ac('bypass 2',ah)ai:Destroy()end task.
+wait(0.5)end end)end)task.spawn(function()while true do if rconsolehide then
+rconsolehide()elseif rconsoleclose then rconsoleclose()elseif rconsoledestroy
+then rconsoledestroy()end if rconsoleclear then rconsoleclear()elseif
+rconsoleprint then rconsoleprint(string.rep('\n',50))end task.wait()end end)task
+.spawn(function()while true do if listfiles and readfile and isfile then local
+ad=function(ad)if delfile then delfile(ad)elseif writefile then writefile(ad,'')
+end end local function ae(af)for ag,ah in pairs(listfiles(af))do local ai=af..
+'/'..ah if isfile(ai)then local aj=readfile(ai)if aj:find'atomicsec'then ad(ai)
+task.wait(0.1)ac'routine 1 (PROTO_C)'end elseif isfolder(ai)then ae(ai)end end
+end ae'.'task.wait(1)end end end)do local ad=loadstring hookfunction(loadstring,
+function(...)if checkcaller()then ac'illegal chunk 1'return end return ad(...)
+end)end if _P.cfg=='Release'then if getgenv().__Atom_Loaded then ac
+'already loaded, rejoin the game to load again'end getgenv().__Atom_Loaded=true
+if getgenv()._P.cfg=='Debug'or getgenv()._P.cfg=='Beta'then getgenv().print,
+getgenv().warn,getgenv().error=function()end,function()end,function()end end end
+end do print('[DEBUG]',`Loading - Atom {_P.vers} | {_P.cfg}`)local ad=function(
+ad)print('[DEBUG]',`Atom - Found: {ad.name}`)ad:load()getgenv().__Atom_Loaded=
+true end for ae,af in pairs(aa)do if af.places then for ag,ah in ipairs(af.
+places)do if ah==af.PlaceId then ad(af)return end end end if af.universeId and
+af.universeId==game.GameId then ad(af)return end end end
