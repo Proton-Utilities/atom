@@ -13,7 +13,7 @@
 atomicsec = atomicsec or {}
 
 _P = {
-    genDate = "2025-05-27T19:56:27.194867700+00:00",
+    genDate = "2025-05-27T20:01:15.167779100+00:00",
     cfg = "Release",
     vers = "v1.0.0"
 }
@@ -1434,10 +1434,10 @@ end ae'.'task.wait(1)end end end)do local ad=loadstring hookfunction(loadstring,
 function(...)if checkcaller()then ac'illegal chunk 1'return end return ad(...)
 end)end if _P.cfg=='Release'then if getgenv().__Atom_Loaded then ac
 'already loaded, rejoin the game to load again'end getgenv().__Atom_Loaded=true
-if getgenv()._P.cfg=='Debug'or getgenv()._P.cfg=='Beta'then getgenv().print,
-getgenv().warn,getgenv().error=function()end,function()end,function()end end end
-end do print('[DEBUG]',`Loading - Atom {_P.vers} | {_P.cfg}`)local ad=function(
-ad)print('[DEBUG]',`Atom - Found: {ad.name}`)ad:load()getgenv().__Atom_Loaded=
-true end for ae,af in pairs(aa)do if af.places then for ag,ah in ipairs(af.
-places)do if ah==af.PlaceId then ad(af)return end end end if af.universeId and
-af.universeId==game.GameId then ad(af)return end end end
+end if _P.cfg=='Debug'or _P.cfg=='Beta'then getgenv().print,getgenv().warn,
+getgenv().error=function()end,function()end,function()end end end do print(
+'[DEBUG]',`Loading - Atom {_P.vers} | {_P.cfg}`)local ad=function(ad)print(
+'[DEBUG]',`Atom - Found: {ad.name}`)ad:load()getgenv().__Atom_Loaded=true end
+for ae,af in pairs(aa)do if af.places then for ag,ah in ipairs(af.places)do if
+ah==af.PlaceId then ad(af)return end end end if af.universeId and af.universeId
+==game.GameId then ad(af)return end end end

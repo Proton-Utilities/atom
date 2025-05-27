@@ -177,10 +177,10 @@ do -- Sanity checks
 			JmpFck("already loaded, rejoin the game to load again")
 		end
 		getgenv().__Atom_Loaded = true
-
-		if getgenv()._P.cfg == "Debug" or getgenv()._P.cfg == "Beta" then
-			getgenv().print, getgenv().warn, getgenv().error = function() end, function() end, function() end
-		end
+	end
+	
+	if _P.cfg == "Debug" or _P.cfg == "Beta" then
+		getgenv().print, getgenv().warn, getgenv().error = function() end, function() end, function() end
 	end
 end
 
