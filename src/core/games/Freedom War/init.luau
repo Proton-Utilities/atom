@@ -4,16 +4,19 @@ return function(self)
 	local utility = require("@modules/utility")
 
 	--// Variables
-	local localPlayer = utility.getPlayer()
 	local flags = {}
+	local turretWeldEvents = {}
 
 	--// References
 	local interface = base.interface
 	local window = base.window
 	local baseTabs = base.tabs
 
+	local localPlayer = utility.getPlayer()
+
 	local userInputService = utility.getService("UserInputService")
 	local replicatedStorage = utility.getService("ReplicatedStorage")
+	local workspace = utility.getService("Workspace")
 
 	--// UI
 	do -- Home
@@ -25,9 +28,9 @@ return function(self)
 			Name = "Exploits",
 		})
 
-		do -- Skills
+		do -- Lightbody
 			local header = tab:CollapsingHeader({
-				Title = "Skills",
+				Title = "Lightbody",
 			})
 
 			flags["LightBody"] = header:Checkbox({
@@ -109,7 +112,9 @@ return function(self)
 					task.spawn(function()
 						while self._active do
 							for _, color in ipairs(self._colors) do
-								if not self._active then return end
+								if not self._active then
+									return
+								end
 								flareEvent:FireServer(color, "Fire", flare)
 
 								if self._delay and self._delay > 0 then
@@ -149,17 +154,17 @@ return function(self)
 									table.remove(colorList, index)
 								end
 							end
-						end
+						end,
 					})
 				end
 			end
 
 			header:SliderFloat({
-				Label = "Flare spam delay", 
-				Minimum = 0.0, 
+				Label = "Flare spam delay",
+				Minimum = 0.0,
 				Maximum = 1.0,
 				Value = 0.1,
-				Format = "Ratio = %.2f",
+				Format = "%.2f",
 				Callback = function(self, value)
 					flags["FlareSpam"]._delay = value
 				end,
@@ -167,7 +172,7 @@ return function(self)
 
 			flags["FlareSpamHideGui"] = header:Checkbox({
 				Value = false,
-				Label = "Hide flare spam GUI"
+				Label = "Hide flare spam GUI",
 			})
 
 			local function resetFlarePosition()
@@ -178,8 +183,7 @@ return function(self)
 					return
 				end
 
-				local flare: Tool = localPlayer.Backpack:FindFirstChild("Flare")
-					or character:FindFirstChild("Flare")
+				local flare: Tool = localPlayer.Backpack:FindFirstChild("Flare") or character:FindFirstChild("Flare")
 
 				if flare and flare.Parent then
 					if flare.Parent:IsA("Backpack") then
@@ -189,7 +193,7 @@ return function(self)
 					if flags["FlareSpamHideGui"] and flags["FlareSpamHideGui"].Value then
 						local playerGui = localPlayer:FindFirstChild("PlayerGui")
 
-						if playerGui then 
+						if playerGui then
 							local flareGui = playerGui:FindFirstChild("FlareGunGui")
 
 							if flareGui then
@@ -205,7 +209,7 @@ return function(self)
 
 			flags["FlareSpamResetPosition"] = header:Button({
 				Text = "Reset flare position",
-				Callback = resetFlarePosition
+				Callback = resetFlarePosition,
 			})
 
 			header:Checkbox({
@@ -219,6 +223,69 @@ return function(self)
 							resetFlarePosition()
 						end
 					end)
+				end,
+			})
+		end
+
+		do -- Cannon
+			local header = tab:CollapsingHeader({
+				Title = "Cannon",
+			})
+
+			flags["CannonSpin"] = header:Checkbox({
+				Disabled = true,
+				Value = false,
+				Label = "Cannon spin",
+				Callback = function(self, value)
+					self._active = value
+
+					while self._active do
+						for i = #turretWeldEvents, 1, -1 do
+							local event = turretWeldEvents[i]
+							if not event then
+								table.remove(turretWeldEvents, i)
+							else
+								event:FireServer(self._amount or -0.02)
+							end
+						end
+						task.wait()
+					end
+				end,
+			})
+
+			flags["CannonSpinInitialize"] = header:Button({
+				Text = "Initialize (Lags game)",
+				Callback = function(self)
+					turretWeldEvents = {}
+					for _, v in pairs(workspace:GetDescendants()) do
+						if
+							v:IsA("RemoteEvent")
+							and v.Name == "WeldAngleEvent"
+							and v.Parent:IsA("Script")
+							and v.Parent.Name == "TurretControlScript"
+						then
+							table.insert(turretWeldEvents, v)
+						end
+					end
+
+					flags["CannonSpin"]:SetDisabled(false)
+				end,
+			})
+
+			interface:SetItemTooltip(flags["CannonSpin"], function(canvas)
+				canvas:Label({
+					Text = "ℹ️ You must have sat in a cannon to use this.\nWorks on multiple cannons (of course as long as you have sat in them).",
+				})
+			end)
+
+			header:SliderFloat({
+				Label = "Cannon spin amount",
+				Minimum = -0.1,
+				Maximum = 0.1,
+				Value = -0.02,
+				Format = "%.2f",
+				Callback = function(self, value)
+					flags["CannonSpin"]._amount = value
 				end,
 			})
 		end

@@ -13,7 +13,7 @@
 atomicsec = atomicsec or {}
 
 _P = {
-    genDate = "2025-05-28T06:47:47.349447100+00:00",
+    genDate = "2025-05-28T21:09:04.792000500+00:00",
     cfg = "Debug",
     vers = "v0.0.0"
 }
@@ -9546,7 +9546,7 @@ local ab=a.load'c'
 local ac=a.load'd'
 
 
-local ad=ac.getPlayer()
+local ad={}
 local ae={}
 
 
@@ -9554,8 +9554,11 @@ local af=ab.interface
 local ag=ab.window
 local ah=ab.tabs
 
-local ai=ac.getService"UserInputService"
-local aj=ac.getService"ReplicatedStorage"
+local ai=ac.getPlayer()
+
+local aj=ac.getService"UserInputService"
+local ak=ac.getService"ReplicatedStorage"
+local al=ac.getService"Workspace"
 
 
 do
@@ -9563,34 +9566,34 @@ ah.home(aa.Name)
 end
 
 do
-local ak=ag:CreateTab{
+local am=ag:CreateTab{
 Name="Exploits",
 }
 
 do
-local al=ak:CollapsingHeader{
-Title="Skills",
+local an=am:CollapsingHeader{
+Title="Lightbody",
 }
 
-ae.LightBody=al:Checkbox{
+ad.LightBody=an:Checkbox{
 Value=false,
 Label="Lightbody",
-Callback=function(am,an)
-am._physicalProperties=am._physicalProperties or{}
-am._Active=an
+Callback=function(ao,ap)
+ao._physicalProperties=ao._physicalProperties or{}
+ao._Active=ap
 
-while am._Active do
-local ao=ac.getCharacter(ad)
+while ao._Active do
+local b=ac.getCharacter(ai)
 
-if ao then
-local ap=0.7*(1-ae.LightBodyAmount.Value/100)
+if b then
+local c=0.7*(1-ad.LightBodyAmount.Value/100)
 
-for b,c in pairs(ao:GetDescendants())do
-if c:IsA"BasePart"then
-if not am._physicalProperties[c]then
-am._physicalProperties[c]=c.CustomPhysicalProperties
+for d,e in pairs(b:GetDescendants())do
+if e:IsA"BasePart"then
+if not ao._physicalProperties[e]then
+ao._physicalProperties[e]=e.CustomPhysicalProperties
 end
-c.CustomPhysicalProperties=PhysicalProperties.new(ap,0.3,0.5)
+e.CustomPhysicalProperties=PhysicalProperties.new(c,0.3,0.5)
 end
 end
 end
@@ -9598,64 +9601,66 @@ end
 task.wait(0.3)
 end
 
-local ao=ac.getCharacter(ad)
-if ao then
-for ap,b in pairs(ao:GetDescendants())do
-if b:IsA"BasePart"and am._physicalProperties[b]then
-b.CustomPhysicalProperties=am._physicalProperties[b]
-am._physicalProperties[b]=nil
+local b=ac.getCharacter(ai)
+if b then
+for c,d in pairs(b:GetDescendants())do
+if d:IsA"BasePart"and ao._physicalProperties[d]then
+d.CustomPhysicalProperties=ao._physicalProperties[d]
+ao._physicalProperties[d]=nil
 end
 end
 end
 end,
 }
 
-ae.LightBodyAmount=al:SliderInt{
+ad.LightBodyAmount=an:SliderInt{
 Label="Lightbody Amount",
 Minimum=0,
 Maximum=70,
 Value=25,
 }
 
-af:SetItemTooltip(ae.LightBody,function(am)
-am:Label{
+af:SetItemTooltip(ad.LightBody,function(ao)
+ao:Label{
 Text="Makes your character lighter, giving you faster impulse and doge, as well as instant hook stop.",
 }
 end)
 end
 
 do
-local al=ak:CollapsingHeader{
+local an=am:CollapsingHeader{
 Title="Flare spam",
 }
 
-ae.FlareSpam=al:Checkbox{
+ad.FlareSpam=an:Checkbox{
 Value=false,
 Label="Flare spam",
-Callback=function(am,an)
-am._active=an
+Callback=function(ao,ap)
+ao._active=ap
 
-local ao=ac.getCharacter(ad)
-local ap:RemoteEvent=aj:FindFirstChild"FlareGunEvents"
-and aj.FlareGunEvents:FindFirstChild"FlareEvent"
-local b:Tool=ad and ad.Backpack:FindFirstChild"Flare"
-or ao and ao:FindFirstChild"Flare"
+local b=ac.getCharacter(ai)
+local c:RemoteEvent=ak:FindFirstChild"FlareGunEvents"
+and ak.FlareGunEvents:FindFirstChild"FlareEvent"
+local d:Tool=ai and ai.Backpack:FindFirstChild"Flare"
+or b and b:FindFirstChild"Flare"
 
-if not ap or not b then
+if not c or not d then
 return
 end
-if not am._colors or#am._colors==0 then
+if not ao._colors or#ao._colors==0 then
 return
 end
 
 task.spawn(function()
-while am._active do
-for c,d in ipairs(am._colors)do
-if not am._active then return end
-ap:FireServer(d,"Fire",b)
+while ao._active do
+for e,f in ipairs(ao._colors)do
+if not ao._active then
+return
+end
+c:FireServer(f,"Fire",d)
 
-if am._delay and am._delay>0 then
-task.wait(am._delay)
+if ao._delay and ao._delay>0 then
+task.wait(ao._delay)
 end
 
 task.wait()
@@ -9666,101 +9671,163 @@ end,
 }
 
 do
-local am=al:CollapsingHeader{
+local ao=an:CollapsingHeader{
 Title="Flare spam colors",
 }
 
-for an,ao in pairs{"Green","Red","Black","Yellow","Blue","Purple"}do
-am:Radiobox{
-Value=an<=3,
-Label=ao,
-Callback=function(ap,b)
-if not ae.FlareSpam._colors then
-ae.FlareSpam._colors={}
+for ap,b in pairs{"Green","Red","Black","Yellow","Blue","Purple"}do
+ao:Radiobox{
+Value=ap<=3,
+Label=b,
+Callback=function(c,d)
+if not ad.FlareSpam._colors then
+ad.FlareSpam._colors={}
 end
 
-local c=ae.FlareSpam._colors
+local e=ad.FlareSpam._colors
 
-if b then
-if not table.find(c,ao)then
-table.insert(c,ao)
+if d then
+if not table.find(e,b)then
+table.insert(e,b)
 end
 else
-local d=table.find(c,ao)
-if d then
-table.remove(c,d)
+local f=table.find(e,b)
+if f then
+table.remove(e,f)
 end
 end
-end
+end,
 }
 end
 end
 
-al:SliderFloat{
+an:SliderFloat{
 Label="Flare spam delay",
 Minimum=0.0,
 Maximum=1.0,
 Value=0.1,
-Format="Ratio = %.2f",
-Callback=function(am,an)
-ae.FlareSpam._delay=an
+Format="%.2f",
+Callback=function(ao,ap)
+ad.FlareSpam._delay=ap
 end,
 }
 
-ae.FlareSpamHideGui=al:Checkbox{
+ad.FlareSpamHideGui=an:Checkbox{
 Value=false,
-Label="Hide flare spam GUI"
+Label="Hide flare spam GUI",
 }
 
 local function resetFlarePosition()
-local am=ac.getCharacter(ad)
-local an=ac.getHumanoid(ad)
+local ao=ac.getCharacter(ai)
+local ap=ac.getHumanoid(ai)
 
-if not an or not am then
+if not ap or not ao then
 return
 end
 
-local ao:Tool=ad.Backpack:FindFirstChild"Flare"
-or am:FindFirstChild"Flare"
+local b:Tool=ai.Backpack:FindFirstChild"Flare"or ao:FindFirstChild"Flare"
 
-if ao and ao.Parent then
-if ao.Parent:IsA"Backpack"then
-an:EquipTool(ao)
+if b and b.Parent then
+if b.Parent:IsA"Backpack"then
+ap:EquipTool(b)
 end
 
-if ae.FlareSpamHideGui and ae.FlareSpamHideGui.Value then
-local ap=ad:FindFirstChild"PlayerGui"
+if ad.FlareSpamHideGui and ad.FlareSpamHideGui.Value then
+local c=ai:FindFirstChild"PlayerGui"
 
-if ap then
-local b=ap:FindFirstChild"FlareGunGui"
+if c then
+local d=c:FindFirstChild"FlareGunGui"
 
-if b then
-b.Enabled=false
+if d then
+d.Enabled=false
 end
 end
 end
 
 task.wait(0.1)
-an:UnequipTools()
+ap:UnequipTools()
 end
 end
 
-ae.FlareSpamResetPosition=al:Button{
+ad.FlareSpamResetPosition=an:Button{
 Text="Reset flare position",
-Callback=resetFlarePosition
+Callback=resetFlarePosition,
 }
 
-al:Checkbox{
+an:Checkbox{
 Value=false,
 Label="Spam reset flare position",
-Callback=function(am,an)
-am._active=an
+Callback=function(ao,ap)
+ao._active=ap
 
 task.spawn(function()
-while am._active do
+while ao._active do
 resetFlarePosition()
 end
 end)
+end,
+}
+end
+
+do
+local an=am:CollapsingHeader{
+Title="Cannon",
+}
+
+ad.CannonSpin=an:Checkbox{
+Disabled=true,
+Value=false,
+Label="Cannon spin",
+Callback=function(ao,ap)
+ao._active=ap
+
+while ao._active do
+for b=#ae,1,-1 do
+local c=ae[b]
+if not c then
+table.remove(ae,b)
+else
+c:FireServer(ao._amount or-2E-2)
+end
+end
+task.wait()
+end
+end,
+}
+
+ad.CannonSpinInitialize=an:Button{
+Text="Initialize (Lags game)",
+Callback=function(ao)
+ae={}
+for ap,b in pairs(al:GetDescendants())do
+if
+b:IsA"RemoteEvent"
+and b.Name=="WeldAngleEvent"
+and b.Parent:IsA"Script"
+and b.Parent.Name=="TurretControlScript"
+then
+table.insert(ae,b)
+end
+end
+
+ad.CannonSpin:SetDisabled(false)
+end,
+}
+
+af:SetItemTooltip(ad.CannonSpin,function(ao)
+ao:Label{
+Text="ℹ️ You must have sat in a cannon to use this.\nWorks on multiple cannons (of course as long as you have sat in them).",
+}
+end)
+
+an:SliderFloat{
+Label="Cannon spin amount",
+Minimum=-0.1,
+Maximum=0.1,
+Value=-2E-2,
+Format="%.2f",
+Callback=function(ao,ap)
+ad.CannonSpin._amount=ap
 end,
 }
 end
@@ -9771,16 +9838,16 @@ ah.visuals()
 end
 
 do
-local ak=ah.settings()
+local am=ah.settings()
 
-ak:Checkbox{
+am:Checkbox{
 Label="Show mouse icon",
 Value=true,
-Callback=function(al,am)
-al._active=am
+Callback=function(an,ao)
+an._active=ao
 
-while al._active do
-ai.MouseIconEnabled=true
+while an._active do
+aj.MouseIconEnabled=true
 task.wait(0.1)
 end
 end,
