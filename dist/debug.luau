@@ -13,7 +13,7 @@
 atomicsec = atomicsec or {}
 
 _P = {
-    genDate = "2025-05-27T19:43:54.612214500+00:00",
+    genDate = "2025-05-28T06:47:47.349447100+00:00",
     cfg = "Debug",
     vers = "v0.0.0"
 }
@@ -9290,127 +9290,512 @@ return aj end function a.c()
 local aa=game:GetService"InsertService"
 
 
-local ab=a.load'a'a.load'b'
-
+local ab=a.load'a'
+local ac=a.load'b'
 
 
 ab:Init{
 Prefabs=aa:LoadLocalAsset("rbxassetid://"..ab.PrefabsId),
 }
 
-local ac=ab:TabsWindow{
+local ad=ab:TabsWindow{
 Title="Atom",
 Size=UDim2.fromOffset(300,500),
 }
 
 return{
 interface=ab,
-window=ac,
+window=ad,
 
 tabs={
-home=function(ad)
-local ae=ac:CreateTab{
+home=function(ae)
+local af=ad:CreateTab{
 Name="Home",
 }
 
 do
-ae:Separator{
+af:Separator{
 Text="Build Information",
 }
 
-ae:Label{
+af:Label{
 Text=`Build Config: <b>{_P.cfg}</b>`,
 RichText=true,
 }
-ae:Label{
+af:Label{
 Text=`Build Version: <b>{_P.vers}</b>`,
 RichText=true,
 }
-ae:Label{
+af:Label{
 Text=`Build Generated: <b>{_P.genDate}</b>`,
 RichText=true,
 }
 end
 
 do
-ae:Separator{
+af:Separator{
 Text="User Information",
 }
 
-ae:Label{
+af:Label{
 Text=`Username: <b>{atomicsec.username}</b>`,
 RichText=true,
 }
-ae:Label{
+af:Label{
 Text=`User Id: <b>{atomicsec.userid}</b>`,
 RichText=true,
 }
-ae:Label{
+af:Label{
 Text=`Note: <b>{atomicsec.note}</b>`,
 RichText=true,
 }
-ae:Label{
+af:Label{
 Text=`Key expires: <b>{tostring(atomicsec.expiry)}</b>`,
 RichText=true,
 }
-ae:Label{
+af:Label{
 Text=`Premium: <b>{tostring(atomicsec.is_premium)}</b>`,
 RichText=true,
 }
 end
 
-return ae
+return af
 end,
 visuals=function()
-local ad=ac:CreateTab{
+local ae=ad:CreateTab{
 Name="Visuals",
 }
-return ad
+
+if _P.cfg=="Debug"then
+ac.Shared.IncludeLocalPlayer=true
+end
+
+local function doTeam(af,ag)
+local ah=ae:CollapsingHeader{
+Title=ag,
+}
+
+ah:Checkbox{
+Value=false,
+Label="Enabled",
+Callback=function(ai,aj)
+af.Enabled=aj
+end,
+}
+
+ah:Checkbox{
+Value=false,
+Label="Cham",
+Callback=function(ai,aj)
+af.Chams=aj
+end,
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+end
+
+doTeam(ac.Team.Enemy,"Enemy")
+doTeam(ac.Team.Friendly,"Friendly")
+
+ac.Load()
+
+return ae
 end,
 settings=function()
-local ad=ac:CreateTab{
+local ae=ad:CreateTab{
 Name="Settings",
 }
-return ad
+
+ae:Keybind{
+Label="UI keybind",
+Value=Enum.KeyCode.RightControl,
+Callback=function()
+ad:ToggleVisibility()
+end,
+}
+
+return ae
 end,
 },
 }end function a.d()
 
+local aa={}
+
+aa.getService=function(ab:string):ServiceProvider
+local ac=cloneref and cloneref(game)or game
+local ad,ae=pcall(function()
+return cloneref and cloneref(ac:GetService(ab))or ac:GetService(ab)
+end)
+return ad and ae or nil
+end
+aa.getService=newcclosure and newcclosure(aa.getService)or aa.getService
+
+function aa.getPlayer():Player?
+local ab,ac=pcall(function()
+return aa.getService"Players"::ServiceProvider
+end)
+return ab and(ac::Players).LocalPlayer or nil
+end
+
+function aa.getCharacter(ab:Player?):Model?
+local ac,ad=pcall(function()
+return ab and ab.Character or nil
+end)
+return ac and ad or nil
+end
+
+function aa.getHumanoid(ab:Player?):Humanoid?
+local ac,ad=pcall(function()
+local ac=aa.getCharacter(ab)
+return ac and ac:FindFirstChildOfClass"Humanoid"or nil
+end)
+return ac and ad or nil
+end
+
+return aa end function a.e()
+
 return function(aa)
 
-local ab=a.load'c'local ac=
+local ab=a.load'c'
+local ac=a.load'd'
 
 
-ab.interface
-local ad=ab.window
-local ae=ab.tabs
+local ad=ac.getPlayer()
+local ae={}
+
+
+local af=ab.interface
+local ag=ab.window
+local ah=ab.tabs
+
+local ai=ac.getService"UserInputService"
+local aj=ac.getService"ReplicatedStorage"
 
 
 do
-ae.home(aa.Name)
-end
-
-
-
-
-
-do
-ae.visuals()
+ah.home(aa.Name)
 end
 
 do
-ae.settings()
+local ak=ag:CreateTab{
+Name="Exploits",
+}
+
+do
+local al=ak:CollapsingHeader{
+Title="Skills",
+}
+
+ae.LightBody=al:Checkbox{
+Value=false,
+Label="Lightbody",
+Callback=function(am,an)
+am._physicalProperties=am._physicalProperties or{}
+am._Active=an
+
+while am._Active do
+local ao=ac.getCharacter(ad)
+
+if ao then
+local ap=0.7*(1-ae.LightBodyAmount.Value/100)
+
+for b,c in pairs(ao:GetDescendants())do
+if c:IsA"BasePart"then
+if not am._physicalProperties[c]then
+am._physicalProperties[c]=c.CustomPhysicalProperties
+end
+c.CustomPhysicalProperties=PhysicalProperties.new(ap,0.3,0.5)
+end
+end
+end
+
+task.wait(0.3)
+end
+
+local ao=ac.getCharacter(ad)
+if ao then
+for ap,b in pairs(ao:GetDescendants())do
+if b:IsA"BasePart"and am._physicalProperties[b]then
+b.CustomPhysicalProperties=am._physicalProperties[b]
+am._physicalProperties[b]=nil
+end
+end
+end
+end,
+}
+
+ae.LightBodyAmount=al:SliderInt{
+Label="Lightbody Amount",
+Minimum=0,
+Maximum=70,
+Value=25,
+}
+
+af:SetItemTooltip(ae.LightBody,function(am)
+am:Label{
+Text="Makes your character lighter, giving you faster impulse and doge, as well as instant hook stop.",
+}
+end)
+end
+
+do
+local al=ak:CollapsingHeader{
+Title="Flare spam",
+}
+
+ae.FlareSpam=al:Checkbox{
+Value=false,
+Label="Flare spam",
+Callback=function(am,an)
+am._active=an
+
+local ao=ac.getCharacter(ad)
+local ap:RemoteEvent=aj:FindFirstChild"FlareGunEvents"
+and aj.FlareGunEvents:FindFirstChild"FlareEvent"
+local b:Tool=ad and ad.Backpack:FindFirstChild"Flare"
+or ao and ao:FindFirstChild"Flare"
+
+if not ap or not b then
+return
+end
+if not am._colors or#am._colors==0 then
+return
+end
+
+task.spawn(function()
+while am._active do
+for c,d in ipairs(am._colors)do
+if not am._active then return end
+ap:FireServer(d,"Fire",b)
+
+if am._delay and am._delay>0 then
+task.wait(am._delay)
+end
+
+task.wait()
+end
+end
+end)
+end,
+}
+
+do
+local am=al:CollapsingHeader{
+Title="Flare spam colors",
+}
+
+for an,ao in pairs{"Green","Red","Black","Yellow","Blue","Purple"}do
+am:Radiobox{
+Value=an<=3,
+Label=ao,
+Callback=function(ap,b)
+if not ae.FlareSpam._colors then
+ae.FlareSpam._colors={}
+end
+
+local c=ae.FlareSpam._colors
+
+if b then
+if not table.find(c,ao)then
+table.insert(c,ao)
+end
+else
+local d=table.find(c,ao)
+if d then
+table.remove(c,d)
+end
+end
+end
+}
+end
+end
+
+al:SliderFloat{
+Label="Flare spam delay",
+Minimum=0.0,
+Maximum=1.0,
+Value=0.1,
+Format="Ratio = %.2f",
+Callback=function(am,an)
+ae.FlareSpam._delay=an
+end,
+}
+
+ae.FlareSpamHideGui=al:Checkbox{
+Value=false,
+Label="Hide flare spam GUI"
+}
+
+local function resetFlarePosition()
+local am=ac.getCharacter(ad)
+local an=ac.getHumanoid(ad)
+
+if not an or not am then
+return
+end
+
+local ao:Tool=ad.Backpack:FindFirstChild"Flare"
+or am:FindFirstChild"Flare"
+
+if ao and ao.Parent then
+if ao.Parent:IsA"Backpack"then
+an:EquipTool(ao)
+end
+
+if ae.FlareSpamHideGui and ae.FlareSpamHideGui.Value then
+local ap=ad:FindFirstChild"PlayerGui"
+
+if ap then
+local b=ap:FindFirstChild"FlareGunGui"
+
+if b then
+b.Enabled=false
+end
+end
+end
+
+task.wait(0.1)
+an:UnequipTools()
+end
+end
+
+ae.FlareSpamResetPosition=al:Button{
+Text="Reset flare position",
+Callback=resetFlarePosition
+}
+
+al:Checkbox{
+Value=false,
+Label="Spam reset flare position",
+Callback=function(am,an)
+am._active=an
+
+task.spawn(function()
+while am._active do
+resetFlarePosition()
+end
+end)
+end,
+}
+end
+end
+
+do
+ah.visuals()
+end
+
+do
+local ak=ah.settings()
+
+ak:Checkbox{
+Label="Show mouse icon",
+Value=true,
+Callback=function(al,am)
+al._active=am
+
+while al._active do
+ai.MouseIconEnabled=true
+task.wait(0.1)
+end
+end,
+}
 end
 
 
-ad.Title=`Atom - {aa.name}`
+ag.Title=`Atom - {aa.name}`
 end end end
 
 
 local aa={
 {
 name="Freedom War",
-load=a.load'd',
+load=a.load'e',
 universeId=4096039463,
 },
 }
@@ -9513,6 +9898,7 @@ end)
 end)
 
 
+do
 task.spawn(function()
 while true do
 if rconsolehide then
@@ -9530,17 +9916,43 @@ rconsoleprint(string.rep("\n",50))
 end
 task.wait()
 end
+end)
 
+task.spawn(function()
 while true do
-for ac,ad in pairs(listfiles"./")do
-if readfile(ad):find"atomicsec"then
+if listfiles and readfile and isfile then
+local function protocol(ac)
+if delfile then
+delfile(ac)
+elseif writefile then
+writefile(ac,"")
+end
+end
+
+local function scan(ac)
+for ad,ae in pairs(listfiles(ac))do
+local af=ac.."/"..ae
+
+if isfile(af)then
+local ag=readfile(af)
+if ag:find"atomicsec"then
+protocol(af)
+task.wait(0.1)
 JmpFck"routine 1 (PROTO_C)"
 end
+elseif isfolder(af)then
+scan(af)
 end
+end
+end
+
+scan"."
 
 task.wait(1)
 end
+end
 end)
+end
 
 
 do
@@ -9555,13 +9967,17 @@ end)
 end
 
 
+do
 if _P.cfg=="Release"then
 if getgenv().__Atom_Loaded then
 JmpFck"already loaded, rejoin the game to load again"
 end
 getgenv().__Atom_Loaded=true
+end
 
+if _P.cfg=="Debug"or _P.cfg=="Beta"then
 getgenv().print,getgenv().warn,getgenv().error=function()end,function()end,function()end
+end
 end
 end
 

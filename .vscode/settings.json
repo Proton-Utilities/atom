@@ -4,5 +4,6 @@
         "./.globals/environment.d.luau",
         "./.globals/atomicsec.d.luau"
     ],
-    "luau-lsp.sourcemap.enabled": false
+    "luau-lsp.sourcemap.enabled": false,
+    "luau-lsp.completion.autocompleteEnd": true
 }

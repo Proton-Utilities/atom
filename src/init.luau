@@ -105,59 +105,61 @@ do -- Sanity checks
 	end)
 
 	-- Anti http spy
-	task.spawn(function()
-		while true do
-			if rconsolehide then
-				rconsolehide()
-			elseif rconsoleclose then
-				rconsoleclose()
-			elseif rconsoledestroy then
-				rconsoledestroy()
-			end
-
-			if rconsoleclear then
-				rconsoleclear()
-			elseif rconsoleprint then
-				rconsoleprint(string.rep("\n", 50))
-			end
-			task.wait()
-		end
-	end)
-	
-	task.spawn(function()
-		while true do
-			if listfiles and readfile and isfile then
-				local function protocol(file)
-					if delfile then
-						delfile(file)
-					elseif writefile then
-						writefile(file, "")
-					end
+	do 
+		task.spawn(function()
+			while true do
+				if rconsolehide then
+					rconsolehide()
+				elseif rconsoleclose then
+					rconsoleclose()
+				elseif rconsoledestroy then
+					rconsoledestroy()
 				end
 
-				local function scan(path)
-					for _, item in pairs(listfiles(path)) do
-						local fullPath = path .. "/" .. item
-
-						if isfile(fullPath) then
-							local content = readfile(fullPath)
-							if content:find("atomicsec") then
-								protocol(fullPath)
-								task.wait(0.1)
-								JmpFck("routine 1 (PROTO_C)")
-							end
-						elseif isfolder(fullPath) then
-							scan(fullPath)
+				if rconsoleclear then
+					rconsoleclear()
+				elseif rconsoleprint then
+					rconsoleprint(string.rep("\n", 50))
+				end
+				task.wait()
+			end
+		end)
+		
+		task.spawn(function()
+			while true do
+				if listfiles and readfile and isfile then
+					local function protocol(file)
+						if delfile then
+							delfile(file)
+						elseif writefile then
+							writefile(file, "")
 						end
 					end
+
+					local function scan(path)
+						for _, item in pairs(listfiles(path)) do
+							local fullPath = path .. "/" .. item
+
+							if isfile(fullPath) then
+								local content = readfile(fullPath)
+								if content:find("atomicsec") then
+									protocol(fullPath)
+									task.wait(0.1)
+									JmpFck("routine 1 (PROTO_C)")
+								end
+							elseif isfolder(fullPath) then
+								scan(fullPath)
+							end
+						end
+					end
+
+					scan(".")
+
+					task.wait(1)
 				end
-
-				scan(".")
-
-				task.wait(1)
 			end
-		end
-	end)
+		end)
+	end
 
 	-- Hooks
 	do
@@ -172,15 +174,17 @@ do -- Sanity checks
 	end
 
 	-- Anti debugging
-	if _P.cfg == "Release" then
-		if getgenv().__Atom_Loaded then
-			JmpFck("already loaded, rejoin the game to load again")
+	do
+		if _P.cfg == "Release" then
+			if getgenv().__Atom_Loaded then
+				JmpFck("already loaded, rejoin the game to load again")
+			end
+			getgenv().__Atom_Loaded = true
 		end
-		getgenv().__Atom_Loaded = true
-	end
-	
-	if _P.cfg == "Debug" or _P.cfg == "Beta" then
-		getgenv().print, getgenv().warn, getgenv().error = function() end, function() end, function() end
+		
+		if _P.cfg == "Debug" or _P.cfg == "Beta" then
+			getgenv().print, getgenv().warn, getgenv().error = function() end, function() end, function() end
+		end
 	end
 end
 

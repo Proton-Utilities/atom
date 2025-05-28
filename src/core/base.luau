@@ -4,8 +4,8 @@
 local insertService = game:GetService("InsertService")
 
 --// Imports
-local regui = require("@packages/ReGui.luau")
-local esp = require("@modules/esp.luau")
+local regui = require("@packages/ReGui")
+local esp = require("@modules/esp")
 
 --// Initialize
 regui:Init({
@@ -79,12 +79,141 @@ return {
 			local tab = window:CreateTab({
 				Name = "Visuals",
 			})
+
+			if _P.cfg == "Debug" then
+				esp.Shared.IncludeLocalPlayer = true
+			end
+
+			local function doTeam(team, name)
+				local header = tab:CollapsingHeader({
+					Title = name,
+				})
+
+				header:Checkbox({
+					Value = false,
+					Label = "Enabled",
+					Callback = function(self, value)
+						team.Enabled = value
+					end,
+				})
+
+				header:Checkbox({
+					Value = false,
+					Label = "Cham",
+					Callback = function(self, value)
+						team.Chams = value
+					end,
+				})
+
+				--[[ header:Checkbox({
+					Value = false,
+					Label = "Skeleton",
+					Callback = function(self, value)
+						team.Skeleton = value
+					end,
+				})
+
+				header:Checkbox({
+					Value = false,
+					Label = "Box",
+					Callback = function(self, value)
+						team.Box = value
+					end,
+				})
+
+				header:Checkbox({
+					Value = false,
+					Label = "Box Fill",
+					Callback = function(self, value)
+						team.BoxFill = value
+					end,
+				})
+
+				header:Checkbox({
+					Value = false,
+					Label = "Health Bar",
+					Callback = function(self, value)
+						team.HealthBar = value
+					end,
+				})
+
+				header:Checkbox({
+					Value = false,
+					Label = "Corner Box",
+					Callback = function(self, value)
+						team.CornerBox = value
+					end,
+				})
+
+				header:Checkbox({
+					Value = false,
+					Label = "Skeleton",
+					Callback = function(self, value)
+						team.Skeleton = value
+					end,
+				})
+
+				header:Checkbox({
+					Value = false,
+					Label = "Tracer",
+					Callback = function(self, value)
+						team.Tracer = value
+					end,
+				})
+
+				header:Checkbox({
+					Value = false,
+					Label = "Health Text",
+					Callback = function(self, value)
+						team.HealthText = value
+					end,
+				})
+
+				header:Checkbox({
+					Value = false,
+					Label = "Name Text",
+					Callback = function(self, value)
+						team.Name = value
+					end,
+				})
+
+				header:Checkbox({
+					Value = false,
+					Label = "Distance Text",
+					Callback = function(self, value)
+						team.Distance = value
+					end,
+				})
+
+				header:Checkbox({
+					Value = false,
+					Label = "Weapon Text",
+					Callback = function(self, value)
+						team.Weapon = value
+					end,
+				}) ]]
+			end
+
+			doTeam(esp.Team.Enemy, "Enemy")
+			doTeam(esp.Team.Friendly, "Friendly")
+
+			esp.Load()
+
 			return tab
 		end,
 		settings = function()
 			local tab = window:CreateTab({
 				Name = "Settings",
 			})
+
+			tab:Keybind({
+				Label = "UI keybind",
+				Value = Enum.KeyCode.RightControl,
+				Callback = function()
+					window:ToggleVisibility()
+				end,
+			})
+
 			return tab
 		end,
 	},
