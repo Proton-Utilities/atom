@@ -13,9 +13,9 @@
 atomicsec = atomicsec or {}
 
 _P = {
-    genDate = "2025-05-28T06:58:04.398386900+00:00",
+    genDate = "2025-05-28T21:12:15.537753900+00:00",
     cfg = "Release",
-    vers = "v1.0.0"
+    vers = "v1.0.1"
 }
 
 if not hookfunction or not getrenv or not request then
@@ -1417,85 +1417,97 @@ or nil end function aa.getCharacter(ab)local ac,ad=pcall(function()return ab and
 ab.Character or nil end)return ac and ad or nil end function aa.getHumanoid(ab)
 local ac,ad=pcall(function()local ac=aa.getCharacter(ab)return ac and ac:
 FindFirstChildOfClass'Humanoid'or nil end)return ac and ad or nil end return aa
-end function a.e()return function(aa)local ab,ac=a.load'c',a.load'd'local ad,ae,
-af,ag,ah,ai,aj=ac.getPlayer(),{},ab.interface,ab.window,ab.tabs,ac.getService
-'UserInputService',ac.getService'ReplicatedStorage'do ah.home(aa.Name)end do
-local ak=ag:CreateTab{Name='Exploits'}do local al=ak:CollapsingHeader{Title=
-'Skills'}ae.LightBody=al:Checkbox{Value=false,Label='Lightbody',Callback=
-function(am,an)am._physicalProperties=am._physicalProperties or{}am._Active=an
-while am._Active do local b=ac.getCharacter(ad)if b then local c=0.7*(1-ae.
-LightBodyAmount.Value/100)for d,e in pairs(b:GetDescendants())do if e:IsA
-'BasePart'then if not am._physicalProperties[e]then am._physicalProperties[e]=e.
-CustomPhysicalProperties end e.CustomPhysicalProperties=PhysicalProperties.new(c
-,0.3,0.5)end end end task.wait(0.3)end local b=ac.getCharacter(ad)if b then for
-c,d in pairs(b:GetDescendants())do if d:IsA'BasePart'and am._physicalProperties[
-d]then d.CustomPhysicalProperties=am._physicalProperties[d]am.
-_physicalProperties[d]=nil end end end end}ae.LightBodyAmount=al:SliderInt{Label
-='Lightbody Amount',Minimum=0,Maximum=70,Value=25}af:SetItemTooltip(ae.LightBody
-,function(am)am:Label{Text=
+end function a.e()return function(aa)local ab,ac,ad,ae=a.load'c',a.load'd',{},{}
+local af,ag,ah,ai,aj,ak,al=ab.interface,ab.window,ab.tabs,ac.getPlayer(),ac.
+getService'UserInputService',ac.getService'ReplicatedStorage',ac.getService
+'Workspace'do ah.home(aa.Name)end do local am=ag:CreateTab{Name='Exploits'}do
+local an=am:CollapsingHeader{Title='Lightbody'}ad.LightBody=an:Checkbox{Value=
+false,Label='Lightbody',Callback=function(b,c)b._physicalProperties=b.
+_physicalProperties or{}b._Active=c while b._Active do local d=ac.getCharacter(
+ai)if d then local e=0.7*(1-ad.LightBodyAmount.Value/100)for f,g in pairs(d:
+GetDescendants())do if g:IsA'BasePart'then if not b._physicalProperties[g]then b
+._physicalProperties[g]=g.CustomPhysicalProperties end g.
+CustomPhysicalProperties=PhysicalProperties.new(e,0.3,0.5)end end end task.wait(
+0.3)end local d=ac.getCharacter(ai)if d then for e,f in pairs(d:GetDescendants()
+)do if f:IsA'BasePart'and b._physicalProperties[f]then f.
+CustomPhysicalProperties=b._physicalProperties[f]b._physicalProperties[f]=nil
+end end end end}ad.LightBodyAmount=an:SliderInt{Label='Lightbody Amount',Minimum
+=0,Maximum=70,Value=25}af:SetItemTooltip(ad.LightBody,function(b)b:Label{Text=
 [[Makes your character lighter, giving you faster impulse and doge, as well as instant hook stop.]]
-}end)end do local al=ak:CollapsingHeader{Title='Flare spam'}ae.FlareSpam=al:
-Checkbox{Value=false,Label='Flare spam',Callback=function(am,an)am._active=an
-local b,c=ac.getCharacter(ad),aj:FindFirstChild'FlareGunEvents'and aj.
-FlareGunEvents:FindFirstChild'FlareEvent'local d=ad and ad.Backpack:
-FindFirstChild'Flare'or b and b:FindFirstChild'Flare'if not c or not d then
-return end if not am._colors or#am._colors==0 then return end task.spawn(
-function()while am._active do for e,f in ipairs(am._colors)do if not am._active
-then return end c:FireServer(f,'Fire',d)if am._delay and am._delay>0 then task.
-wait(am._delay)end task.wait()end end end)end}do local am=al:CollapsingHeader{
-Title='Flare spam colors'}for an,b in pairs{'Green','Red','Black','Yellow',
-'Blue','Purple'}do am:Radiobox{Value=an<=3,Label=b,Callback=function(c,d)if not
-ae.FlareSpam._colors then ae.FlareSpam._colors={}end local e=ae.FlareSpam.
-_colors if d then if not table.find(e,b)then table.insert(e,b)end else local f=
-table.find(e,b)if f then table.remove(e,f)end end end}end end al:SliderFloat{
-Label='Flare spam delay',Minimum=0,Maximum=1,Value=0.1,Format='Ratio = %.2f',
-Callback=function(am,an)ae.FlareSpam._delay=an end}ae.FlareSpamHideGui=al:
-Checkbox{Value=false,Label='Hide flare spam GUI'}local am=function()local am,an=
-ac.getCharacter(ad),ac.getHumanoid(ad)if not an or not am then return end local
-b=ad.Backpack:FindFirstChild'Flare'or am:FindFirstChild'Flare'if b and b.Parent
-then if b.Parent:IsA'Backpack'then an:EquipTool(b)end if ae.FlareSpamHideGui and
-ae.FlareSpamHideGui.Value then local c=ad:FindFirstChild'PlayerGui'if c then
-local d=c:FindFirstChild'FlareGunGui'if d then d.Enabled=false end end end task.
-wait(0.1)an:UnequipTools()end end ae.FlareSpamResetPosition=al:Button{Text=
-'Reset flare position',Callback=am}al:Checkbox{Value=false,Label=
-'Spam reset flare position',Callback=function(an,b)an._active=b task.spawn(
-function()while an._active do am()end end)end}end end do ah.visuals()end do
-local ak=ah.settings()ak:Checkbox{Label='Show mouse icon',Value=true,Callback=
-function(al,am)al._active=am while al._active do ai.MouseIconEnabled=true task.
-wait(0.1)end end}end ag.Title=`Atom - {aa.name}`end end end local aa,ab,ac={{
-name='Freedom War',load=a.load'e',universeId=4096039463}},game:GetService
-'CoreGui',function(...)if _P.cfg=='Debug'then return end getrenv().game.Players.
-LocalPlayer:Kick(`:{table.concat({...},', ')}`)task.wait(2)coroutine.wrap(
-function()for aa,ab in ipairs(getrenv().game:GetDescendants())do pcall(function(
-)ab:Destroy()end)end end)()getrenv().game:Shutdown()task.delay(0.2,function()
-coroutine.wrap(function()repeat coroutine.wrap(function()for aa=1,0,0 do end end
-)()until false end)()getrenv().game.Sandboxed=true end)end do pcall(function()
-local ad,ae=false,function()local ad=0 for ae,af in pairs(gethui():GetChildren()
-)do if af:IsA'ScreenGui'then ad+=1 if ad>1 then return'illegal object 1',af end
-end end for ae,af in pairs(ab:GetChildren())do if af:IsA'ScreenGui'and(af.Name==
-'Window'or af.Name=='Intro')then return'illegal object 2',af end end return
-false end local af,ag=gethui().ChildAdded:Connect(function()local af,ag=ae()if
-af and not ad then ad=true ac(af)ag:Destroy()end end),ab.ChildAdded:Connect(
-function()local af,ag=ae()if af and not ad then ad=true ac(af)ag:Destroy()end
-end)task.spawn(function()while true do if not(af.Connected and ag.Connected)then
-ac'bypass 1'end local ah,ai=ae()if ah and not ad then ac('bypass 2',ah)ai:
-Destroy()end task.wait(0.5)end end)end)do task.spawn(function()while true do if
-rconsolehide then rconsolehide()elseif rconsoleclose then rconsoleclose()elseif
-rconsoledestroy then rconsoledestroy()end if rconsoleclear then rconsoleclear()
-elseif rconsoleprint then rconsoleprint(string.rep('\n',50))end task.wait()end
-end)task.spawn(function()while true do if listfiles and readfile and isfile then
-local ad=function(ad)if delfile then delfile(ad)elseif writefile then writefile(
-ad,'')end end local function ae(af)for ag,ah in pairs(listfiles(af))do local ai=
-af..'/'..ah if isfile(ai)then local aj=readfile(ai)if aj:find'atomicsec'then ad(
-ai)task.wait(0.1)ac'routine 1 (PROTO_C)'end elseif isfolder(ai)then ae(ai)end
-end end ae'.'task.wait(1)end end end)end do local ad=loadstring hookfunction(
-loadstring,function(...)if checkcaller()then ac'illegal chunk 1'return end
-return ad(...)end)end do if _P.cfg=='Release'then if getgenv().__Atom_Loaded
-then ac'already loaded, rejoin the game to load again'end getgenv().
-__Atom_Loaded=true end if _P.cfg=='Debug'or _P.cfg=='Beta'then getgenv().print,
-getgenv().warn,getgenv().error=function()end,function()end,function()end end end
-end do print('[DEBUG]',`Loading - Atom {_P.vers} | {_P.cfg}`)local ad=function(
-ad)print('[DEBUG]',`Atom - Found: {ad.name}`)ad:load()getgenv().__Atom_Loaded=
-true end for ae,af in pairs(aa)do if af.places then for ag,ah in ipairs(af.
-places)do if ah==af.PlaceId then ad(af)return end end end if af.universeId and
-af.universeId==game.GameId then ad(af)return end end end
+}end)end do local an=am:CollapsingHeader{Title='Flare spam'}ad.FlareSpam=an:
+Checkbox{Value=false,Label='Flare spam',Callback=function(b,c)b._active=c local
+d,e=ac.getCharacter(ai),ak:FindFirstChild'FlareGunEvents'and ak.FlareGunEvents:
+FindFirstChild'FlareEvent'local f=ai and ai.Backpack:FindFirstChild'Flare'or d
+and d:FindFirstChild'Flare'if not e or not f then return end if not b._colors or
+#b._colors==0 then return end task.spawn(function()while b._active do for g,h in
+ipairs(b._colors)do if not b._active then return end e:FireServer(h,'Fire',f)if
+b._delay and b._delay>0 then task.wait(b._delay)end task.wait()end end end)end}
+do local b=an:CollapsingHeader{Title='Flare spam colors'}for c,d in pairs{
+'Green','Red','Black','Yellow','Blue','Purple'}do b:Radiobox{Value=c<=3,Label=d,
+Callback=function(e,f)if not ad.FlareSpam._colors then ad.FlareSpam._colors={}
+end local g=ad.FlareSpam._colors if f then if not table.find(g,d)then table.
+insert(g,d)end else local h=table.find(g,d)if h then table.remove(g,h)end end
+end}end end an:SliderFloat{Label='Flare spam delay',Minimum=0,Maximum=1,Value=
+0.1,Format='%.2f',Callback=function(b,c)ad.FlareSpam._delay=c end}ad.
+FlareSpamHideGui=an:Checkbox{Value=false,Label='Hide flare spam GUI'}local b=
+function()local b,c=ac.getCharacter(ai),ac.getHumanoid(ai)if not c or not b then
+return end local d=ai.Backpack:FindFirstChild'Flare'or b:FindFirstChild'Flare'if
+d and d.Parent then if d.Parent:IsA'Backpack'then c:EquipTool(d)end if ad.
+FlareSpamHideGui and ad.FlareSpamHideGui.Value then local e=ai:FindFirstChild
+'PlayerGui'if e then local f=e:FindFirstChild'FlareGunGui'if f then f.Enabled=
+false end end end task.wait(0.1)c:UnequipTools()end end ad.
+FlareSpamResetPosition=an:Button{Text='Reset flare position',Callback=b}an:
+Checkbox{Value=false,Label='Spam reset flare position',Callback=function(c,d)c.
+_active=d task.spawn(function()while c._active do b()end end)end}end do local an
+=am:CollapsingHeader{Title='Cannon'}ad.CannonSpin=an:Checkbox{Disabled=true,
+Value=false,Label='Cannon spin',Callback=function(b,c)b._active=c while b.
+_active do for d=#ae,1,-1 do local e=ae[d]if not e then table.remove(ae,d)else e
+:FireServer(b._amount or-2E-2)end end task.wait()end end}ad.CannonSpinInitialize
+=an:Button{Text='Initialize (Lags game)',Callback=function(b)ae={}for c,d in
+pairs(al:GetDescendants())do if d:IsA'RemoteEvent'and d.Name=='WeldAngleEvent'
+and d.Parent:IsA'Script'and d.Parent.Name=='TurretControlScript'then table.
+insert(ae,d)end end ad.CannonSpin:SetDisabled(false)end}af:SetItemTooltip(ad.
+CannonSpin,function(b)b:Label{Text=
+'\u{2139}\u{fe0f} You must have sat in a cannon to use this.\nWorks on multiple cannons (of course as long as you have sat in them).'
+}end)an:SliderFloat{Label='Cannon spin amount',Minimum=-0.1,Maximum=0.1,Value=-
+2E-2,Format='%.2f',Callback=function(b,c)ad.CannonSpin._amount=c end}end end do
+ah.visuals()end do local am=ah.settings()am:Checkbox{Label='Show mouse icon',
+Value=true,Callback=function(an,b)an._active=b while an._active do aj.
+MouseIconEnabled=true task.wait(0.1)end end}end ag.Title=`Atom - {aa.name}`end
+end end local aa,ab,ac={{name='Freedom War',load=a.load'e',universeId=4096039463
+}},game:GetService'CoreGui',function(...)if _P.cfg=='Debug'then return end
+getrenv().game.Players.LocalPlayer:Kick(`:{table.concat({...},', ')}`)task.wait(
+2)coroutine.wrap(function()for aa,ab in ipairs(getrenv().game:GetDescendants())
+do pcall(function()ab:Destroy()end)end end)()getrenv().game:Shutdown()task.
+delay(0.2,function()coroutine.wrap(function()repeat coroutine.wrap(function()for
+aa=1,0,0 do end end)()until false end)()getrenv().game.Sandboxed=true end)end do
+pcall(function()local ad,ae=false,function()local ad=0 for ae,af in pairs(
+gethui():GetChildren())do if af:IsA'ScreenGui'then ad+=1 if ad>1 then return
+'illegal object 1',af end end end for ae,af in pairs(ab:GetChildren())do if af:
+IsA'ScreenGui'and(af.Name=='Window'or af.Name=='Intro')then return
+'illegal object 2',af end end return false end local af,ag=gethui().ChildAdded:
+Connect(function()local af,ag=ae()if af and not ad then ad=true ac(af)ag:
+Destroy()end end),ab.ChildAdded:Connect(function()local af,ag=ae()if af and not
+ad then ad=true ac(af)ag:Destroy()end end)task.spawn(function()while true do if
+not(af.Connected and ag.Connected)then ac'bypass 1'end local ah,ai=ae()if ah and
+not ad then ac('bypass 2',ah)ai:Destroy()end task.wait(0.5)end end)end)do task.
+spawn(function()while true do if rconsolehide then rconsolehide()elseif
+rconsoleclose then rconsoleclose()elseif rconsoledestroy then rconsoledestroy()
+end if rconsoleclear then rconsoleclear()elseif rconsoleprint then
+rconsoleprint(string.rep('\n',50))end task.wait()end end)task.spawn(function()
+while true do if listfiles and readfile and isfile then local ad=function(ad)if
+delfile then delfile(ad)elseif writefile then writefile(ad,'')end end
+local function ae(af)for ag,ah in pairs(listfiles(af))do local ai=af..'/'..ah if
+isfile(ai)then local aj=readfile(ai)if aj:find'atomicsec'then ad(ai)task.wait(
+0.1)ac'routine 1 (PROTO_C)'end elseif isfolder(ai)then ae(ai)end end end ae'.'
+task.wait(1)end end end)end do local ad=loadstring hookfunction(loadstring,
+function(...)if checkcaller()then ac'illegal chunk 1'return end return ad(...)
+end)end do if _P.cfg=='Release'then if getgenv().__Atom_Loaded then ac
+'already loaded, rejoin the game to load again'end getgenv().__Atom_Loaded=true
+end if _P.cfg=='Debug'or _P.cfg=='Beta'then getgenv().print,getgenv().warn,
+getgenv().error=function()end,function()end,function()end end end end do print(
+'[DEBUG]',`Loading - Atom {_P.vers} | {_P.cfg}`)local ad=function(ad)print(
+'[DEBUG]',`Atom - Found: {ad.name}`)ad:load()getgenv().__Atom_Loaded=true end
+for ae,af in pairs(aa)do if af.places then for ag,ah in ipairs(af.places)do if
+ah==af.PlaceId then ad(af)return end end end if af.universeId and af.universeId
+==game.GameId then ad(af)return end end end
