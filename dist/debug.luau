@@ -13,7 +13,7 @@
 atomicsec = atomicsec or {}
 
 _P = {
-    genDate = "2025-05-28T23:06:13.205703200+00:00",
+    genDate = "2025-05-29T20:47:19.589131100+00:00",
     cfg = "Debug",
     vers = "v0.0.0"
 }
@@ -9796,7 +9796,7 @@ end,
 }
 
 ad.CannonSpinInitialize=an:Button{
-Text="Initialize (Lags game)",
+Text="Initialize (Might lag)",
 Callback=function(ao)
 ae={}
 for ap,b in pairs(al:GetDescendants())do
@@ -9830,6 +9830,177 @@ Callback=function(ao,ap)
 ad.CannonSpin._amount=ap
 end,
 }
+end
+
+do
+local an=am:CollapsingHeader{
+Title="Shifter",
+}
+
+do
+local ao=an:CollapsingHeader{
+Title="Mods",
+}
+
+ao:Checkbox{
+Value=false,
+Label="Infinite stamina",
+Callback=function(ap,b)
+ap._active=b
+
+if not ap._active then
+return
+end
+
+local c=ac.getCharacter(ai)
+
+if not c then
+return
+end
+
+local d
+
+for e,f in pairs(c:GetDescendants())do
+if f.Name=="Stamina"and f:IsA"ValueBase"then
+d=f
+break
+end
+end
+
+if not d then
+return
+end
+
+task.spawn(function()
+while ap._active do
+d.Value=24e2
+
+task.wait()
+end
+end)
+end,
+}
+
+ao:Checkbox{
+Value=false,
+Label="Titan instant turn",
+Callback=function(ap,b)
+local c=ac.getCharacter(ai)
+
+if not c then
+return
+end
+
+for d,e in pairs(c:GetDescendants())do
+if e.Name=="RotationSpeed"and e:IsA"ValueBase"then
+e.Value=1e9
+break
+end
+end
+end,
+}
+
+ao:Checkbox{
+Value=false,
+Label="Infinite shift timer",
+Callback=function(ap,b)
+local c=ac.getCharacter(ai)
+
+if not c then
+return
+end
+
+for d,e in pairs(c:GetDescendants())do
+if e.Name=="Time"and e:IsA"ValueBase"then
+e:Destroy()
+break
+end
+end
+end,
+}
+end
+
+do
+local ao=an:CollapsingHeader{
+Title="Impact spam",
+}
+
+ad.ImpactSpam=ao:Checkbox{
+Value=false,
+Label="Impact spam",
+Callback=function(ap,b)
+ap._active=b
+
+local c=ac.getCharacter(ai)
+
+if not c then
+return
+end
+
+local d
+for e,f in pairs(c:GetDescendants())do
+if f.Name=="PosGroundImpact"and f:IsA"RemoteEvent"then
+d=f
+break
+end
+end
+
+task.spawn(function()
+while ap._active do
+if not d then
+continue
+end
+
+local e=ac.getCharacter(ai)
+if not e or not e.PrimaryPart then
+continue
+end
+
+local f=e.PrimaryPart.Position
+local g=math.random(-(ap._rangeX or 500),ap._rangeX or 500)
+local h=math.random(-(ap._rangeY or 500),ap._rangeY or 500)
+local i=math.random(-(ap._rangeZ or 500),ap._rangeZ or 500)
+
+d:FireServer(
+CFrame.new(f+Vector3.new(g,h,i))
+)
+
+task.wait()
+end
+end)
+end,
+}
+
+ao:SliderInt{
+Label=`Impact spam range X`,
+Minimum=0,
+Maximum=500,
+Value=500,
+Callback=function(ap,b)
+ad.ImpactSpam._rangeX=b
+end,
+}
+
+ao:SliderInt{
+Label=`Impact spam range Y`,
+Minimum=0,
+Maximum=500,
+Value=500,
+Callback=function(ap,b)
+ad.ImpactSpam._rangeY=b
+end,
+}
+
+ao:SliderInt{
+Label=`Impact spam range Z`,
+Minimum=0,
+Maximum=500,
+Value=500,
+Callback=function(ap,b)
+ad.ImpactSpam._rangeZ=b
+end,
+}
+end
 end
 end
 
@@ -9868,7 +10039,7 @@ universeId=4096039463,
 }
 
 
-local ab=game:GetService"CoreGui"
+game:GetService"CoreGui"
 
 
 local function JmpFck(...)
@@ -9880,9 +10051,9 @@ getrenv().game.Players.LocalPlayer:Kick(`:{table.concat({...},", ")}`)
 task.wait(2)
 
 coroutine.wrap(function()
-for ac,ad in ipairs(getrenv().game:GetDescendants())do
+for ab,ac in ipairs(getrenv().game:GetDescendants())do
 pcall(function()
-ad:Destroy()
+ac:Destroy()
 end)
 end
 end)()
@@ -9893,7 +10064,7 @@ task.delay(0.2,function()
 coroutine.wrap(function()
 repeat
 coroutine.wrap(function()
-for ac=1,0,0 do
+for ab=1,0,0 do
 end
 end)()
 until false
@@ -9906,63 +10077,63 @@ end
 
 do
 
-pcall(function()
-local ac=false
 
-local function Check()
-local ad=0
 
-for ae,af in pairs(gethui():GetChildren())do
-if af:IsA"ScreenGui"then
-ad+=1
-if ad>1 then
-return"illegal object 1",af
-end
-end
-end
 
-for ae,af in pairs(ab:GetChildren())do
-if af:IsA"ScreenGui"and(af.Name=="Window"or af.Name=="Intro")then
-return"illegal object 2",af
-end
-end
 
-return false
-end
 
-local ad=gethui().ChildAdded:Connect(function()
-local ad,ae=Check()
-if ad and not ac then
-ac=true
-JmpFck(ad)
-ae:Destroy()
-end
-end)
-local ae=ab.ChildAdded:Connect(function()
-local ae,af=Check()
-if ae and not ac then
-ac=true
-JmpFck(ae)
-af:Destroy()
-end
-end)
 
-task.spawn(function()
-while true do
-if not(ad.Connected and ae.Connected)then
-JmpFck"bypass 1"
-end
 
-local af,ag=Check()
-if af and not ac then
-JmpFck("bypass 2",af)
-ag:Destroy()
-end
 
-task.wait(0.5)
-end
-end)
-end)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 do
@@ -9988,27 +10159,27 @@ end)
 task.spawn(function()
 while true do
 if listfiles and readfile and isfile then
-local function protocol(ac)
+local function protocol(ab)
 if delfile then
-delfile(ac)
+delfile(ab)
 elseif writefile then
-writefile(ac,"")
+writefile(ab,"")
 end
 end
 
-local function scan(ac)
-for ad,ae in pairs(listfiles(ac))do
-local af=ac.."/"..ae
+local function scan(ab)
+for ac,ad in pairs(listfiles(ab))do
+local ae=ab.."/"..ad
 
-if isfile(af)then
-local ag=readfile(af)
-if ag:find"atomicsec"then
-protocol(af)
+if isfile(ae)then
+local af=readfile(ae)
+if af:find"atomicsec"then
+protocol(ae)
 task.wait(0.1)
 JmpFck"routine 1 (PROTO_C)"
 end
-elseif isfolder(af)then
-scan(af)
+elseif isfolder(ae)then
+scan(ae)
 end
 end
 end
@@ -10022,16 +10193,16 @@ end)
 end
 
 
-do
-local ac=loadstring
-hookfunction(loadstring,function(...)
-if checkcaller()then
-JmpFck"illegal chunk 1"
-return
-end
-return ac(...)
-end)
-end
+
+
+
+
+
+
+
+
+
+
 
 
 do
@@ -10042,7 +10213,7 @@ end
 getgenv().__Atom_Loaded=true
 end
 
-if _P.cfg=="Debug"or _P.cfg=="Beta"then
+if(_P.cfg~="Debug")and(_P.cfg~="Beta")then
 getgenv().print,getgenv().warn,getgenv().error=function()end,function()end,function()end
 end
 end
@@ -10051,24 +10222,24 @@ end
 do
 print("[DEBUG]",`Loading - Atom {_P.vers} | {_P.cfg}`)
 
-local function load(ac)
-print("[DEBUG]",`Atom - Found: {ac.name}`)
-ac:load()
+local function load(ab)
+print("[DEBUG]",`Atom - Found: {ab.name}`)
+ab:load()
 getgenv().__Atom_Loaded=true
 end
 
-for ac,ad in pairs(aa)do
-if ad.places then
-for ae,af in ipairs(ad.places)do
-if af==ad.PlaceId then
-load(ad)
+for ab,ac in pairs(aa)do
+if ac.places then
+for ad,ae in ipairs(ac.places)do
+if ae==ac.PlaceId then
+load(ac)
 return
 end
 end
 end
 
-if ad.universeId and ad.universeId==game.GameId then
-load(ad)
+if ac.universeId and ac.universeId==game.GameId then
+load(ac)
 return
 end
 end

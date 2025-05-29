@@ -182,7 +182,7 @@ do -- Sanity checks
 			getgenv().__Atom_Loaded = true
 		end
 		
-		if _P.cfg == "Debug" or _P.cfg == "Beta" then
+		if (_P.cfg ~= "Debug") and (_P.cfg ~= "Beta") then
 			getgenv().print, getgenv().warn, getgenv().error = function() end, function() end, function() end
 		end
 	end

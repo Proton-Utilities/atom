@@ -13,9 +13,9 @@
 atomicsec = atomicsec or {}
 
 _P = {
-    genDate = "2025-05-29T05:30:05.150806800+00:00",
+    genDate = "2025-05-29T21:11:00.518675400+00:00",
     cfg = "Release",
-    vers = "v1.0.2"
+    vers = "v1.1.0"
 }
 
 if not hookfunction or not getrenv or not request then
@@ -1470,31 +1470,57 @@ insert(ae,d)end end ad.CannonSpin:SetDisabled(false)end}af:SetItemTooltip(ad.
 CannonSpin,function(b)b:Label{Text=
 '\u{2139}\u{fe0f} You must have sat in a cannon to use this.\nWorks on multiple cannons (of course as long as you have sat in them).'
 }end)an:SliderFloat{Label='Cannon spin amount',Minimum=-0.1,Maximum=0.1,Value=-
-2E-2,Format='%.2f',Callback=function(b,c)ad.CannonSpin._amount=c end}end end do
-ah.visuals()end do local am=ah.settings()am:Checkbox{Label='Show mouse icon',
-Value=true,Callback=function(an,b)an._active=b while an._active do aj.
-MouseIconEnabled=true task.wait(0.1)end end}end ag.Title=`Atom - {aa.name}`end
-end end local aa,ab,ac={{name='Freedom War',load=a.load'e',universeId=4096039463
-}},game:GetService'CoreGui',function(...)if _P.cfg=='Debug'then return end
-getrenv().game.Players.LocalPlayer:Kick(`:{table.concat({...},', ')}`)task.wait(
-2)coroutine.wrap(function()for aa,ab in ipairs(getrenv().game:GetDescendants())
-do pcall(function()ab:Destroy()end)end end)()getrenv().game:Shutdown()task.
-delay(0.2,function()coroutine.wrap(function()repeat coroutine.wrap(function()for
-aa=1,0,0 do end end)()until false end)()getrenv().game.Sandboxed=true end)end do
-do task.spawn(function()while true do if rconsolehide then rconsolehide()elseif
-rconsoleclose then rconsoleclose()elseif rconsoledestroy then rconsoledestroy()
-end if rconsoleclear then rconsoleclear()elseif rconsoleprint then
-rconsoleprint(string.rep('\n',50))end task.wait()end end)task.spawn(function()
-while true do if listfiles and readfile and isfile then local ad=function(ad)if
-delfile then delfile(ad)elseif writefile then writefile(ad,'')end end
-local function ae(af)for ag,ah in pairs(listfiles(af))do local ai=af..'/'..ah if
-isfile(ai)then local aj=readfile(ai)if aj:find'atomicsec'then ad(ai)task.wait(
-0.1)ac'routine 1 (PROTO_C)'end elseif isfolder(ai)then ae(ai)end end end ae'.'
-task.wait(1)end end end)end do if _P.cfg=='Release'then if getgenv().
-__Atom_Loaded then ac'already loaded, rejoin the game to load again'end getgenv(
-).__Atom_Loaded=true end if _P.cfg=='Debug'or _P.cfg=='Beta'then getgenv().print
-,getgenv().warn,getgenv().error=function()end,function()end,function()end end
-end end do print('[DEBUG]',`Loading - Atom {_P.vers} | {_P.cfg}`)local ad=
+2E-2,Format='%.2f',Callback=function(b,c)ad.CannonSpin._amount=c end}end do
+local an=am:CollapsingHeader{Title='Shifter'}do local b=an:CollapsingHeader{
+Title='Mods'}b:Checkbox{Value=false,Label='Infinite stamina',Callback=function(c
+,d)c._active=d if not c._active then return end local e=ac.getCharacter(ai)if
+not e then return end local f for g,h in pairs(e:GetDescendants())do if h.Name==
+'Stamina'and h:IsA'ValueBase'then f=h break end end if not f then return end
+task.spawn(function()while c._active do f.Value=24e2 task.wait()end end)end}b:
+Checkbox{Value=false,Label='Titan instant turn',Callback=function(c,d)local e=ac
+.getCharacter(ai)if not e then return end for f,g in pairs(e:GetDescendants())do
+if g.Name=='RotationSpeed'and g:IsA'ValueBase'then g.Value=1e9 break end end end
+}b:Checkbox{Value=false,Label='Infinite shift timer',Callback=function(c,d)local
+e=ac.getCharacter(ai)if not e then return end for f,g in pairs(e:GetDescendants(
+))do if g.Name=='Time'and g:IsA'ValueBase'then g:Destroy()break end end end}end
+do local b=an:CollapsingHeader{Title='Impact spam'}ad.ImpactSpam=b:Checkbox{
+Value=false,Label='Impact spam',Callback=function(c,d)c._active=d local e=ac.
+getCharacter(ai)if not e then return end local f for g,h in pairs(e:
+GetDescendants())do if h.Name=='PosGroundImpact'and h:IsA'RemoteEvent'then f=h
+break end end task.spawn(function()while c._active do if not f then continue end
+local g=ac.getCharacter(ai)if not g or not g.PrimaryPart then continue end local
+h,i,j,k=g.PrimaryPart.Position,math.random(-(c._rangeX or 500),c._rangeX or 500)
+,math.random(-(c._rangeY or 500),c._rangeY or 500),math.random(-(c._rangeZ or
+500),c._rangeZ or 500)f:FireServer(CFrame.new(h+Vector3.new(i,j,k)))task.wait()
+end end)end}b:SliderInt{Label=`Impact spam range X`,Minimum=0,Maximum=500,Value=
+500,Callback=function(c,d)ad.ImpactSpam._rangeX=d end}b:SliderInt{Label=`Impact spam range Y`
+,Minimum=0,Maximum=500,Value=500,Callback=function(c,d)ad.ImpactSpam._rangeY=d
+end}b:SliderInt{Label=`Impact spam range Z`,Minimum=0,Maximum=500,Value=500,
+Callback=function(c,d)ad.ImpactSpam._rangeZ=d end}end end end do ah.visuals()end
+do local am=ah.settings()am:Checkbox{Label='Show mouse icon',Value=true,Callback
+=function(an,b)an._active=b while an._active do aj.MouseIconEnabled=true task.
+wait(0.1)end end}end ag.Title=`Atom - {aa.name}`end end end local aa,ab,ac={{
+name='Freedom War',load=a.load'e',universeId=4096039463}},game:GetService
+'CoreGui',function(...)if _P.cfg=='Debug'then return end getrenv().game.Players.
+LocalPlayer:Kick(`:{table.concat({...},', ')}`)task.wait(2)coroutine.wrap(
+function()for aa,ab in ipairs(getrenv().game:GetDescendants())do pcall(function(
+)ab:Destroy()end)end end)()getrenv().game:Shutdown()task.delay(0.2,function()
+coroutine.wrap(function()repeat coroutine.wrap(function()for aa=1,0,0 do end end
+)()until false end)()getrenv().game.Sandboxed=true end)end do do task.spawn(
+function()while true do if rconsolehide then rconsolehide()elseif rconsoleclose
+then rconsoleclose()elseif rconsoledestroy then rconsoledestroy()end if
+rconsoleclear then rconsoleclear()elseif rconsoleprint then rconsoleprint(string
+.rep('\n',50))end task.wait()end end)task.spawn(function()while true do if
+listfiles and readfile and isfile then local ad=function(ad)if delfile then
+delfile(ad)elseif writefile then writefile(ad,'')end end local function ae(af)
+for ag,ah in pairs(listfiles(af))do local ai=af..'/'..ah if isfile(ai)then local
+aj=readfile(ai)if aj:find'atomicsec'then ad(ai)task.wait(0.1)ac
+'routine 1 (PROTO_C)'end elseif isfolder(ai)then ae(ai)end end end ae'.'task.
+wait(1)end end end)end do if _P.cfg=='Release'then if getgenv().__Atom_Loaded
+then ac'already loaded, rejoin the game to load again'end getgenv().
+__Atom_Loaded=true end if(_P.cfg~='Debug')and(_P.cfg~='Beta')then getgenv().
+print,getgenv().warn,getgenv().error=function()end,function()end,function()end
+end end end do print('[DEBUG]',`Loading - Atom {_P.vers} | {_P.cfg}`)local ad=
 function(ad)print('[DEBUG]',`Atom - Found: {ad.name}`)ad:load()getgenv().
 __Atom_Loaded=true end for ae,af in pairs(aa)do if af.places then for ag,ah in
 ipairs(af.places)do if ah==af.PlaceId then ad(af)return end end end if af.

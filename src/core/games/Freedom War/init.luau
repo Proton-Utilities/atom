@@ -289,6 +289,177 @@ return function(self)
 				end,
 			})
 		end
+
+		do -- Shifter
+			local header = tab:CollapsingHeader({
+				Title = "Shifter",
+			})
+			
+			do -- Mods
+				local header2 = header:CollapsingHeader({
+					Title = "Mods",
+				})
+
+				header2:Checkbox({
+					Value = false,
+					Label = "Infinite stamina",
+					Callback = function(self, value)
+						self._active = value
+
+						if not self._active then
+							return
+						end
+
+						local character = utility.getCharacter(localPlayer)
+
+						if not character then
+							return
+						end
+
+						local staminaValue
+
+						for _, child in pairs(character:GetDescendants()) do
+							if child.Name == "Stamina" and child:IsA("ValueBase") then
+								staminaValue = child
+								break
+							end
+						end
+
+						if not staminaValue then
+							return
+						end
+
+						task.spawn(function()
+							while self._active do
+								staminaValue.Value = 24e2
+
+								task.wait()
+							end
+						end)
+					end,
+				})
+
+				header2:Checkbox({
+					Value = false,
+					Label = "Titan instant turn",
+					Callback = function(self, value)
+						local character = utility.getCharacter(localPlayer)
+
+						if not character then
+							return
+						end
+
+						for _, child in pairs(character:GetDescendants()) do
+							if child.Name == "RotationSpeed" and child:IsA("ValueBase") then
+								child.Value = 1e9
+								break
+							end
+						end
+					end,
+				})
+
+				header2:Checkbox({
+					Value = false,
+					Label = "Infinite shift timer",
+					Callback = function(self, value)
+						local character = utility.getCharacter(localPlayer)
+
+						if not character then
+							return
+						end
+
+						for _, child in pairs(character:GetDescendants()) do
+							if child.Name == "Time" and child:IsA("ValueBase") then
+								child:Destroy()
+								break
+							end
+						end
+					end,
+				})
+			end
+
+			do -- Impact spam
+				local header2 = header:CollapsingHeader({
+					Title = "Impact spam",
+				})
+
+				flags["ImpactSpam"] = header2:Checkbox({
+					Value = false,
+					Label = "Impact spam",
+					Callback = function(self, value)
+						self._active = value
+						
+						local character = utility.getCharacter(localPlayer)
+
+						if not character  then
+							return
+						end
+
+						local posGroundImpact
+						for _, child in pairs(character:GetDescendants()) do
+							if child.Name == "PosGroundImpact" and child:IsA("RemoteEvent") then
+								posGroundImpact = child
+								break
+							end
+						end
+
+						task.spawn(function()
+							while self._active do
+								if not posGroundImpact then
+									continue
+								end
+
+								local character = utility.getCharacter(localPlayer)
+								if not character or not character.PrimaryPart then
+									continue
+								end
+
+								local primaryPosition = character.PrimaryPart.Position
+								local rangeX = math.random(-(self._rangeX or 500), self._rangeX or 500)
+								local rangeY = math.random(-(self._rangeY or 500), self._rangeY or 500)
+								local rangeZ = math.random(-(self._rangeZ or 500), self._rangeZ or 500)
+
+								posGroundImpact:FireServer(
+									CFrame.new(primaryPosition + Vector3.new(rangeX, rangeY, rangeZ))
+								)
+
+								task.wait()
+							end
+						end)
+					end,
+				})
+
+				header2:SliderInt({
+					Label = `Impact spam range X`,
+					Minimum = 0,
+					Maximum = 500,
+					Value = 500,
+					Callback = function(self, value)
+						flags["ImpactSpam"]._rangeX = value
+					end,
+				})
+
+				header2:SliderInt({
+					Label = `Impact spam range Y`,
+					Minimum = 0,
+					Maximum = 500,
+					Value = 500,
+					Callback = function(self, value)
+						flags["ImpactSpam"]._rangeY = value
+					end,
+				})
+
+				header2:SliderInt({
+					Label = `Impact spam range Z`,
+					Minimum = 0,
+					Maximum = 500,
+					Value = 500,
+					Callback = function(self, value)
+						flags["ImpactSpam"]._rangeZ = value
+					end,
+				})
+			end
+		end
 	end
 
 	do -- Visuals
