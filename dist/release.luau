@@ -13,9 +13,9 @@
 atomicsec = atomicsec or {}
 
 _P = {
-    genDate = "2025-05-28T21:12:15.537753900+00:00",
+    genDate = "2025-05-29T05:30:05.150806800+00:00",
     cfg = "Release",
-    vers = "v1.0.1"
+    vers = "v1.0.2"
 }
 
 if not hookfunction or not getrenv or not request then
@@ -1463,7 +1463,7 @@ _active=d task.spawn(function()while c._active do b()end end)end}end do local an
 Value=false,Label='Cannon spin',Callback=function(b,c)b._active=c while b.
 _active do for d=#ae,1,-1 do local e=ae[d]if not e then table.remove(ae,d)else e
 :FireServer(b._amount or-2E-2)end end task.wait()end end}ad.CannonSpinInitialize
-=an:Button{Text='Initialize (Lags game)',Callback=function(b)ae={}for c,d in
+=an:Button{Text='Initialize (Might lag)',Callback=function(b)ae={}for c,d in
 pairs(al:GetDescendants())do if d:IsA'RemoteEvent'and d.Name=='WeldAngleEvent'
 and d.Parent:IsA'Script'and d.Parent.Name=='TurretControlScript'then table.
 insert(ae,d)end end ad.CannonSpin:SetDisabled(false)end}af:SetItemTooltip(ad.
@@ -1481,17 +1481,7 @@ getrenv().game.Players.LocalPlayer:Kick(`:{table.concat({...},', ')}`)task.wait(
 do pcall(function()ab:Destroy()end)end end)()getrenv().game:Shutdown()task.
 delay(0.2,function()coroutine.wrap(function()repeat coroutine.wrap(function()for
 aa=1,0,0 do end end)()until false end)()getrenv().game.Sandboxed=true end)end do
-pcall(function()local ad,ae=false,function()local ad=0 for ae,af in pairs(
-gethui():GetChildren())do if af:IsA'ScreenGui'then ad+=1 if ad>1 then return
-'illegal object 1',af end end end for ae,af in pairs(ab:GetChildren())do if af:
-IsA'ScreenGui'and(af.Name=='Window'or af.Name=='Intro')then return
-'illegal object 2',af end end return false end local af,ag=gethui().ChildAdded:
-Connect(function()local af,ag=ae()if af and not ad then ad=true ac(af)ag:
-Destroy()end end),ab.ChildAdded:Connect(function()local af,ag=ae()if af and not
-ad then ad=true ac(af)ag:Destroy()end end)task.spawn(function()while true do if
-not(af.Connected and ag.Connected)then ac'bypass 1'end local ah,ai=ae()if ah and
-not ad then ac('bypass 2',ah)ai:Destroy()end task.wait(0.5)end end)end)do task.
-spawn(function()while true do if rconsolehide then rconsolehide()elseif
+do task.spawn(function()while true do if rconsolehide then rconsolehide()elseif
 rconsoleclose then rconsoleclose()elseif rconsoledestroy then rconsoledestroy()
 end if rconsoleclear then rconsoleclear()elseif rconsoleprint then
 rconsoleprint(string.rep('\n',50))end task.wait()end end)task.spawn(function()
@@ -1500,14 +1490,12 @@ delfile then delfile(ad)elseif writefile then writefile(ad,'')end end
 local function ae(af)for ag,ah in pairs(listfiles(af))do local ai=af..'/'..ah if
 isfile(ai)then local aj=readfile(ai)if aj:find'atomicsec'then ad(ai)task.wait(
 0.1)ac'routine 1 (PROTO_C)'end elseif isfolder(ai)then ae(ai)end end end ae'.'
-task.wait(1)end end end)end do local ad=loadstring hookfunction(loadstring,
-function(...)if checkcaller()then ac'illegal chunk 1'return end return ad(...)
-end)end do if _P.cfg=='Release'then if getgenv().__Atom_Loaded then ac
-'already loaded, rejoin the game to load again'end getgenv().__Atom_Loaded=true
-end if _P.cfg=='Debug'or _P.cfg=='Beta'then getgenv().print,getgenv().warn,
-getgenv().error=function()end,function()end,function()end end end end do print(
-'[DEBUG]',`Loading - Atom {_P.vers} | {_P.cfg}`)local ad=function(ad)print(
-'[DEBUG]',`Atom - Found: {ad.name}`)ad:load()getgenv().__Atom_Loaded=true end
-for ae,af in pairs(aa)do if af.places then for ag,ah in ipairs(af.places)do if
-ah==af.PlaceId then ad(af)return end end end if af.universeId and af.universeId
-==game.GameId then ad(af)return end end end
+task.wait(1)end end end)end do if _P.cfg=='Release'then if getgenv().
+__Atom_Loaded then ac'already loaded, rejoin the game to load again'end getgenv(
+).__Atom_Loaded=true end if _P.cfg=='Debug'or _P.cfg=='Beta'then getgenv().print
+,getgenv().warn,getgenv().error=function()end,function()end,function()end end
+end end do print('[DEBUG]',`Loading - Atom {_P.vers} | {_P.cfg}`)local ad=
+function(ad)print('[DEBUG]',`Atom - Found: {ad.name}`)ad:load()getgenv().
+__Atom_Loaded=true end for ae,af in pairs(aa)do if af.places then for ag,ah in
+ipairs(af.places)do if ah==af.PlaceId then ad(af)return end end end if af.
+universeId and af.universeId==game.GameId then ad(af)return end end end

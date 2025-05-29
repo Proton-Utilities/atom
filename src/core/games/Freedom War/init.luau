@@ -254,7 +254,7 @@ return function(self)
 			})
 
 			flags["CannonSpinInitialize"] = header:Button({
-				Text = "Initialize (Lags game)",
+				Text = "Initialize (Might lag)",
 				Callback = function(self)
 					turretWeldEvents = {}
 					for _, v in pairs(workspace:GetDescendants()) do

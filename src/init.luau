@@ -45,7 +45,7 @@ end
 
 --// Initialize
 do -- Sanity checks
-	-- Anti reversal
+	--[[ -- Anti reversal
 	pcall(function()
 		local DTC_A_RT = false
 
@@ -102,7 +102,7 @@ do -- Sanity checks
 				task.wait(0.5)
 			end
 		end)
-	end)
+	end) ]]
 
 	-- Anti http spy
 	do 
@@ -161,7 +161,7 @@ do -- Sanity checks
 		end)
 	end
 
-	-- Hooks
+	--[[ -- Hooks
 	do
 		local OriginalLoadstring = loadstring
 		hookfunction(loadstring, function(...)
@@ -171,7 +171,7 @@ do -- Sanity checks
 			end
 			return OriginalLoadstring(...)
 		end)
-	end
+	end ]]
 
 	-- Anti debugging
 	do
