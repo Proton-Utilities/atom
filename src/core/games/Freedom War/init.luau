@@ -381,8 +381,87 @@ return function(self)
 
 			do -- Impact spam
 				local header2 = header:CollapsingHeader({
-					Title = "Impact spam",
+					Title = "Impact exploits",
 				})
+
+				header2:Checkbox({
+					Value = false,
+					Label = "Impact draw",
+					Callback = function(self, value)
+						self._active = value
+						
+						local player = game.Players.LocalPlayer
+						local mouse = player:GetMouse()
+						local runService = game:GetService("RunService")
+						
+						if not self._connection then
+							local character = player.Character or player.CharacterAdded:Wait()
+							local posGroundImpact
+							
+							task.spawn(function()
+								while not posGroundImpact do
+									character = player.Character or player.CharacterAdded:Wait()
+									for _, child in ipairs(character:GetDescendants()) do
+										if child:IsA("RemoteEvent") and child.Name == "PosGroundImpact" then
+											posGroundImpact = child
+											break
+										end
+									end
+									if not self._active then return end
+									task.wait()
+								end
+							end)
+							
+							local isDrawing = false
+							local lastPos = nil
+							
+							self._inputBegan = userInputService.InputBegan:Connect(function(input, gpe)
+								if input.UserInputType == Enum.UserInputType.MouseButton1 and not gpe then
+									isDrawing = true
+									lastPos = nil
+								end
+							end)
+							
+							self._inputEnded = userInputService.InputEnded:Connect(function(input)
+								if input.UserInputType == Enum.UserInputType.MouseButton1 then
+									isDrawing = false
+									lastPos = nil
+								end
+							end)
+							
+							self._connection = runService.RenderStepped:Connect(function()
+								if not isDrawing or not posGroundImpact or not self._active then return end
+								
+								local hit = mouse.Hit
+								if not hit then return end
+								
+								local pos = hit.Position
+								
+								if not lastPos or (lastPos - pos).Magnitude >= 0.5 then
+									posGroundImpact:FireServer(CFrame.new(pos))
+									lastPos = pos
+								end
+							end)
+						end
+						
+						if not self._active then
+							if self._connection then
+								self._connection:Disconnect()
+								self._connection = nil
+							end
+							if self._inputBegan then
+								self._inputBegan:Disconnect()
+								self._inputBegan = nil
+							end
+							if self._inputEnded then
+								self._inputEnded:Disconnect()
+								self._inputEnded = nil
+							end
+						end
+					end
+				})
+				
+				header2:Separator()
 
 				flags["ImpactSpam"] = header2:Checkbox({
 					Value = false,
@@ -407,11 +486,13 @@ return function(self)
 						task.spawn(function()
 							while self._active do
 								if not posGroundImpact then
+									task.wait()
 									continue
 								end
 
 								local localCharacter = utility.getCharacter(localPlayer)
 								if not localCharacter or not localCharacter.PrimaryPart then
+									task.wait()
 									continue
 								end
 
