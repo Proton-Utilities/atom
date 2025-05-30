@@ -17,6 +17,7 @@ return function(self)
 	local userInputService = utility.getService("UserInputService")
 	local replicatedStorage = utility.getService("ReplicatedStorage")
 	local workspace = utility.getService("Workspace")
+	local players = utility.getService("Players")
 
 	--// UI
 	do -- Home
@@ -409,23 +410,45 @@ return function(self)
 									continue
 								end
 
-								local character = utility.getCharacter(localPlayer)
-								if not character or not character.PrimaryPart then
+								local localCharacter = utility.getCharacter(localPlayer)
+								if not localCharacter or not localCharacter.PrimaryPart then
 									continue
 								end
 
-								local primaryPosition = character.PrimaryPart.Position
-								local rangeX = math.random(-(self._rangeX or 500), self._rangeX or 500)
-								local rangeY = math.random(-(self._rangeY or 500), self._rangeY or 500)
-								local rangeZ = math.random(-(self._rangeZ or 500), self._rangeZ or 500)
+								if self._followPlayers then
+									for _, player in pairs(players:GetPlayers()) do
+										local playerCharacter = player.Character
+										if playerCharacter and playerCharacter.PrimaryPart then
+											local position = playerCharacter.PrimaryPart.Position + Vector3.new(
+												math.random(-self._rangeX, self._rangeX),
+												math.random(-self._rangeY, self._rangeY),
+												math.random(-self._rangeZ, self._rangeZ)
+											)
+											posGroundImpact:FireServer(CFrame.new(position))
+										end
+									end
+								else
+									local primaryPosition = localCharacter.PrimaryPart.Position
+									local rangeX = math.random(-(self._rangeX or 500), self._rangeX or 500)
+									local rangeY = math.random(-(self._rangeY or 500), self._rangeY or 500)
+									local rangeZ = math.random(-(self._rangeZ or 500), self._rangeZ or 500)
 
-								posGroundImpact:FireServer(
-									CFrame.new(primaryPosition + Vector3.new(rangeX, rangeY, rangeZ))
-								)
+									posGroundImpact:FireServer(
+										CFrame.new(primaryPosition + Vector3.new(rangeX, rangeY, rangeZ))
+									)
+								end
 
 								task.wait()
 							end
 						end)
+					end,
+				})
+
+				header2:Checkbox({
+					Value = false,
+					Label = "Impact spam follows players",
+					Callback = function(self, value)
+						flags["ImpactSpam"]._followPlayers = value
 					end,
 				})
 

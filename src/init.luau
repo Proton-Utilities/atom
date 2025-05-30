@@ -8,7 +8,7 @@ local files = {
 }
 
 --// Services
-local CoreGui = game:GetService("CoreGui")
+-- local CoreGui = game:GetService("CoreGui")
 
 --// Functions
 local function JmpFck(...)
