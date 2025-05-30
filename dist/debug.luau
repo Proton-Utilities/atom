@@ -13,7 +13,7 @@
 atomicsec = atomicsec or {}
 
 _P = {
-    genDate = "2025-05-30T23:08:01.489393200+00:00",
+    genDate = "2025-05-30T23:12:00.924520700+00:00",
     cfg = "Debug",
     vers = "v0.0.0"
 }
@@ -10011,11 +10011,17 @@ Label="Impact spam",
 Callback=function(b,c)
 b._active=c
 
-local d=ac.getCharacter(ai)
+if b._task then
+task.cancel(b._task)
+b._task=nil
+end
 
-if not d then
+if not c then
 return
 end
+
+local d=ac.getCharacter(ai)
+if not d then return end
 
 local e
 for f,g in pairs(d:GetDescendants())do
@@ -10025,16 +10031,12 @@ break
 end
 end
 
-task.spawn(function()
+b._task=task.spawn(function()
 while b._active do
-if not e then
-break
-end
+if not e then break end
 
 local f=ac.getCharacter(ai)
-if not f or not f.PrimaryPart then
-break
-end
+if not f or not f.PrimaryPart then break end
 
 if b._followPlayers then
 for g,h in pairs(am:GetPlayers())do
@@ -10064,6 +10066,7 @@ end
 end)
 end,
 }
+
 
 ap:Checkbox{
 Value=false,

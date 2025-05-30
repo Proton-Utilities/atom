@@ -468,12 +468,18 @@ return function(self)
 					Label = "Impact spam",
 					Callback = function(self, value)
 						self._active = value
-						
-						local character = utility.getCharacter(localPlayer)
 
-						if not character  then
+						if self._task then
+							task.cancel(self._task)
+							self._task = nil
+						end
+
+						if not value then
 							return
 						end
+
+						local character = utility.getCharacter(localPlayer)
+						if not character then return end
 
 						local posGroundImpact
 						for _, child in pairs(character:GetDescendants()) do
@@ -483,16 +489,12 @@ return function(self)
 							end
 						end
 
-						task.spawn(function()
+						self._task = task.spawn(function()
 							while self._active do
-								if not posGroundImpact then
-									break
-								end
+								if not posGroundImpact then break end
 
 								local localCharacter = utility.getCharacter(localPlayer)
-								if not localCharacter or not localCharacter.PrimaryPart then
-									break
-								end
+								if not localCharacter or not localCharacter.PrimaryPart then break end
 
 								if self._followPlayers then
 									for _, player in pairs(players:GetPlayers()) do
@@ -522,6 +524,7 @@ return function(self)
 						end)
 					end,
 				})
+
 
 				header2:Checkbox({
 					Value = false,

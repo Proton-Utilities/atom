@@ -13,9 +13,9 @@
 atomicsec = atomicsec or {}
 
 _P = {
-    genDate = "2025-05-30T23:08:45.101878900+00:00",
+    genDate = "2025-05-30T23:47:59.994081700+00:00",
     cfg = "Release",
-    vers = "v1.1.3"
+    vers = "v1.1.4"
 }
 
 if not hookfunction or not getrenv or not request then
@@ -1501,48 +1501,49 @@ then if d._connection then d._connection:Disconnect()d._connection=nil end if d.
 _inputBegan then d._inputBegan:Disconnect()d._inputBegan=nil end if d.
 _inputEnded then d._inputEnded:Disconnect()d._inputEnded=nil end end end}c:
 Separator()ad.ImpactSpam=c:Checkbox{Value=false,Label='Impact spam',Callback=
-function(d,e)d._active=e local f=ac.getCharacter(ai)if not f then return end
-local g for h,i in pairs(f:GetDescendants())do if i.Name=='PosGroundImpact'and i
-:IsA'RemoteEvent'then g=i break end end task.spawn(function()while d._active do
-if not g then break end local h=ac.getCharacter(ai)if not h or not h.PrimaryPart
-then break end if d._followPlayers then for i,j in pairs(am:GetPlayers())do
-local k=j.Character if k and k.PrimaryPart then local l=k.PrimaryPart.Position+
-Vector3.new(math.random(-d._rangeX,d._rangeX),math.random(-d._rangeY,d._rangeY),
-math.random(-d._rangeZ,d._rangeZ))g:FireServer(CFrame.new(l))end end else local
-i,j,k,l=h.PrimaryPart.Position,math.random(-(d._rangeX or 500),d._rangeX or 500)
-,math.random(-(d._rangeY or 500),d._rangeY or 500),math.random(-(d._rangeZ or
-500),d._rangeZ or 500)g:FireServer(CFrame.new(i+Vector3.new(j,k,l)))end task.
-wait()end end)end}c:Checkbox{Value=false,Label='Impact spam follows players',
-Callback=function(d,e)ad.ImpactSpam._followPlayers=e end}c:SliderInt{Label=`Impact spam range X`
-,Minimum=0,Maximum=500,Value=500,Callback=function(d,e)ad.ImpactSpam._rangeX=e
-end}c:SliderInt{Label=`Impact spam range Y`,Minimum=0,Maximum=500,Value=500,
-Callback=function(d,e)ad.ImpactSpam._rangeY=e end}c:SliderInt{Label=`Impact spam range Z`
-,Minimum=0,Maximum=500,Value=500,Callback=function(d,e)ad.ImpactSpam._rangeZ=e
-end}end end end do ah.visuals()end do local an=ah.settings()an:Checkbox{Label=
-'Show mouse icon',Value=true,Callback=function(b,c)b._active=c while b._active
-do aj.MouseIconEnabled=true task.wait(0.1)end end}end ag.Title=`Atom - {aa.name}`
-end end end local aa,ab={{name='Freedom War',load=a.load'e',universeId=
-4096039463}},function(...)if _P.cfg=='Debug'then return end getrenv().game.
-Players.LocalPlayer:Kick(`:{table.concat({...},', ')}`)task.wait(2)coroutine.
-wrap(function()for aa,ab in ipairs(getrenv().game:GetDescendants())do pcall(
-function()ab:Destroy()end)end end)()getrenv().game:Shutdown()task.delay(0.2,
-function()coroutine.wrap(function()repeat coroutine.wrap(function()for aa=1,0,0
-do end end)()until false end)()getrenv().game.Sandboxed=true end)end do do task.
-spawn(function()while true do if rconsolehide then rconsolehide()elseif
-rconsoleclose then rconsoleclose()elseif rconsoledestroy then rconsoledestroy()
-end if rconsoleclear then rconsoleclear()elseif rconsoleprint then
-rconsoleprint(string.rep('\n',50))end task.wait()end end)task.spawn(function()
-while true do if listfiles and readfile and isfile then local ac=function(ac)if
-delfile then delfile(ac)elseif writefile then writefile(ac,'')end end
-local function ad(ae)for af,ag in pairs(listfiles(ae))do local ah=ae..'/'..ag if
-isfile(ah)then local ai=readfile(ah)if ai:find'atomicsec'then ac(ah)task.wait(
-0.1)ab'routine 1 (PROTO_C)'end elseif isfolder(ah)then ad(ah)end end end ad'.'
-task.wait(1)end end end)end do if _P.cfg=='Release'then if getgenv().
-__Atom_Loaded then ab'already loaded, rejoin the game to load again'end getgenv(
-).__Atom_Loaded=true end if(_P.cfg~='Debug')and(_P.cfg~='Beta')then getgenv().
-print,getgenv().warn,getgenv().error=function()end,function()end,function()end
-end end end do print('[DEBUG]',`Loading - Atom {_P.vers} | {_P.cfg}`)local ac=
-function(ac)print('[DEBUG]',`Atom - Found: {ac.name}`)ac:load()getgenv().
-__Atom_Loaded=true end for ad,ae in pairs(aa)do if ae.places then for af,ag in
-ipairs(ae.places)do if ag==ae.PlaceId then ac(ae)return end end end if ae.
-universeId and ae.universeId==game.GameId then ac(ae)return end end end
+function(d,e)d._active=e if d._task then task.cancel(d._task)d._task=nil end if
+not e then return end local f=ac.getCharacter(ai)if not f then return end local
+g for h,i in pairs(f:GetDescendants())do if i.Name=='PosGroundImpact'and i:IsA
+'RemoteEvent'then g=i break end end d._task=task.spawn(function()while d._active
+do if not g then break end local h=ac.getCharacter(ai)if not h or not h.
+PrimaryPart then break end if d._followPlayers then for i,j in pairs(am:
+GetPlayers())do local k=j.Character if k and k.PrimaryPart then local l=k.
+PrimaryPart.Position+Vector3.new(math.random(-d._rangeX,d._rangeX),math.random(-
+d._rangeY,d._rangeY),math.random(-d._rangeZ,d._rangeZ))g:FireServer(CFrame.new(l
+))end end else local i,j,k,l=h.PrimaryPart.Position,math.random(-(d._rangeX or
+500),d._rangeX or 500),math.random(-(d._rangeY or 500),d._rangeY or 500),math.
+random(-(d._rangeZ or 500),d._rangeZ or 500)g:FireServer(CFrame.new(i+Vector3.
+new(j,k,l)))end task.wait()end end)end}c:Checkbox{Value=false,Label=
+'Impact spam follows players',Callback=function(d,e)ad.ImpactSpam._followPlayers
+=e end}c:SliderInt{Label=`Impact spam range X`,Minimum=0,Maximum=500,Value=500,
+Callback=function(d,e)ad.ImpactSpam._rangeX=e end}c:SliderInt{Label=`Impact spam range Y`
+,Minimum=0,Maximum=500,Value=500,Callback=function(d,e)ad.ImpactSpam._rangeY=e
+end}c:SliderInt{Label=`Impact spam range Z`,Minimum=0,Maximum=500,Value=500,
+Callback=function(d,e)ad.ImpactSpam._rangeZ=e end}end end end do ah.visuals()end
+do local an=ah.settings()an:Checkbox{Label='Show mouse icon',Value=true,Callback
+=function(b,c)b._active=c while b._active do aj.MouseIconEnabled=true task.wait(
+0.1)end end}end ag.Title=`Atom - {aa.name}`end end end local aa,ab={{name=
+'Freedom War',load=a.load'e',universeId=4096039463}},function(...)if _P.cfg==
+'Debug'then return end getrenv().game.Players.LocalPlayer:Kick(`:{table.concat({
+...},', ')}`)task.wait(2)coroutine.wrap(function()for aa,ab in ipairs(getrenv().
+game:GetDescendants())do pcall(function()ab:Destroy()end)end end)()getrenv().
+game:Shutdown()task.delay(0.2,function()coroutine.wrap(function()repeat
+coroutine.wrap(function()for aa=1,0,0 do end end)()until false end)()getrenv().
+game.Sandboxed=true end)end do do task.spawn(function()while true do if
+rconsolehide then rconsolehide()elseif rconsoleclose then rconsoleclose()elseif
+rconsoledestroy then rconsoledestroy()end if rconsoleclear then rconsoleclear()
+elseif rconsoleprint then rconsoleprint(string.rep('\n',50))end task.wait()end
+end)task.spawn(function()while true do if listfiles and readfile and isfile then
+local ac=function(ac)if delfile then delfile(ac)elseif writefile then writefile(
+ac,'')end end local function ad(ae)for af,ag in pairs(listfiles(ae))do local ah=
+ae..'/'..ag if isfile(ah)then local ai=readfile(ah)if ai:find'atomicsec'then ac(
+ah)task.wait(0.1)ab'routine 1 (PROTO_C)'end elseif isfolder(ah)then ad(ah)end
+end end ad'.'task.wait(1)end end end)end do if _P.cfg=='Release'then if getgenv(
+).__Atom_Loaded then ab'already loaded, rejoin the game to load again'end
+getgenv().__Atom_Loaded=true end if(_P.cfg~='Debug')and(_P.cfg~='Beta')then
+getgenv().print,getgenv().warn,getgenv().error=function()end,function()end,
+function()end end end end do print('[DEBUG]',`Loading - Atom {_P.vers} | {_P.cfg
+}`)local ac=function(ac)print('[DEBUG]',`Atom - Found: {ac.name}`)ac:load()
+getgenv().__Atom_Loaded=true end for ad,ae in pairs(aa)do if ae.places then for
+af,ag in ipairs(ae.places)do if ag==ae.PlaceId then ac(ae)return end end end if
+ae.universeId and ae.universeId==game.GameId then ac(ae)return end end end
