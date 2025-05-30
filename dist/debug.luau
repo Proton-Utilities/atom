@@ -13,7 +13,7 @@
 atomicsec = atomicsec or {}
 
 _P = {
-    genDate = "2025-05-30T08:10:05.315460500+00:00",
+    genDate = "2025-05-30T22:58:35.519241600+00:00",
     cfg = "Debug",
     vers = "v0.0.0"
 }
@@ -9926,6 +9926,83 @@ local ap=ao:CollapsingHeader{
 Title="Impact spam",
 }
 
+ap:Checkbox{
+Value=false,
+Label="Impact draw",
+Callback=function(b,c)
+b._active=c
+
+local d=game.Players.LocalPlayer
+local e=d:GetMouse()
+local f=game:GetService"RunService"
+
+if not b._connection then
+local g=d.Character or d.CharacterAdded:Wait()
+local h
+
+task.spawn(function()
+while not h do
+g=d.Character or d.CharacterAdded:Wait()
+for i,j in ipairs(g:GetDescendants())do
+if j:IsA"RemoteEvent"and j.Name=="PosGroundImpact"then
+h=j
+break
+end
+end
+if not b._active then return end
+task.wait()
+end
+end)
+
+local i=false
+local j
+
+b._inputBegan=aj.InputBegan:Connect(function(k,l)
+if k.UserInputType==Enum.UserInputType.MouseButton1 and not l then
+i=true
+j=nil
+end
+end)
+
+b._inputEnded=aj.InputEnded:Connect(function(k)
+if k.UserInputType==Enum.UserInputType.MouseButton1 then
+i=false
+j=nil
+end
+end)
+
+b._connection=f.RenderStepped:Connect(function()
+if not i or not h or not b._active then return end
+
+local k=e.Hit
+if not k then return end
+
+local l=k.Position
+
+if not j or(j-l).Magnitude>=0.5 then
+h:FireServer(CFrame.new(l))
+j=l
+end
+end)
+end
+
+if not b._active then
+if b._connection then
+b._connection:Disconnect()
+b._connection=nil
+end
+if b._inputBegan then
+b._inputBegan:Disconnect()
+b._inputBegan=nil
+end
+if b._inputEnded then
+b._inputEnded:Disconnect()
+b._inputEnded=nil
+end
+end
+end
+}
+
 ad.ImpactSpam=ap:Checkbox{
 Value=false,
 Label="Impact spam",
@@ -9949,11 +10026,13 @@ end
 task.spawn(function()
 while b._active do
 if not e then
+task.wait()
 continue
 end
 
 local f=ac.getCharacter(ai)
 if not f or not f.PrimaryPart then
+task.wait()
 continue
 end
 
