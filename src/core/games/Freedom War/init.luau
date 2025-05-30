@@ -486,14 +486,12 @@ return function(self)
 						task.spawn(function()
 							while self._active do
 								if not posGroundImpact then
-									task.wait()
-									continue
+									break
 								end
 
 								local localCharacter = utility.getCharacter(localPlayer)
 								if not localCharacter or not localCharacter.PrimaryPart then
-									task.wait()
-									continue
+									break
 								end
 
 								if self._followPlayers then

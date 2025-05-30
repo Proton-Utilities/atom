@@ -13,7 +13,7 @@
 atomicsec = atomicsec or {}
 
 _P = {
-    genDate = "2025-05-30T22:58:35.519241600+00:00",
+    genDate = "2025-05-30T23:08:01.489393200+00:00",
     cfg = "Debug",
     vers = "v0.0.0"
 }
@@ -9923,7 +9923,7 @@ end
 
 do
 local ap=ao:CollapsingHeader{
-Title="Impact spam",
+Title="Impact exploits",
 }
 
 ap:Checkbox{
@@ -10003,6 +10003,8 @@ end
 end
 }
 
+ap:Separator()
+
 ad.ImpactSpam=ap:Checkbox{
 Value=false,
 Label="Impact spam",
@@ -10026,14 +10028,12 @@ end
 task.spawn(function()
 while b._active do
 if not e then
-task.wait()
-continue
+break
 end
 
 local f=ac.getCharacter(ai)
 if not f or not f.PrimaryPart then
-task.wait()
-continue
+break
 end
 
 if b._followPlayers then
