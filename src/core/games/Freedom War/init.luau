@@ -14,6 +14,7 @@ return function(self)
 
 	local localPlayer = utility.getPlayer()
 
+	local runService = utility.getService("RunService")
 	local userInputService = utility.getService("UserInputService")
 	local replicatedStorage = utility.getService("ReplicatedStorage")
 	local workspace = utility.getService("Workspace")
@@ -233,6 +234,99 @@ return function(self)
 				Title = "Cannon",
 			})
 
+			flags["CannonInstantFire"] = header:Checkbox({
+				Value = false,
+				Label = "Instant fire",
+				Callback = function(self, value)
+					self._active = value
+
+					if self._connections then
+						for _, conn in ipairs(self._connections) do
+							conn:Disconnect()
+						end
+					end
+					self._connections = {}
+
+					self._clear = function()
+						self._currentCannon = nil
+						self._fireRemote = nil
+						self._reloadRemote = nil
+						self._reloadedValue = nil
+					end
+
+					self._onSeated = function(isSeated, seatPart)
+						if isSeated and seatPart then
+							local cannon = seatPart.Parent
+							if
+								cannon
+								and (
+									cannon.Name == "WallCannon"
+									or cannon.Name == "GroundCannon"
+									or game:GetService("CollectionService"):HasTag(seatPart, "TurretSeat")
+								)
+							then
+								local script = cannon:FindFirstChild("TurretControlScript")
+								if script then
+									local fire = script:FindFirstChild("FireEvent")
+									local reload = script:FindFirstChild("ReloadEvent")
+									local reloaded = script:FindFirstChild("Reloaded")
+									if fire and reload and reloaded then
+										self._currentCannon = cannon
+										self._fireRemote = fire
+										self._reloadRemote = reload
+										self._reloadedValue = reloaded
+										return
+									end
+								end
+							end
+						end
+						self._clear()
+					end
+
+					self._onInput = function(input, gameProcessed)
+						if gameProcessed or input.KeyCode ~= Enum.KeyCode.F then
+							return
+						end
+						if not (self._currentCannon and self._fireRemote) then
+							return
+						end
+
+						if self._reloadedValue and self._reloadRemote and not self._reloadedValue.Value then
+							pcall(function()
+								self._reloadRemote:InvokeServer("StandardShell")
+							end)
+						end
+
+						pcall(function()
+							self._fireRemote:InvokeServer()
+						end)
+					end
+
+					if value then
+						local humanoid = utility.getHumanoid(localPlayer)
+
+						table.insert(self._connections, humanoid.Seated:Connect(self._onSeated))
+						table.insert(
+							self._connections,
+							game:GetService("UserInputService").InputBegan:Connect(self._onInput)
+						)
+
+						self._characterAddedConn = localPlayer.CharacterAdded:Connect(function(newChar)
+							local newHumanoid = newChar:WaitForChild("Humanoid")
+							table.insert(self._connections, newHumanoid.Seated:Connect(self._onSeated))
+						end)
+					else
+						if self._characterAddedConn then
+							self._characterAddedConn:Disconnect()
+							self._characterAddedConn = nil
+						end
+						self._clear()
+					end
+				end,
+			})
+
+			header:Separator()
+
 			flags["CannonSpin"] = header:Checkbox({
 				Disabled = true,
 				Value = false,
@@ -295,7 +389,7 @@ return function(self)
 			local header = tab:CollapsingHeader({
 				Title = "Shifter",
 			})
-			
+
 			do -- Mods
 				local header2 = header:CollapsingHeader({
 					Title = "Mods",
@@ -389,15 +483,14 @@ return function(self)
 					Label = "Impact draw",
 					Callback = function(self, value)
 						self._active = value
-						
+
 						local player = game.Players.LocalPlayer
 						local mouse = player:GetMouse()
-						local runService = game:GetService("RunService")
-						
+
 						if not self._connection then
 							local character = player.Character or player.CharacterAdded:Wait()
 							local posGroundImpact
-							
+
 							task.spawn(function()
 								while not posGroundImpact do
 									character = player.Character or player.CharacterAdded:Wait()
@@ -407,60 +500,69 @@ return function(self)
 											break
 										end
 									end
-									if not self._active then return end
+									if not self._active then
+										return
+									end
 									task.wait()
 								end
 							end)
-							
+
 							local isDrawing = false
 							local lastPos = nil
-							
+
 							self._inputBegan = userInputService.InputBegan:Connect(function(input, gpe)
 								if input.UserInputType == Enum.UserInputType.MouseButton1 and not gpe then
 									isDrawing = true
 									lastPos = nil
 								end
 							end)
-							
+
 							self._inputEnded = userInputService.InputEnded:Connect(function(input)
 								if input.UserInputType == Enum.UserInputType.MouseButton1 then
 									isDrawing = false
 									lastPos = nil
 								end
 							end)
-							
+
 							self._connection = runService.RenderStepped:Connect(function()
-								if not isDrawing or not posGroundImpact or not self._active then return end
-								
+								if not isDrawing or not posGroundImpact or not self._active then
+									return
+								end
+
 								local hit = mouse.Hit
-								if not hit then return end
-								
+
+								if not hit then
+									return
+								end
+
 								local pos = hit.Position
-								
+
 								if not lastPos or (lastPos - pos).Magnitude >= 0.5 then
 									posGroundImpact:FireServer(CFrame.new(pos))
 									lastPos = pos
 								end
 							end)
 						end
-						
+
 						if not self._active then
 							if self._connection then
 								self._connection:Disconnect()
 								self._connection = nil
 							end
+
 							if self._inputBegan then
 								self._inputBegan:Disconnect()
 								self._inputBegan = nil
 							end
+
 							if self._inputEnded then
 								self._inputEnded:Disconnect()
 								self._inputEnded = nil
 							end
 						end
-					end
+					end,
 				})
-				
+
 				header2:Separator()
 
 				flags["ImpactSpam"] = header2:Checkbox({
@@ -479,7 +581,9 @@ return function(self)
 						end
 
 						local character = utility.getCharacter(localPlayer)
-						if not character then return end
+						if not character then
+							return
+						end
 
 						local posGroundImpact
 						for _, child in pairs(character:GetDescendants()) do
@@ -491,20 +595,25 @@ return function(self)
 
 						self._task = task.spawn(function()
 							while self._active do
-								if not posGroundImpact then break end
+								if not posGroundImpact then
+									break
+								end
 
 								local localCharacter = utility.getCharacter(localPlayer)
-								if not localCharacter or not localCharacter.PrimaryPart then break end
+								if not localCharacter or not localCharacter.PrimaryPart then
+									break
+								end
 
 								if self._followPlayers then
 									for _, player in pairs(players:GetPlayers()) do
 										local playerCharacter = player.Character
 										if playerCharacter and playerCharacter.PrimaryPart then
-											local position = playerCharacter.PrimaryPart.Position + Vector3.new(
-												math.random(-self._rangeX, self._rangeX),
-												math.random(-self._rangeY, self._rangeY),
-												math.random(-self._rangeZ, self._rangeZ)
-											)
+											local position = playerCharacter.PrimaryPart.Position
+												+ Vector3.new(
+													math.random(-self._rangeX, self._rangeX),
+													math.random(-self._rangeY, self._rangeY),
+													math.random(-self._rangeZ, self._rangeZ)
+												)
 											posGroundImpact:FireServer(CFrame.new(position))
 										end
 									end
@@ -524,7 +633,6 @@ return function(self)
 						end)
 					end,
 				})
-
 
 				header2:Checkbox({
 					Value = false,

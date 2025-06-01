@@ -13,9 +13,9 @@
 atomicsec = atomicsec or {}
 
 _P = {
-    genDate = "2025-05-30T23:47:59.994081700+00:00",
+    genDate = "2025-06-01T00:39:24.058471300+00:00",
     cfg = "Release",
-    vers = "v1.1.4"
+    vers = "V1.1.5"
 }
 
 if not hookfunction or not getrenv or not request then
@@ -1418,132 +1418,153 @@ ab.Character or nil end)return ac and ad or nil end function aa.getHumanoid(ab)
 local ac,ad=pcall(function()local ac=aa.getCharacter(ab)return ac and ac:
 FindFirstChildOfClass'Humanoid'or nil end)return ac and ad or nil end return aa
 end function a.e()return function(aa)local ab,ac,ad,ae=a.load'c',a.load'd',{},{}
-local af,ag,ah,ai,aj,ak,al,am=ab.interface,ab.window,ab.tabs,ac.getPlayer(),ac.
-getService'UserInputService',ac.getService'ReplicatedStorage',ac.getService
-'Workspace',ac.getService'Players'do ah.home(aa.Name)end do local an=ag:
-CreateTab{Name='Exploits'}do local b=an:CollapsingHeader{Title='Lightbody'}ad.
-LightBody=b:Checkbox{Value=false,Label='Lightbody',Callback=function(c,d)c.
-_physicalProperties=c._physicalProperties or{}c._Active=d while c._Active do
-local e=ac.getCharacter(ai)if e then local f=0.7*(1-ad.LightBodyAmount.Value/100
-)for g,h in pairs(e:GetDescendants())do if h:IsA'BasePart'then if not c.
-_physicalProperties[h]then c._physicalProperties[h]=h.CustomPhysicalProperties
-end h.CustomPhysicalProperties=PhysicalProperties.new(f,0.3,0.5)end end end task
-.wait(0.3)end local e=ac.getCharacter(ai)if e then for f,g in pairs(e:
-GetDescendants())do if g:IsA'BasePart'and c._physicalProperties[g]then g.
-CustomPhysicalProperties=c._physicalProperties[g]c._physicalProperties[g]=nil
-end end end end}ad.LightBodyAmount=b:SliderInt{Label='Lightbody Amount',Minimum=
-0,Maximum=70,Value=25}af:SetItemTooltip(ad.LightBody,function(c)c:Label{Text=
+local af,ag,ah,ai,aj,ak,al,am,an=ab.interface,ab.window,ab.tabs,ac.getPlayer(),
+ac.getService'RunService',ac.getService'UserInputService',ac.getService
+'ReplicatedStorage',ac.getService'Workspace',ac.getService'Players'do ah.home(aa
+.Name)end do local b=ag:CreateTab{Name='Exploits'}do local c=b:CollapsingHeader{
+Title='Lightbody'}ad.LightBody=c:Checkbox{Value=false,Label='Lightbody',Callback
+=function(d,e)d._physicalProperties=d._physicalProperties or{}d._Active=e while
+d._Active do local f=ac.getCharacter(ai)if f then local g=0.7*(1-ad.
+LightBodyAmount.Value/100)for h,i in pairs(f:GetDescendants())do if i:IsA
+'BasePart'then if not d._physicalProperties[i]then d._physicalProperties[i]=i.
+CustomPhysicalProperties end i.CustomPhysicalProperties=PhysicalProperties.new(g
+,0.3,0.5)end end end task.wait(0.3)end local f=ac.getCharacter(ai)if f then for
+g,h in pairs(f:GetDescendants())do if h:IsA'BasePart'and d._physicalProperties[h
+]then h.CustomPhysicalProperties=d._physicalProperties[h]d._physicalProperties[h
+]=nil end end end end}ad.LightBodyAmount=c:SliderInt{Label='Lightbody Amount',
+Minimum=0,Maximum=70,Value=25}af:SetItemTooltip(ad.LightBody,function(d)d:Label{
+Text=
 [[Makes your character lighter, giving you faster impulse and doge, as well as instant hook stop.]]
-}end)end do local b=an:CollapsingHeader{Title='Flare spam'}ad.FlareSpam=b:
-Checkbox{Value=false,Label='Flare spam',Callback=function(c,d)c._active=d local
-e,f=ac.getCharacter(ai),ak:FindFirstChild'FlareGunEvents'and ak.FlareGunEvents:
-FindFirstChild'FlareEvent'local g=ai and ai.Backpack:FindFirstChild'Flare'or e
-and e:FindFirstChild'Flare'if not f or not g then return end if not c._colors or
-#c._colors==0 then return end task.spawn(function()while c._active do for h,i in
-ipairs(c._colors)do if not c._active then return end f:FireServer(i,'Fire',g)if
-c._delay and c._delay>0 then task.wait(c._delay)end task.wait()end end end)end}
-do local c=b:CollapsingHeader{Title='Flare spam colors'}for d,e in pairs{'Green'
-,'Red','Black','Yellow','Blue','Purple'}do c:Radiobox{Value=d<=3,Label=e,
-Callback=function(f,g)if not ad.FlareSpam._colors then ad.FlareSpam._colors={}
-end local h=ad.FlareSpam._colors if g then if not table.find(h,e)then table.
-insert(h,e)end else local i=table.find(h,e)if i then table.remove(h,i)end end
-end}end end b:SliderFloat{Label='Flare spam delay',Minimum=0,Maximum=1,Value=0.1
-,Format='%.2f',Callback=function(c,d)ad.FlareSpam._delay=d end}ad.
-FlareSpamHideGui=b:Checkbox{Value=false,Label='Hide flare spam GUI'}local c=
-function()local c,d=ac.getCharacter(ai),ac.getHumanoid(ai)if not d or not c then
-return end local e=ai.Backpack:FindFirstChild'Flare'or c:FindFirstChild'Flare'if
-e and e.Parent then if e.Parent:IsA'Backpack'then d:EquipTool(e)end if ad.
-FlareSpamHideGui and ad.FlareSpamHideGui.Value then local f=ai:FindFirstChild
-'PlayerGui'if f then local g=f:FindFirstChild'FlareGunGui'if g then g.Enabled=
-false end end end task.wait(0.1)d:UnequipTools()end end ad.
-FlareSpamResetPosition=b:Button{Text='Reset flare position',Callback=c}b:
-Checkbox{Value=false,Label='Spam reset flare position',Callback=function(d,e)d.
-_active=e task.spawn(function()while d._active do c()end end)end}end do local b=
-an:CollapsingHeader{Title='Cannon'}ad.CannonSpin=b:Checkbox{Disabled=true,Value=
-false,Label='Cannon spin',Callback=function(c,d)c._active=d while c._active do
-for e=#ae,1,-1 do local f=ae[e]if not f then table.remove(ae,e)else f:
-FireServer(c._amount or-2E-2)end end task.wait()end end}ad.CannonSpinInitialize=
-b:Button{Text='Initialize (Might lag)',Callback=function(c)ae={}for d,e in
-pairs(al:GetDescendants())do if e:IsA'RemoteEvent'and e.Name=='WeldAngleEvent'
-and e.Parent:IsA'Script'and e.Parent.Name=='TurretControlScript'then table.
-insert(ae,e)end end ad.CannonSpin:SetDisabled(false)end}af:SetItemTooltip(ad.
-CannonSpin,function(c)c:Label{Text=
+}end)end do local c=b:CollapsingHeader{Title='Flare spam'}ad.FlareSpam=c:
+Checkbox{Value=false,Label='Flare spam',Callback=function(d,e)d._active=e local
+f,g=ac.getCharacter(ai),al:FindFirstChild'FlareGunEvents'and al.FlareGunEvents:
+FindFirstChild'FlareEvent'local h=ai and ai.Backpack:FindFirstChild'Flare'or f
+and f:FindFirstChild'Flare'if not g or not h then return end if not d._colors or
+#d._colors==0 then return end task.spawn(function()while d._active do for i,j in
+ipairs(d._colors)do if not d._active then return end g:FireServer(j,'Fire',h)if
+d._delay and d._delay>0 then task.wait(d._delay)end task.wait()end end end)end}
+do local d=c:CollapsingHeader{Title='Flare spam colors'}for e,f in pairs{'Green'
+,'Red','Black','Yellow','Blue','Purple'}do d:Radiobox{Value=e<=3,Label=f,
+Callback=function(g,h)if not ad.FlareSpam._colors then ad.FlareSpam._colors={}
+end local i=ad.FlareSpam._colors if h then if not table.find(i,f)then table.
+insert(i,f)end else local j=table.find(i,f)if j then table.remove(i,j)end end
+end}end end c:SliderFloat{Label='Flare spam delay',Minimum=0,Maximum=1,Value=0.1
+,Format='%.2f',Callback=function(d,e)ad.FlareSpam._delay=e end}ad.
+FlareSpamHideGui=c:Checkbox{Value=false,Label='Hide flare spam GUI'}local d=
+function()local d,e=ac.getCharacter(ai),ac.getHumanoid(ai)if not e or not d then
+return end local f=ai.Backpack:FindFirstChild'Flare'or d:FindFirstChild'Flare'if
+f and f.Parent then if f.Parent:IsA'Backpack'then e:EquipTool(f)end if ad.
+FlareSpamHideGui and ad.FlareSpamHideGui.Value then local g=ai:FindFirstChild
+'PlayerGui'if g then local h=g:FindFirstChild'FlareGunGui'if h then h.Enabled=
+false end end end task.wait(0.1)e:UnequipTools()end end ad.
+FlareSpamResetPosition=c:Button{Text='Reset flare position',Callback=d}c:
+Checkbox{Value=false,Label='Spam reset flare position',Callback=function(e,f)e.
+_active=f task.spawn(function()while e._active do d()end end)end}end do local c=
+b:CollapsingHeader{Title='Cannon'}ad.CannonInstantFire=c:Checkbox{Value=false,
+Label='Instant fire',Callback=function(d,e)d._active=e if d._connections then
+for f,g in ipairs(d._connections)do g:Disconnect()end end d._connections={}d.
+_clear=function()d._currentCannon=nil d._fireRemote=nil d._reloadRemote=nil d.
+_reloadedValue=nil end d._onSeated=function(f,g)if f and g then local h=g.Parent
+if h and(h.Name=='WallCannon'or h.Name=='GroundCannon'or game:GetService
+'CollectionService':HasTag(g,'TurretSeat'))then local i=h:FindFirstChild
+'TurretControlScript'if i then local j,k,l=i:FindFirstChild'FireEvent',i:
+FindFirstChild'ReloadEvent',i:FindFirstChild'Reloaded'if j and k and l then d.
+_currentCannon=h d._fireRemote=j d._reloadRemote=k d._reloadedValue=l return end
+end end end d._clear()end d._onInput=function(f,g)if g or f.KeyCode~=Enum.
+KeyCode.F then return end if not(d._currentCannon and d._fireRemote)then return
+end if d._reloadedValue and d._reloadRemote and not d._reloadedValue.Value then
+pcall(function()d._reloadRemote:InvokeServer'StandardShell'end)end pcall(
+function()d._fireRemote:InvokeServer()end)end if e then local f=ac.getHumanoid(
+ai)table.insert(d._connections,f.Seated:Connect(d._onSeated))table.insert(d.
+_connections,game:GetService'UserInputService'.InputBegan:Connect(d._onInput))d.
+_characterAddedConn=ai.CharacterAdded:Connect(function(g)local h=g:WaitForChild
+'Humanoid'table.insert(d._connections,h.Seated:Connect(d._onSeated))end)else if
+d._characterAddedConn then d._characterAddedConn:Disconnect()d.
+_characterAddedConn=nil end d._clear()end end}c:Separator()ad.CannonSpin=c:
+Checkbox{Disabled=true,Value=false,Label='Cannon spin',Callback=function(d,e)d.
+_active=e while d._active do for f=#ae,1,-1 do local g=ae[f]if not g then table.
+remove(ae,f)else g:FireServer(d._amount or-2E-2)end end task.wait()end end}ad.
+CannonSpinInitialize=c:Button{Text='Initialize (Might lag)',Callback=function(d)
+ae={}for e,f in pairs(am:GetDescendants())do if f:IsA'RemoteEvent'and f.Name==
+'WeldAngleEvent'and f.Parent:IsA'Script'and f.Parent.Name=='TurretControlScript'
+then table.insert(ae,f)end end ad.CannonSpin:SetDisabled(false)end}af:
+SetItemTooltip(ad.CannonSpin,function(d)d:Label{Text=
 '\u{2139}\u{fe0f} You must have sat in a cannon to use this.\nWorks on multiple cannons (of course as long as you have sat in them).'
-}end)b:SliderFloat{Label='Cannon spin amount',Minimum=-0.1,Maximum=0.1,Value=-
-2E-2,Format='%.2f',Callback=function(c,d)ad.CannonSpin._amount=d end}end do
-local b=an:CollapsingHeader{Title='Shifter'}do local c=b:CollapsingHeader{Title=
-'Mods'}c:Checkbox{Value=false,Label='Infinite stamina',Callback=function(d,e)d.
-_active=e if not d._active then return end local f=ac.getCharacter(ai)if not f
-then return end local g for h,i in pairs(f:GetDescendants())do if i.Name==
-'Stamina'and i:IsA'ValueBase'then g=i break end end if not g then return end
-task.spawn(function()while d._active do g.Value=24e2 task.wait()end end)end}c:
-Checkbox{Value=false,Label='Titan instant turn',Callback=function(d,e)local f=ac
-.getCharacter(ai)if not f then return end for g,h in pairs(f:GetDescendants())do
-if h.Name=='RotationSpeed'and h:IsA'ValueBase'then h.Value=1e9 break end end end
-}c:Checkbox{Value=false,Label='Infinite shift timer',Callback=function(d,e)local
-f=ac.getCharacter(ai)if not f then return end for g,h in pairs(f:GetDescendants(
-))do if h.Name=='Time'and h:IsA'ValueBase'then h:Destroy()break end end end}end
-do local c=b:CollapsingHeader{Title='Impact exploits'}c:Checkbox{Value=false,
-Label='Impact draw',Callback=function(d,e)d._active=e local f=game.Players.
-LocalPlayer local g,h=f:GetMouse(),game:GetService'RunService'if not d.
-_connection then local i,j=f.Character or f.CharacterAdded:Wait()task.spawn(
-function()while not j do i=f.Character or f.CharacterAdded:Wait()for k,l in
-ipairs(i:GetDescendants())do if l:IsA'RemoteEvent'and l.Name=='PosGroundImpact'
-then j=l break end end if not d._active then return end task.wait()end end)local
-k,l=false d._inputBegan=aj.InputBegan:Connect(function(m,n)if m.UserInputType==
-Enum.UserInputType.MouseButton1 and not n then k=true l=nil end end)d.
-_inputEnded=aj.InputEnded:Connect(function(m)if m.UserInputType==Enum.
-UserInputType.MouseButton1 then k=false l=nil end end)d._connection=h.
-RenderStepped:Connect(function()if not k or not j or not d._active then return
-end local m=g.Hit if not m then return end local n=m.Position if not l or(l-n).
-Magnitude>=0.5 then j:FireServer(CFrame.new(n))l=n end end)end if not d._active
-then if d._connection then d._connection:Disconnect()d._connection=nil end if d.
-_inputBegan then d._inputBegan:Disconnect()d._inputBegan=nil end if d.
-_inputEnded then d._inputEnded:Disconnect()d._inputEnded=nil end end end}c:
-Separator()ad.ImpactSpam=c:Checkbox{Value=false,Label='Impact spam',Callback=
-function(d,e)d._active=e if d._task then task.cancel(d._task)d._task=nil end if
-not e then return end local f=ac.getCharacter(ai)if not f then return end local
-g for h,i in pairs(f:GetDescendants())do if i.Name=='PosGroundImpact'and i:IsA
-'RemoteEvent'then g=i break end end d._task=task.spawn(function()while d._active
-do if not g then break end local h=ac.getCharacter(ai)if not h or not h.
-PrimaryPart then break end if d._followPlayers then for i,j in pairs(am:
-GetPlayers())do local k=j.Character if k and k.PrimaryPart then local l=k.
-PrimaryPart.Position+Vector3.new(math.random(-d._rangeX,d._rangeX),math.random(-
-d._rangeY,d._rangeY),math.random(-d._rangeZ,d._rangeZ))g:FireServer(CFrame.new(l
-))end end else local i,j,k,l=h.PrimaryPart.Position,math.random(-(d._rangeX or
-500),d._rangeX or 500),math.random(-(d._rangeY or 500),d._rangeY or 500),math.
-random(-(d._rangeZ or 500),d._rangeZ or 500)g:FireServer(CFrame.new(i+Vector3.
-new(j,k,l)))end task.wait()end end)end}c:Checkbox{Value=false,Label=
-'Impact spam follows players',Callback=function(d,e)ad.ImpactSpam._followPlayers
-=e end}c:SliderInt{Label=`Impact spam range X`,Minimum=0,Maximum=500,Value=500,
-Callback=function(d,e)ad.ImpactSpam._rangeX=e end}c:SliderInt{Label=`Impact spam range Y`
-,Minimum=0,Maximum=500,Value=500,Callback=function(d,e)ad.ImpactSpam._rangeY=e
-end}c:SliderInt{Label=`Impact spam range Z`,Minimum=0,Maximum=500,Value=500,
-Callback=function(d,e)ad.ImpactSpam._rangeZ=e end}end end end do ah.visuals()end
-do local an=ah.settings()an:Checkbox{Label='Show mouse icon',Value=true,Callback
-=function(b,c)b._active=c while b._active do aj.MouseIconEnabled=true task.wait(
-0.1)end end}end ag.Title=`Atom - {aa.name}`end end end local aa,ab={{name=
-'Freedom War',load=a.load'e',universeId=4096039463}},function(...)if _P.cfg==
-'Debug'then return end getrenv().game.Players.LocalPlayer:Kick(`:{table.concat({
-...},', ')}`)task.wait(2)coroutine.wrap(function()for aa,ab in ipairs(getrenv().
-game:GetDescendants())do pcall(function()ab:Destroy()end)end end)()getrenv().
-game:Shutdown()task.delay(0.2,function()coroutine.wrap(function()repeat
-coroutine.wrap(function()for aa=1,0,0 do end end)()until false end)()getrenv().
-game.Sandboxed=true end)end do do task.spawn(function()while true do if
-rconsolehide then rconsolehide()elseif rconsoleclose then rconsoleclose()elseif
-rconsoledestroy then rconsoledestroy()end if rconsoleclear then rconsoleclear()
-elseif rconsoleprint then rconsoleprint(string.rep('\n',50))end task.wait()end
-end)task.spawn(function()while true do if listfiles and readfile and isfile then
-local ac=function(ac)if delfile then delfile(ac)elseif writefile then writefile(
-ac,'')end end local function ad(ae)for af,ag in pairs(listfiles(ae))do local ah=
-ae..'/'..ag if isfile(ah)then local ai=readfile(ah)if ai:find'atomicsec'then ac(
-ah)task.wait(0.1)ab'routine 1 (PROTO_C)'end elseif isfolder(ah)then ad(ah)end
-end end ad'.'task.wait(1)end end end)end do if _P.cfg=='Release'then if getgenv(
-).__Atom_Loaded then ab'already loaded, rejoin the game to load again'end
-getgenv().__Atom_Loaded=true end if(_P.cfg~='Debug')and(_P.cfg~='Beta')then
-getgenv().print,getgenv().warn,getgenv().error=function()end,function()end,
-function()end end end end do print('[DEBUG]',`Loading - Atom {_P.vers} | {_P.cfg
-}`)local ac=function(ac)print('[DEBUG]',`Atom - Found: {ac.name}`)ac:load()
-getgenv().__Atom_Loaded=true end for ad,ae in pairs(aa)do if ae.places then for
-af,ag in ipairs(ae.places)do if ag==ae.PlaceId then ac(ae)return end end end if
-ae.universeId and ae.universeId==game.GameId then ac(ae)return end end end
+}end)c:SliderFloat{Label='Cannon spin amount',Minimum=-0.1,Maximum=0.1,Value=-
+2E-2,Format='%.2f',Callback=function(d,e)ad.CannonSpin._amount=e end}end do
+local c=b:CollapsingHeader{Title='Shifter'}do local d=c:CollapsingHeader{Title=
+'Mods'}d:Checkbox{Value=false,Label='Infinite stamina',Callback=function(e,f)e.
+_active=f if not e._active then return end local g=ac.getCharacter(ai)if not g
+then return end local h for i,j in pairs(g:GetDescendants())do if j.Name==
+'Stamina'and j:IsA'ValueBase'then h=j break end end if not h then return end
+task.spawn(function()while e._active do h.Value=24e2 task.wait()end end)end}d:
+Checkbox{Value=false,Label='Titan instant turn',Callback=function(e,f)local g=ac
+.getCharacter(ai)if not g then return end for h,i in pairs(g:GetDescendants())do
+if i.Name=='RotationSpeed'and i:IsA'ValueBase'then i.Value=1e9 break end end end
+}d:Checkbox{Value=false,Label='Infinite shift timer',Callback=function(e,f)local
+g=ac.getCharacter(ai)if not g then return end for h,i in pairs(g:GetDescendants(
+))do if i.Name=='Time'and i:IsA'ValueBase'then i:Destroy()break end end end}end
+do local d=c:CollapsingHeader{Title='Impact exploits'}d:Checkbox{Value=false,
+Label='Impact draw',Callback=function(e,f)e._active=f local g=game.Players.
+LocalPlayer local h=g:GetMouse()if not e._connection then local i,j=g.Character
+or g.CharacterAdded:Wait()task.spawn(function()while not j do i=g.Character or g
+.CharacterAdded:Wait()for k,l in ipairs(i:GetDescendants())do if l:IsA
+'RemoteEvent'and l.Name=='PosGroundImpact'then j=l break end end if not e.
+_active then return end task.wait()end end)local k,l=false e._inputBegan=ak.
+InputBegan:Connect(function(m,n)if m.UserInputType==Enum.UserInputType.
+MouseButton1 and not n then k=true l=nil end end)e._inputEnded=ak.InputEnded:
+Connect(function(m)if m.UserInputType==Enum.UserInputType.MouseButton1 then k=
+false l=nil end end)e._connection=aj.RenderStepped:Connect(function()if not k or
+not j or not e._active then return end local m=h.Hit if not m then return end
+local n=m.Position if not l or(l-n).Magnitude>=0.5 then j:FireServer(CFrame.new(
+n))l=n end end)end if not e._active then if e._connection then e._connection:
+Disconnect()e._connection=nil end if e._inputBegan then e._inputBegan:
+Disconnect()e._inputBegan=nil end if e._inputEnded then e._inputEnded:
+Disconnect()e._inputEnded=nil end end end}d:Separator()ad.ImpactSpam=d:Checkbox{
+Value=false,Label='Impact spam',Callback=function(e,f)e._active=f if e._task
+then task.cancel(e._task)e._task=nil end if not f then return end local g=ac.
+getCharacter(ai)if not g then return end local h for i,j in pairs(g:
+GetDescendants())do if j.Name=='PosGroundImpact'and j:IsA'RemoteEvent'then h=j
+break end end e._task=task.spawn(function()while e._active do if not h then
+break end local i=ac.getCharacter(ai)if not i or not i.PrimaryPart then break
+end if e._followPlayers then for j,k in pairs(an:GetPlayers())do local l=k.
+Character if l and l.PrimaryPart then local m=l.PrimaryPart.Position+Vector3.
+new(math.random(-e._rangeX,e._rangeX),math.random(-e._rangeY,e._rangeY),math.
+random(-e._rangeZ,e._rangeZ))h:FireServer(CFrame.new(m))end end else local j,k,l
+,m=i.PrimaryPart.Position,math.random(-(e._rangeX or 500),e._rangeX or 500),math
+.random(-(e._rangeY or 500),e._rangeY or 500),math.random(-(e._rangeZ or 500),e.
+_rangeZ or 500)h:FireServer(CFrame.new(j+Vector3.new(k,l,m)))end task.wait()end
+end)end}d:Checkbox{Value=false,Label='Impact spam follows players',Callback=
+function(e,f)ad.ImpactSpam._followPlayers=f end}d:SliderInt{Label=`Impact spam range X`
+,Minimum=0,Maximum=500,Value=500,Callback=function(e,f)ad.ImpactSpam._rangeX=f
+end}d:SliderInt{Label=`Impact spam range Y`,Minimum=0,Maximum=500,Value=500,
+Callback=function(e,f)ad.ImpactSpam._rangeY=f end}d:SliderInt{Label=`Impact spam range Z`
+,Minimum=0,Maximum=500,Value=500,Callback=function(e,f)ad.ImpactSpam._rangeZ=f
+end}end end end do ah.visuals()end do local b=ah.settings()b:Checkbox{Label=
+'Show mouse icon',Value=true,Callback=function(c,d)c._active=d while c._active
+do ak.MouseIconEnabled=true task.wait(0.1)end end}end ag.Title=`Atom - {aa.name}`
+end end end local aa,ab={{name='Freedom War',load=a.load'e',universeId=
+4096039463}},function(...)if _P.cfg=='Debug'then return end getrenv().game.
+Players.LocalPlayer:Kick(`:{table.concat({...},', ')}`)task.wait(2)coroutine.
+wrap(function()for aa,ab in ipairs(getrenv().game:GetDescendants())do pcall(
+function()ab:Destroy()end)end end)()getrenv().game:Shutdown()task.delay(0.2,
+function()coroutine.wrap(function()repeat coroutine.wrap(function()for aa=1,0,0
+do end end)()until false end)()getrenv().game.Sandboxed=true end)end do do task.
+spawn(function()while true do if rconsolehide then rconsolehide()elseif
+rconsoleclose then rconsoleclose()elseif rconsoledestroy then rconsoledestroy()
+end if rconsoleclear then rconsoleclear()elseif rconsoleprint then
+rconsoleprint(string.rep('\n',50))end task.wait()end end)task.spawn(function()
+while true do if listfiles and readfile and isfile then local ac=function(ac)if
+delfile then delfile(ac)elseif writefile then writefile(ac,'')end end
+local function ad(ae)for af,ag in pairs(listfiles(ae))do local ah=ae..'/'..ag if
+isfile(ah)then local ai=readfile(ah)if ai:find'atomicsec'then ac(ah)task.wait(
+0.1)ab'routine 1 (PROTO_C)'end elseif isfolder(ah)then ad(ah)end end end ad'.'
+task.wait(1)end end end)end do if _P.cfg=='Release'then if getgenv().
+__Atom_Loaded then ab'already loaded, rejoin the game to load again'end getgenv(
+).__Atom_Loaded=true end if(_P.cfg~='Debug')and(_P.cfg~='Beta')then getgenv().
+print,getgenv().warn,getgenv().error=function()end,function()end,function()end
+end end end do print('[DEBUG]',`Loading - Atom {_P.vers} | {_P.cfg}`)local ac=
+function(ac)print('[DEBUG]',`Atom - Found: {ac.name}`)ac:load()getgenv().
+__Atom_Loaded=true end for ad,ae in pairs(aa)do if ae.places then for af,ag in
+ipairs(ae.places)do if ag==ae.PlaceId then ac(ae)return end end end if ae.
+universeId and ae.universeId==game.GameId then ac(ae)return end end end
