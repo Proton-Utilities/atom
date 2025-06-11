@@ -4,8 +4,10 @@
       {
         "label": "Run ProCMP",
         "type": "shell",
-        "command": "ProCMP",
+        "command": "lune",
         "args": [
+          "run",
+          "build/build.luau",
           "build/.pcmp.json"
         ],
         "group": {

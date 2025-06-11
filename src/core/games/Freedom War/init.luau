@@ -4,10 +4,10 @@ return function(self)
 	local utility = require("@modules/utility")
 
 	--// Variables
-	local flags = {}
 	local turretWeldEvents = {}
 
 	--// References
+	local flags = base.flags
 	local interface = base.interface
 	local window = base.window
 	local baseTabs = base.tabs
@@ -107,6 +107,7 @@ return function(self)
 					if not flareEvent or not flare then
 						return
 					end
+
 					if not self._colors or #self._colors == 0 then
 						return
 					end
@@ -117,6 +118,7 @@ return function(self)
 								if not self._active then
 									return
 								end
+
 								flareEvent:FireServer(color, "Fire", flare)
 
 								if self._delay and self._delay > 0 then
@@ -136,7 +138,7 @@ return function(self)
 				})
 
 				for i, v in pairs({ "Green", "Red", "Black", "Yellow", "Blue", "Purple" }) do
-					colorsHeader:Radiobox({
+					flags[`FlareSpamColor{v}`] = colorsHeader:Radiobox({
 						Value = i <= 3,
 						Label = v,
 						Callback = function(self, value)
@@ -152,6 +154,7 @@ return function(self)
 								end
 							else
 								local index = table.find(colorList, v)
+								
 								if index then
 									table.remove(colorList, index)
 								end
@@ -161,7 +164,7 @@ return function(self)
 				end
 			end
 
-			header:SliderFloat({
+			flags[`FlareSpamDelay`] = header:SliderFloat({
 				Label = "Flare spam delay",
 				Minimum = 0.0,
 				Maximum = 1.0,
@@ -206,7 +209,11 @@ return function(self)
 
 					task.wait(0.1)
 					humanoid:UnequipTools()
+					
+					return true
 				end
+
+				return
 			end
 
 			flags["FlareSpamResetPosition"] = header:Button({
@@ -214,7 +221,7 @@ return function(self)
 				Callback = resetFlarePosition,
 			})
 
-			header:Checkbox({
+			flags[`FlareSpamSpamReset`] = header:Checkbox({
 				Value = false,
 				Label = "Spam reset flare position",
 				Callback = function(self, value)
@@ -222,7 +229,9 @@ return function(self)
 
 					task.spawn(function()
 						while self._active do
-							resetFlarePosition()
+							if not resetFlarePosition() then
+								break
+							end
 						end
 					end)
 				end,
@@ -245,6 +254,7 @@ return function(self)
 							conn:Disconnect()
 						end
 					end
+
 					self._connections = {}
 
 					self._clear = function()
@@ -257,6 +267,7 @@ return function(self)
 					self._onSeated = function(isSeated, seatPart)
 						if isSeated and seatPart then
 							local cannon = seatPart.Parent
+
 							if
 								cannon
 								and (
@@ -270,16 +281,19 @@ return function(self)
 									local fire = script:FindFirstChild("FireEvent")
 									local reload = script:FindFirstChild("ReloadEvent")
 									local reloaded = script:FindFirstChild("Reloaded")
+
 									if fire and reload and reloaded then
 										self._currentCannon = cannon
 										self._fireRemote = fire
 										self._reloadRemote = reload
 										self._reloadedValue = reloaded
+
 										return
 									end
 								end
 							end
 						end
+
 						self._clear()
 					end
 
@@ -287,6 +301,7 @@ return function(self)
 						if gameProcessed or input.KeyCode ~= Enum.KeyCode.F then
 							return
 						end
+
 						if not (self._currentCannon and self._fireRemote) then
 							return
 						end
@@ -313,6 +328,7 @@ return function(self)
 
 						self._characterAddedConn = localPlayer.CharacterAdded:Connect(function(newChar)
 							local newHumanoid = newChar:WaitForChild("Humanoid")
+
 							table.insert(self._connections, newHumanoid.Seated:Connect(self._onSeated))
 						end)
 					else
@@ -320,6 +336,7 @@ return function(self)
 							self._characterAddedConn:Disconnect()
 							self._characterAddedConn = nil
 						end
+
 						self._clear()
 					end
 				end,
@@ -337,12 +354,14 @@ return function(self)
 					while self._active do
 						for i = #turretWeldEvents, 1, -1 do
 							local event = turretWeldEvents[i]
+
 							if not event then
 								table.remove(turretWeldEvents, i)
 							else
 								event:FireServer(self._amount or -0.02)
 							end
 						end
+
 						task.wait()
 					end
 				end,
@@ -373,7 +392,7 @@ return function(self)
 				})
 			end)
 
-			header:SliderFloat({
+			flags[`CannonSpinAmount`] = header:SliderFloat({
 				Label = "Cannon spin amount",
 				Minimum = -0.1,
 				Maximum = 0.1,
@@ -395,7 +414,7 @@ return function(self)
 					Title = "Mods",
 				})
 
-				header2:Checkbox({
+				flags[`InfStamina`] = header2:Checkbox({
 					Value = false,
 					Label = "Infinite stamina",
 					Callback = function(self, value)
@@ -424,6 +443,15 @@ return function(self)
 							return
 						end
 
+						if not self._oldStamina then
+							self._oldStamina = staminaValue.Value
+						end
+
+						if not value then
+							staminaValue.Value = self._oldStamina
+							self._oldStamina = nil
+						end
+
 						task.spawn(function()
 							while self._active do
 								staminaValue.Value = 24e2
@@ -434,9 +462,9 @@ return function(self)
 					end,
 				})
 
-				header2:Checkbox({
+				flags[`ShifterTitanInstantTurn`] = header2:Checkbox({
 					Value = false,
-					Label = "Titan instant turn",
+					Label = "Shifter titan instant turn",
 					Callback = function(self, value)
 						local character = utility.getCharacter(localPlayer)
 
@@ -453,7 +481,7 @@ return function(self)
 					end,
 				})
 
-				header2:Checkbox({
+				flags[`InfShiftTimer`] = header2:Checkbox({
 					Value = false,
 					Label = "Infinite shift timer",
 					Callback = function(self, value)
@@ -475,10 +503,10 @@ return function(self)
 
 			do -- Impact spam
 				local header2 = header:CollapsingHeader({
-					Title = "Impact exploits",
+					Title = "Impact exploits (Semi patched)",
 				})
 
-				header2:Checkbox({
+				flags[`ImpactDrawEnabled`] = header2:Checkbox({
 					Value = false,
 					Label = "Impact draw",
 					Callback = function(self, value)
@@ -488,18 +516,19 @@ return function(self)
 						local mouse = player:GetMouse()
 
 						if not self._connection then
-							local character = player.Character or player.CharacterAdded:Wait()
 							local posGroundImpact
 
 							task.spawn(function()
 								while not posGroundImpact do
-									character = player.Character or player.CharacterAdded:Wait()
+									local character = player.Character or player.CharacterAdded:Wait()
+
 									for _, child in ipairs(character:GetDescendants()) do
 										if child:IsA("RemoteEvent") and child.Name == "PosGroundImpact" then
 											posGroundImpact = child
 											break
 										end
 									end
+
 									if not self._active then
 										return
 									end
@@ -581,11 +610,13 @@ return function(self)
 						end
 
 						local character = utility.getCharacter(localPlayer)
+
 						if not character then
 							return
 						end
 
 						local posGroundImpact
+
 						for _, child in pairs(character:GetDescendants()) do
 							if child.Name == "PosGroundImpact" and child:IsA("RemoteEvent") then
 								posGroundImpact = child
@@ -600,6 +631,7 @@ return function(self)
 								end
 
 								local localCharacter = utility.getCharacter(localPlayer)
+
 								if not localCharacter or not localCharacter.PrimaryPart then
 									break
 								end
@@ -607,6 +639,7 @@ return function(self)
 								if self._followPlayers then
 									for _, player in pairs(players:GetPlayers()) do
 										local playerCharacter = player.Character
+
 										if playerCharacter and playerCharacter.PrimaryPart then
 											local position = playerCharacter.PrimaryPart.Position
 												+ Vector3.new(
@@ -614,6 +647,7 @@ return function(self)
 													math.random(-self._rangeY, self._rangeY),
 													math.random(-self._rangeZ, self._rangeZ)
 												)
+
 											posGroundImpact:FireServer(CFrame.new(position))
 										end
 									end
@@ -634,7 +668,7 @@ return function(self)
 					end,
 				})
 
-				header2:Checkbox({
+				flags[`ImpactSpamFollowsPlayers`] = header2:Checkbox({
 					Value = false,
 					Label = "Impact spam follows players",
 					Callback = function(self, value)
@@ -642,7 +676,7 @@ return function(self)
 					end,
 				})
 
-				header2:SliderInt({
+				flags[`ImpactSpamRageX`] = header2:SliderInt({
 					Label = `Impact spam range X`,
 					Minimum = 0,
 					Maximum = 500,
@@ -652,7 +686,7 @@ return function(self)
 					end,
 				})
 
-				header2:SliderInt({
+				flags[`ImpactSpamRageY`] = header2:SliderInt({
 					Label = `Impact spam range Y`,
 					Minimum = 0,
 					Maximum = 500,
@@ -662,7 +696,7 @@ return function(self)
 					end,
 				})
 
-				header2:SliderInt({
+				flags[`ImpactSpamRageZ`] = header2:SliderInt({
 					Label = `Impact spam range Z`,
 					Minimum = 0,
 					Maximum = 500,
@@ -682,18 +716,24 @@ return function(self)
 	do -- Settings
 		local tab = baseTabs.settings()
 
-		tab:Checkbox({
+		flags["ShowMouseIcon"] = tab:Checkbox({
 			Label = "Show mouse icon",
 			Value = true,
 			Callback = function(self, value)
 				self._active = value
 
-				while self._active do
-					userInputService.MouseIconEnabled = true
-					task.wait(0.1)
-				end
+				task.spawn(function()
+					while self._active do
+						userInputService.MouseIconEnabled = true
+						task.wait(0.1)
+					end
+				end)
 			end,
 		})
+	end
+
+	do -- Config
+		baseTabs.config(self.name)
 	end
 
 	--// Initialize

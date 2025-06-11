@@ -312,6 +312,7 @@ declare function rconsoleinfo(text: string): ()
 declare function rconsolewarn(text: string): ()
 declare function rconsoleerr(text: string): ()
 
+declare function queue_on_teleport(file: string): ()
 declare function newlclosure<A..., R...>(func: (A...) -> R...): (A...) -> R...
 declare function setrenderproperty(object: Drawing, property: string, value: any): ()
 declare function cleardrawcache(): ()

@@ -2,8 +2,10 @@
 
 --// Services
 local insertService = game:GetService("InsertService")
+local httpService = game:GetService("HttpService")
 
 --// Imports
+local flags = require("@core/flags")
 local regui = require("@packages/ReGui")
 local esp = require("@modules/esp")
 
@@ -18,6 +20,7 @@ local window = regui:TabsWindow({
 })
 
 return {
+	flags = flags,
 	interface = regui,
 	window = window,
 
@@ -75,6 +78,7 @@ return {
 			
 			return tab
 		end,
+		
 		visuals = function()
 			local tab = window:CreateTab({
 				Name = "Visuals",
@@ -89,7 +93,7 @@ return {
 					Title = name,
 				})
 
-				header:Checkbox({
+				flags[`TEAM_{name}_ENABLED`] = header:Checkbox({
 					Value = false,
 					Label = "Enabled",
 					Callback = function(self, value)
@@ -97,7 +101,7 @@ return {
 					end,
 				})
 
-				header:Checkbox({
+				flags[`TEAM_{name}_CHAMS`] = header:Checkbox({
 					Value = false,
 					Label = "Cham",
 					Callback = function(self, value)
@@ -201,12 +205,13 @@ return {
 
 			return tab
 		end,
+
 		settings = function()
 			local tab = window:CreateTab({
 				Name = "Settings",
 			})
 
-			tab:Keybind({
+			flags["SETTINGS_UI_KEYBIND"] = tab:Keybind({
 				Label = "UI keybind",
 				Value = Enum.KeyCode.RightControl,
 				Callback = function()
@@ -216,5 +221,80 @@ return {
 
 			return tab
 		end,
+
+		config = function(gameName)
+			local tab = window:CreateTab({
+				Name = "Config",
+			})
+
+			local folder = "atomCfg/" .. gameName
+
+			if not isfolder(folder) then
+				makefolder(folder)
+			end
+
+			local configName = "default"
+			local configList = {}
+
+			local input = tab:InputText({
+				Label = "Config name",
+				Value = configName,
+				Callback = function(self, newVal)
+					configName = newVal
+				end,
+			})
+
+			tab:Button({
+				Text = "Save Config",
+				Callback = function()
+					local json = httpService:JSONEncode(flags:Export())
+					writefile(folder .. "/" .. configName .. ".json", json)
+				end,
+			})
+
+			local combo = tab:Combo({
+				Label = "Configs",
+				Items = configList,
+				Callback = function(_, selected)
+					configName = selected
+					input:SetValue(selected)
+				end,
+			})
+
+			tab:Button({
+				Text = "Overwrite Config",
+				Callback = function()
+					local path = folder .. "/" .. configName .. ".json"
+					if isfile(path) then
+						local json = httpService:JSONEncode(flags:Export())
+						writefile(path, json)
+					end
+				end,
+			})
+
+			tab:Button({
+				Text = "Load Config",
+				Callback = function()
+					local path = folder .. "/" .. configName .. ".json"
+					if isfile(path) then
+						local data = httpService:JSONDecode(readfile(path))
+						flags:Import(data)
+					end
+				end,
+			})
+
+			tab:Button({
+				Text = "Reload Config List",
+				Callback = function()
+					configList = listfiles(folder)
+					for i, path in ipairs(configList) do
+						configList[i] = path:match("([^/\\]+)%.json$")
+					end
+					combo.Items = configList
+				end,
+			})
+
+			return tab
+		end
 	},
 }
