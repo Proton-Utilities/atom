@@ -13,45 +13,36 @@ if not hookfunction or not getrenv or not request then
 	return
 end
 
-local function push(file)
-    loadstring(file)()
+local Players = game:GetService("Players")
+repeat task.wait() until Players.LocalPlayer and game:IsLoaded()
 
-    if queue_on_teleport then
-        queue_on_teleport(file)
+local LocalPlayer = Players.LocalPlayer
+
+local function WaitForChildOfPlayer(name)
+    while not LocalPlayer:FindFirstChild(name) do
+        LocalPlayer.ChildAdded:Wait()
     end
+    return LocalPlayer[name]
 end
 
-push([==[
-    local Players = game:GetService("Players")
-    repeat task.wait() until Players.LocalPlayer and game:IsLoaded()
-    
-    local LocalPlayer = Players.LocalPlayer
+local function WaitForPlayerLoad()
+    LocalPlayer.Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    WaitForChildOfPlayer("Backpack")
+    WaitForChildOfPlayer("PlayerGui")
+    WaitForChildOfPlayer("PlayerScripts")
+end
 
-    local function WaitForChildOfPlayer(name)
-        while not LocalPlayer:FindFirstChild(name) do
-            LocalPlayer.ChildAdded:Wait()
-        end
-        return LocalPlayer[name]
-    end
+WaitForPlayerLoad()
 
-    local function WaitForPlayerLoad()
-        LocalPlayer.Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-        WaitForChildOfPlayer("Backpack")
-        WaitForChildOfPlayer("PlayerGui")
-        WaitForChildOfPlayer("PlayerScripts")
-    end
+atomicsec = atomicsec or {}
 
-    WaitForPlayerLoad()
+_P = {
+    genDate = "2025-06-11T08:08:42.514219+00:00",
+    cfg = "Release",
+    vers = "v1.2.1"
+}
 
-    atomicsec = atomicsec or {}
-
-    _P = {
-        genDate = "2025-06-11T06:02:28.919392800+00:00",
-        cfg = "Release",
-        vers = "v1.2.0"
-    }
-
-    local a a={cache={},load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
+local a a={cache={},load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
 end return a.cache[b].c end}do function a.a()local b={}function b:Export()local
 c={}for d,e in pairs(self)do if typeof(e)=='Instance'or type(e)=='table'then
 local f,g=pcall(function()return e.Value end)if f and g~=nil then c[d]=g end end
@@ -1624,4 +1615,3 @@ load()getgenv().__Atom_Loaded=true end for ad,ae in pairs(aa)do if ae.places
 then for af,ag in ipairs(ae.places)do if ag==ae.PlaceId then return ac(ae)end
 end end if ae.universeId and ae.universeId==game.GameId then return ac(ae)end
 end end
-]==])

@@ -13,43 +13,33 @@ if not hookfunction or not getrenv or not request then
 	return
 end
 
-local function push(file)
-    loadstring(file)()
+local Players = game:GetService("Players")
+repeat task.wait() until Players.LocalPlayer and game:IsLoaded()
 
-    if queue_on_teleport then
-        queue_on_teleport(file)
+local LocalPlayer = Players.LocalPlayer
+
+local function WaitForChildOfPlayer(name)
+    while not LocalPlayer:FindFirstChild(name) do
+        LocalPlayer.ChildAdded:Wait()
     end
+    return LocalPlayer[name]
 end
 
-push([==[
-    local Players = game:GetService("Players")
-    repeat task.wait() until Players.LocalPlayer and game:IsLoaded()
-    
-    local LocalPlayer = Players.LocalPlayer
+local function WaitForPlayerLoad()
+    LocalPlayer.Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    WaitForChildOfPlayer("Backpack")
+    WaitForChildOfPlayer("PlayerGui")
+    WaitForChildOfPlayer("PlayerScripts")
+end
 
-    local function WaitForChildOfPlayer(name)
-        while not LocalPlayer:FindFirstChild(name) do
-            LocalPlayer.ChildAdded:Wait()
-        end
-        return LocalPlayer[name]
-    end
+WaitForPlayerLoad()
 
-    local function WaitForPlayerLoad()
-        LocalPlayer.Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-        WaitForChildOfPlayer("Backpack")
-        WaitForChildOfPlayer("PlayerGui")
-        WaitForChildOfPlayer("PlayerScripts")
-    end
+atomicsec = atomicsec or {}
 
-    WaitForPlayerLoad()
+_P = {
+    genDate = __COMPOSER.Insert(__COMPOSER.genDate),
+    cfg = __COMPOSER.Insert(__COMPOSER.cfg),
+    vers = __COMPOSER.Insert(__COMPOSER.vers)
+}
 
-    atomicsec = atomicsec or {}
-
-    _P = {
-        genDate = __COMPOSER.Insert(__COMPOSER.genDate),
-        cfg = __COMPOSER.Insert(__COMPOSER.cfg),
-        vers = __COMPOSER.Insert(__COMPOSER.vers)
-    }
-
-    __COMPOSER.Insert(__COMPOSER.build)
-]==])
+__COMPOSER.Insert(__COMPOSER.build)
