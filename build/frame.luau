@@ -13,27 +13,6 @@ if not hookfunction or not getrenv or not request then
 	return
 end
 
-local Players = game:GetService("Players")
-repeat task.wait() until Players.LocalPlayer and game:IsLoaded()
-
-local LocalPlayer = Players.LocalPlayer
-
-local function WaitForChildOfPlayer(name)
-    while not LocalPlayer:FindFirstChild(name) do
-        LocalPlayer.ChildAdded:Wait()
-    end
-    return LocalPlayer[name]
-end
-
-local function WaitForPlayerLoad()
-    LocalPlayer.Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-    WaitForChildOfPlayer("Backpack")
-    WaitForChildOfPlayer("PlayerGui")
-    WaitForChildOfPlayer("PlayerScripts")
-end
-
-WaitForPlayerLoad()
-
 atomicsec = atomicsec or {}
 
 _P = {

@@ -1,7 +1,5 @@
---!nolint
 --!nocheck
---!native
---!optimize 2
+--!nolint
 
 --[[
     @author Proton-Utilities
@@ -10,28 +8,35 @@
     This file was automatically generated with darklua, it is not intended for manual editing.
 --]]
 
-atomicsec = atomicsec or {}
-
-_P = {
-    genDate = "2025-05-27T19:54:37.867878100+00:00",
-    cfg = "Beta",
-    vers = "v1.0.0"
-}
-
 if not hookfunction or not getrenv or not request then
 	game.Player.LocalPlayer:Kick("Your executor is not supported.")
 	return
 end
 
+atomicsec = atomicsec or {}
+
+_P = {
+    genDate = "2025-06-11T08:12:02.608905500+00:00",
+    cfg = "Beta",
+    vers = "v1.2.2-beta.1"
+}
+
 local a a={cache={},load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
-end return a.cache[b].c end}do function a.a()local b={Version='1.4.4',Author=
-'Depso',License='MIT',Repository='https://github.com/depthso/Dear-ReGui/',Debug=
-false,PrefabsId=71968920594655,DefaultTitle='ReGui',ContainerName='ReGui',
-DoubleClickThreshold=0.3,TooltipOffset=15,IniToSave={'Value'},ClassIgnored={
-'Visible'},Container=nil,Prefabs=nil,FocusedWindow=nil,ThemeConfigs={},Elements=
-{},Signaling={},Animation={DefaultTweenInfo=TweenInfo.new(0.08)},_FlagCache={},
-_ErrorCache={},Windows={},ActiveTooltips={},IniSettings={},AnimationConnections=
-{}}b.Icons={Dot='rbxasset://textures/whiteCircle.png',Arrow=
+end return a.cache[b].c end}do function a.a()local b={}function b:Export()local
+c={}for d,e in pairs(self)do if typeof(e)=='Instance'or type(e)=='table'then
+local f,g=pcall(function()return e.Value end)if f and g~=nil then c[d]=g end end
+end return c end function b:Import(c)for d,e in pairs(c)do local f=self[d]if f
+and f.Value~=nil then local g=pcall(function()f:SetValue(e)end)if not g then
+warn(`Failed to import value for flag "{d}"`)end end end end function b:Reset()
+for c in pairs(self)do self[c]=nil end end return b end function a.b()local b={
+Version='1.4.4',Author='Depso',License='MIT',Repository=
+'https://github.com/depthso/Dear-ReGui/',Debug=false,PrefabsId=71968920594655,
+DefaultTitle='ReGui',ContainerName='ReGui',DoubleClickThreshold=0.3,
+TooltipOffset=15,IniToSave={'Value'},ClassIgnored={'Visible'},Container=nil,
+Prefabs=nil,FocusedWindow=nil,ThemeConfigs={},Elements={},Signaling={},Animation
+={DefaultTweenInfo=TweenInfo.new(0.08)},_FlagCache={},_ErrorCache={},Windows={},
+ActiveTooltips={},IniSettings={},AnimationConnections={}}b.Icons={Dot=
+'rbxasset://textures/whiteCircle.png',Arrow=
 [[rbxasset://textures/DeveloperFramework/button_arrow_right.png]],Close=
 'rbxasset://textures/AnimationEditor/icon_close.png',Checkmark=
 'rbxasset://textures/AnimationEditor/icon_checkmark.png',Cat=
@@ -1126,7 +1131,7 @@ NoButtons=true})v('InputInt4','InputInt',4,{NoButtons=true})v('SliderInt2',
 'DragInt',4)v('DragFloat2','DragFloat',2)v('DragFloat3','DragFloat',3)v(
 'DragFloat4','DragFloat',4)w('InputColor3','InputInt3')w('SliderColor3',
 'SliderInt3')w('DragColor3','DragInt3')x('InputCFrame','InputInt3')x(
-'SliderCFrame','SliderInt3')x('DragCFrame','DragInt3')return b end function a.b(
+'SliderCFrame','SliderInt3')x('DragCFrame','DragInt3')return b end function a.c(
 )local aa,ab,ac,ad,ae=game:GetService'RunService',game:GetService'Players',game:
 GetService'Workspace',game:GetService'UserInputService',gethui and gethui()or
 game:GetService'CoreGui'local b,c=ab.LocalPlayer,ac.CurrentCamera local d,e,f,g,
@@ -1388,56 +1393,204 @@ RightUpperArm},{aj.RightUpperArm,aj.RightLowerArm},{aj.RightLowerArm,aj.
 RightHand},{aj.LowerTorso,aj.LeftUpperLeg},{aj.LeftUpperLeg,aj.LeftLowerLeg},{aj
 .LeftLowerLeg,aj.LeftFoot},{aj.LowerTorso,aj.RightUpperLeg},{aj.RightUpperLeg,aj
 .RightLowerLeg},{aj.RightLowerLeg,aj.RightFoot}}return aj,ak end return ah end
-function a.c()local aa,ab,ac=game:GetService'InsertService',a.load'a',a.load'b'
-ab:Init{Prefabs=aa:LoadLocalAsset('rbxassetid://'..ab.PrefabsId)}local ad=ab:
-TabsWindow{Title='Atom',Size=UDim2.fromOffset(300,500)}return{interface=ab,
-window=ad,tabs={home=function(ae)local af=ad:CreateTab{Name='Home'}do af:
-Separator{Text='Build Information'}af:Label{Text=`Build Config: <b>{_P.cfg}</b>`
-,RichText=true}af:Label{Text=`Build Version: <b>{_P.vers}</b>`,RichText=true}af:
-Label{Text=`Build Generated: <b>{_P.genDate}</b>`,RichText=true}end do af:
-Separator{Text='User Information'}af:Label{Text=`Username: <b>{atomicsec.
-username}</b>`,RichText=true}af:Label{Text=`User Id: <b>{atomicsec.userid}</b>`,
-RichText=true}af:Label{Text=`Note: <b>{atomicsec.note}</b>`,RichText=true}af:
-Label{Text=`Key expires: <b>{tostring(atomicsec.expiry)}</b>`,RichText=true}af:
-Label{Text=`Premium: <b>{tostring(atomicsec.is_premium)}</b>`,RichText=true}end
-return af end,visuals=function()local ae=ad:CreateTab{Name='Visuals'}return ae
-end,settings=function()local ae=ad:CreateTab{Name='Settings'}return ae end}}end
-function a.d()return function(aa)local ab=a.load'c'local ac,ad,ae=ab.interface,
-ab.window,ab.tabs do ae.home(aa.Name)end do ae.visuals()end do ae.settings()end
-ad.Title=`Atom - {aa.name}`end end end local aa,ab,ac={{name='Freedom War',load=
-a.load'd',universeId=4096039463}},game:GetService'CoreGui',function(...)if _P.
+function a.d()local aa,ab,ac,ad,ae=game:GetService'InsertService',game:
+GetService'HttpService',a.load'a',a.load'b',a.load'c'ad:Init{Prefabs=aa:
+LoadLocalAsset('rbxassetid://'..ad.PrefabsId)}local af=ad:TabsWindow{Title=
+'Atom',Size=UDim2.fromOffset(300,500)}return{flags=ac,interface=ad,window=af,
+tabs={home=function(ag)local ah=af:CreateTab{Name='Home'}do ah:Separator{Text=
+'Build Information'}ah:Label{Text=`Build Config: <b>{_P.cfg}</b>`,RichText=true}
+ah:Label{Text=`Build Version: <b>{_P.vers}</b>`,RichText=true}ah:Label{Text=`Build Generated: <b>{
+_P.genDate}</b>`,RichText=true}end do ah:Separator{Text='User Information'}ah:
+Label{Text=`Username: <b>{atomicsec.username}</b>`,RichText=true}ah:Label{Text=`User Id: <b>{
+atomicsec.userid}</b>`,RichText=true}ah:Label{Text=`Note: <b>{atomicsec.note}</b>`
+,RichText=true}ah:Label{Text=`Key expires: <b>{tostring(atomicsec.expiry)}</b>`,
+RichText=true}ah:Label{Text=`Premium: <b>{tostring(atomicsec.is_premium)}</b>`,
+RichText=true}end return ah end,visuals=function()local ag=af:CreateTab{Name=
+'Visuals'}if _P.cfg=='Debug'then ae.Shared.IncludeLocalPlayer=true end local ah=
+function(ah,ai)local aj=ag:CollapsingHeader{Title=ai}ac[`TEAM_{ai}_ENABLED`]=aj:
+Checkbox{Value=false,Label='Enabled',Callback=function(ak,al)ah.Enabled=al end}
+ac[`TEAM_{ai}_CHAMS`]=aj:Checkbox{Value=false,Label='Cham',Callback=function(ak,
+al)ah.Chams=al end}end ah(ae.Team.Enemy,'Enemy')ah(ae.Team.Friendly,'Friendly')
+ae.Load()return ag end,settings=function()local ag=af:CreateTab{Name='Settings'}
+ac.SETTINGS_UI_KEYBIND=ag:Keybind{Label='UI keybind',Value=Enum.KeyCode.
+RightControl,Callback=function()af:ToggleVisibility()end}return ag end,config=
+function(ag)local ah,ai=af:CreateTab{Name='Config'},'atomCfg/'..ag if not
+isfolder(ai)then makefolder(ai)end local aj,ak='default',{}local al=ah:InputText
+{Label='Config name',Value=aj,Callback=function(al,am)aj=am end}ah:Button{Text=
+'Save Config',Callback=function()local am=ab:JSONEncode(ac:Export())writefile(ai
+..'/'..aj..'.json',am)end}local am=ah:Combo{Label='Configs',Items=ak,Callback=
+function(am,an)aj=an al:SetValue(an)end}ah:Button{Text='Overwrite Config',
+Callback=function()local an=ai..'/'..aj..'.json'if isfile(an)then local b=ab:
+JSONEncode(ac:Export())writefile(an,b)end end}ah:Button{Text='Load Config',
+Callback=function()local an=ai..'/'..aj..'.json'if isfile(an)then local b=ab:
+JSONDecode(readfile(an))ac:Import(b)end end}ah:Button{Text='Reload Config List',
+Callback=function()ak=listfiles(ai)for an,b in ipairs(ak)do ak[an]=b:match
+'([^/\\]+)%.json$'end am.Items=ak end}return ah end}}end function a.e()local aa=
+{}aa.getService=function(ab)local ac=cloneref and cloneref(game)or game local ad
+,ae=pcall(function()return cloneref and cloneref(ac:GetService(ab))or ac:
+GetService(ab)end)return ad and ae or nil end aa.getService=newcclosure and
+newcclosure(aa.getService)or aa.getService function aa.getPlayer()local ab,ac=
+pcall(function()return(aa.getService'Players')end)return ab and(ac).LocalPlayer
+or nil end function aa.getCharacter(ab)local ac,ad=pcall(function()return ab and
+ab.Character or nil end)return ac and ad or nil end function aa.getHumanoid(ab)
+local ac,ad=pcall(function()local ac=aa.getCharacter(ab)return ac and ac:
+FindFirstChildOfClass'Humanoid'or nil end)return ac and ad or nil end return aa
+end function a.f()return function(aa)local ab,ac,ad=a.load'd',a.load'e',{}local
+ae,af,ag,ah,ai,aj,ak,al,am,an=ab.flags,ab.interface,ab.window,ab.tabs,ac.
+getPlayer(),ac.getService'RunService',ac.getService'UserInputService',ac.
+getService'ReplicatedStorage',ac.getService'Workspace',ac.getService'Players'do
+ah.home(aa.Name)end do local b=ag:CreateTab{Name='Exploits'}do local c=b:
+CollapsingHeader{Title='Lightbody'}ae.LightBody=c:Checkbox{Value=false,Label=
+'Lightbody',Callback=function(d,e)d._physicalProperties=d._physicalProperties or
+{}d._Active=e while d._Active do local f=ac.getCharacter(ai)if f then local g=
+0.7*(1-ae.LightBodyAmount.Value/100)for h,i in pairs(f:GetDescendants())do if i:
+IsA'BasePart'then if not d._physicalProperties[i]then d._physicalProperties[i]=i
+.CustomPhysicalProperties end i.CustomPhysicalProperties=PhysicalProperties.new(
+g,0.3,0.5)end end end task.wait(0.3)end local f=ac.getCharacter(ai)if f then for
+g,h in pairs(f:GetDescendants())do if h:IsA'BasePart'and d._physicalProperties[h
+]then h.CustomPhysicalProperties=d._physicalProperties[h]d._physicalProperties[h
+]=nil end end end end}ae.LightBodyAmount=c:SliderInt{Label='Lightbody Amount',
+Minimum=0,Maximum=70,Value=25}af:SetItemTooltip(ae.LightBody,function(d)d:Label{
+Text=
+[[Makes your character lighter, giving you faster impulse and doge, as well as instant hook stop.]]
+}end)end do local c=b:CollapsingHeader{Title='Flare spam'}ae.FlareSpam=c:
+Checkbox{Value=false,Label='Flare spam',Callback=function(d,e)d._active=e local
+f,g=ac.getCharacter(ai),al:FindFirstChild'FlareGunEvents'and al.FlareGunEvents:
+FindFirstChild'FlareEvent'local h=ai and ai.Backpack:FindFirstChild'Flare'or f
+and f:FindFirstChild'Flare'if not g or not h then return end if not d._colors or
+#d._colors==0 then return end task.spawn(function()while d._active do for i,j in
+ipairs(d._colors)do if not d._active then return end g:FireServer(j,'Fire',h)if
+d._delay and d._delay>0 then task.wait(d._delay)end task.wait()end end end)end}
+do local d=c:CollapsingHeader{Title='Flare spam colors'}for e,f in pairs{'Green'
+,'Red','Black','Yellow','Blue','Purple'}do ae[`FlareSpamColor{f}`]=d:Radiobox{
+Value=e<=3,Label=f,Callback=function(g,h)if not ae.FlareSpam._colors then ae.
+FlareSpam._colors={}end local i=ae.FlareSpam._colors if h then if not table.
+find(i,f)then table.insert(i,f)end else local j=table.find(i,f)if j then table.
+remove(i,j)end end end}end end ae.FlareSpamDelay=c:SliderFloat{Label=
+'Flare spam delay',Minimum=0,Maximum=1,Value=0.1,Format='%.2f',Callback=function
+(d,e)ae.FlareSpam._delay=e end}ae.FlareSpamHideGui=c:Checkbox{Value=false,Label=
+'Hide flare spam GUI'}local d=function()local d,e=ac.getCharacter(ai),ac.
+getHumanoid(ai)if not e or not d then return end local f=ai.Backpack:
+FindFirstChild'Flare'or d:FindFirstChild'Flare'if f and f.Parent then if f.
+Parent:IsA'Backpack'then e:EquipTool(f)end if ae.FlareSpamHideGui and ae.
+FlareSpamHideGui.Value then local g=ai:FindFirstChild'PlayerGui'if g then local
+h=g:FindFirstChild'FlareGunGui'if h then h.Enabled=false end end end task.wait(
+0.1)e:UnequipTools()return true end return end ae.FlareSpamResetPosition=c:
+Button{Text='Reset flare position',Callback=d}ae.FlareSpamSpamReset=c:Checkbox{
+Value=false,Label='Spam reset flare position',Callback=function(e,f)e._active=f
+task.spawn(function()while e._active do if not d()then break end end end)end}end
+do local c=b:CollapsingHeader{Title='Cannon'}ae.CannonInstantFire=c:Checkbox{
+Value=false,Label='Instant fire',Callback=function(d,e)d._active=e if d.
+_connections then for f,g in ipairs(d._connections)do g:Disconnect()end end d.
+_connections={}d._clear=function()d._currentCannon=nil d._fireRemote=nil d.
+_reloadRemote=nil d._reloadedValue=nil end d._onSeated=function(f,g)if f and g
+then local h=g.Parent if h and(h.Name=='WallCannon'or h.Name=='GroundCannon'or
+game:GetService'CollectionService':HasTag(g,'TurretSeat'))then local i=h:
+FindFirstChild'TurretControlScript'if i then local j,k,l=i:FindFirstChild
+'FireEvent',i:FindFirstChild'ReloadEvent',i:FindFirstChild'Reloaded'if j and k
+and l then d._currentCannon=h d._fireRemote=j d._reloadRemote=k d._reloadedValue
+=l return end end end end d._clear()end d._onInput=function(f,g)if g or f.
+KeyCode~=Enum.KeyCode.F then return end if not(d._currentCannon and d.
+_fireRemote)then return end if d._reloadedValue and d._reloadRemote and not d.
+_reloadedValue.Value then pcall(function()d._reloadRemote:InvokeServer
+'StandardShell'end)end pcall(function()d._fireRemote:InvokeServer()end)end if e
+then local f=ac.getHumanoid(ai)table.insert(d._connections,f.Seated:Connect(d.
+_onSeated))table.insert(d._connections,game:GetService'UserInputService'.
+InputBegan:Connect(d._onInput))d._characterAddedConn=ai.CharacterAdded:Connect(
+function(g)local h=g:WaitForChild'Humanoid'table.insert(d._connections,h.Seated:
+Connect(d._onSeated))end)else if d._characterAddedConn then d.
+_characterAddedConn:Disconnect()d._characterAddedConn=nil end d._clear()end end}
+c:Separator()ae.CannonSpin=c:Checkbox{Disabled=true,Value=false,Label=
+'Cannon spin',Callback=function(d,e)d._active=e while d._active do for f=#ad,1,-
+1 do local g=ad[f]if not g then table.remove(ad,f)else g:FireServer(d._amount or
+-2E-2)end end task.wait()end end}ae.CannonSpinInitialize=c:Button{Text=
+'Initialize (Might lag)',Callback=function(d)ad={}for e,f in pairs(am:
+GetDescendants())do if f:IsA'RemoteEvent'and f.Name=='WeldAngleEvent'and f.
+Parent:IsA'Script'and f.Parent.Name=='TurretControlScript'then table.insert(ad,f
+)end end ae.CannonSpin:SetDisabled(false)end}af:SetItemTooltip(ae.CannonSpin,
+function(d)d:Label{Text=
+'\u{2139}\u{fe0f} You must have sat in a cannon to use this.\nWorks on multiple cannons (of course as long as you have sat in them).'
+}end)ae.CannonSpinAmount=c:SliderFloat{Label='Cannon spin amount',Minimum=-0.1,
+Maximum=0.1,Value=-2E-2,Format='%.2f',Callback=function(d,e)ae.CannonSpin.
+_amount=e end}end do local c=b:CollapsingHeader{Title='Shifter'}do local d=c:
+CollapsingHeader{Title='Mods'}ae.InfStamina=d:Checkbox{Value=false,Label=
+'Infinite stamina',Callback=function(e,f)e._active=f if not e._active then
+return end local g=ac.getCharacter(ai)if not g then return end local h for i,j
+in pairs(g:GetDescendants())do if j.Name=='Stamina'and j:IsA'ValueBase'then h=j
+break end end if not h then return end if not e._oldStamina then e._oldStamina=h
+.Value end if not f then h.Value=e._oldStamina e._oldStamina=nil end task.spawn(
+function()while e._active do h.Value=24e2 task.wait()end end)end}ae.
+ShifterTitanInstantTurn=d:Checkbox{Value=false,Label=
+'Shifter titan instant turn',Callback=function(e,f)local g=ac.getCharacter(ai)if
+not g then return end for h,i in pairs(g:GetDescendants())do if i.Name==
+'RotationSpeed'and i:IsA'ValueBase'then i.Value=1e9 break end end end}ae.
+InfShiftTimer=d:Checkbox{Value=false,Label='Infinite shift timer',Callback=
+function(e,f)local g=ac.getCharacter(ai)if not g then return end for h,i in
+pairs(g:GetDescendants())do if i.Name=='Time'and i:IsA'ValueBase'then i:Destroy(
+)break end end end}end do local d=c:CollapsingHeader{Title=
+'Impact exploits (Semi patched)'}ae.ImpactDrawEnabled=d:Checkbox{Value=false,
+Label='Impact draw',Callback=function(e,f)e._active=f local g=game.Players.
+LocalPlayer local h=g:GetMouse()if not e._connection then local i task.spawn(
+function()while not i do local j=g.Character or g.CharacterAdded:Wait()for k,l
+in ipairs(j:GetDescendants())do if l:IsA'RemoteEvent'and l.Name==
+'PosGroundImpact'then i=l break end end if not e._active then return end task.
+wait()end end)local j,k=false e._inputBegan=ak.InputBegan:Connect(function(l,m)
+if l.UserInputType==Enum.UserInputType.MouseButton1 and not m then j=true k=nil
+end end)e._inputEnded=ak.InputEnded:Connect(function(l)if l.UserInputType==Enum.
+UserInputType.MouseButton1 then j=false k=nil end end)e._connection=aj.
+RenderStepped:Connect(function()if not j or not i or not e._active then return
+end local l=h.Hit if not l then return end local m=l.Position if not k or(k-m).
+Magnitude>=0.5 then i:FireServer(CFrame.new(m))k=m end end)end if not e._active
+then if e._connection then e._connection:Disconnect()e._connection=nil end if e.
+_inputBegan then e._inputBegan:Disconnect()e._inputBegan=nil end if e.
+_inputEnded then e._inputEnded:Disconnect()e._inputEnded=nil end end end}d:
+Separator()ae.ImpactSpam=d:Checkbox{Value=false,Label='Impact spam',Callback=
+function(e,f)e._active=f if e._task then task.cancel(e._task)e._task=nil end if
+not f then return end local g=ac.getCharacter(ai)if not g then return end local
+h for i,j in pairs(g:GetDescendants())do if j.Name=='PosGroundImpact'and j:IsA
+'RemoteEvent'then h=j break end end e._task=task.spawn(function()while e._active
+do if not h then break end local i=ac.getCharacter(ai)if not i or not i.
+PrimaryPart then break end if e._followPlayers then for j,k in pairs(an:
+GetPlayers())do local l=k.Character if l and l.PrimaryPart then local m=l.
+PrimaryPart.Position+Vector3.new(math.random(-e._rangeX,e._rangeX),math.random(-
+e._rangeY,e._rangeY),math.random(-e._rangeZ,e._rangeZ))h:FireServer(CFrame.new(m
+))end end else local j,k,l,m=i.PrimaryPart.Position,math.random(-(e._rangeX or
+500),e._rangeX or 500),math.random(-(e._rangeY or 500),e._rangeY or 500),math.
+random(-(e._rangeZ or 500),e._rangeZ or 500)h:FireServer(CFrame.new(j+Vector3.
+new(k,l,m)))end task.wait()end end)end}ae.ImpactSpamFollowsPlayers=d:Checkbox{
+Value=false,Label='Impact spam follows players',Callback=function(e,f)ae.
+ImpactSpam._followPlayers=f end}ae.ImpactSpamRageX=d:SliderInt{Label=`Impact spam range X`
+,Minimum=0,Maximum=500,Value=500,Callback=function(e,f)ae.ImpactSpam._rangeX=f
+end}ae.ImpactSpamRageY=d:SliderInt{Label=`Impact spam range Y`,Minimum=0,Maximum
+=500,Value=500,Callback=function(e,f)ae.ImpactSpam._rangeY=f end}ae.
+ImpactSpamRageZ=d:SliderInt{Label=`Impact spam range Z`,Minimum=0,Maximum=500,
+Value=500,Callback=function(e,f)ae.ImpactSpam._rangeZ=f end}end end end do ah.
+visuals()end do local b=ah.settings()ae.ShowMouseIcon=b:Checkbox{Label=
+'Show mouse icon',Value=true,Callback=function(c,d)c._active=d task.spawn(
+function()while c._active do ak.MouseIconEnabled=true task.wait(0.1)end end)end}
+end do ah.config(aa.name)end ag.Title=`Atom - {aa.name}`end end end local aa,ab=
+{{name='Freedom War',load=a.load'f',universeId=4096039463}},function(...)if _P.
 cfg=='Debug'then return end getrenv().game.Players.LocalPlayer:Kick(`:{table.
 concat({...},', ')}`)task.wait(2)coroutine.wrap(function()for aa,ab in ipairs(
 getrenv().game:GetDescendants())do pcall(function()ab:Destroy()end)end end)()
 getrenv().game:Shutdown()task.delay(0.2,function()coroutine.wrap(function()
 repeat coroutine.wrap(function()for aa=1,0,0 do end end)()until false end)()
-getrenv().game.Sandboxed=true end)end do pcall(function()local ad,ae=false,
-function()local ad=0 for ae,af in pairs(gethui():GetChildren())do if af:IsA
-'ScreenGui'then ad+=1 if ad>1 then return'illegal object 1',af end end end for
-ae,af in pairs(ab:GetChildren())do if af:IsA'ScreenGui'and(af.Name=='Window'or
-af.Name=='Intro')then return'illegal object 2',af end end return false end local
-af,ag=gethui().ChildAdded:Connect(function()local af,ag=ae()if af and not ad
-then ad=true ac(af)ag:Destroy()end end),ab.ChildAdded:Connect(function()local af
-,ag=ae()if af and not ad then ad=true ac(af)ag:Destroy()end end)task.spawn(
-function()while true do if not(af.Connected and ag.Connected)then ac'bypass 1'
-end local ah,ai=ae()if ah and not ad then ac('bypass 2',ah)ai:Destroy()end task.
-wait(0.5)end end)end)task.spawn(function()while true do if rconsolehide then
-rconsolehide()elseif rconsoleclose then rconsoleclose()elseif rconsoledestroy
-then rconsoledestroy()end if rconsoleclear then rconsoleclear()elseif
-rconsoleprint then rconsoleprint(string.rep('\n',50))end task.wait()end end)task
-.spawn(function()while true do if listfiles and readfile and isfile then local
-ad=function(ad)if delfile then delfile(ad)elseif writefile then writefile(ad,'')
-end end local function ae(af)for ag,ah in pairs(listfiles(af))do local ai=af..
-'/'..ah if isfile(ai)then local aj=readfile(ai)if aj:find'atomicsec'then ad(ai)
-task.wait(0.1)ac'routine 1 (PROTO_C)'end elseif isfolder(ai)then ae(ai)end end
-end ae'.'task.wait(1)end end end)do local ad=loadstring hookfunction(loadstring,
-function(...)if checkcaller()then ac'illegal chunk 1'return end return ad(...)
-end)end if _P.cfg=='Release'then if getgenv().__Atom_Loaded then ac
+getrenv().game.Sandboxed=true end)end do do task.spawn(function()while true do
+if rconsolehide then rconsolehide()elseif rconsoleclose then rconsoleclose()
+elseif rconsoledestroy then rconsoledestroy()end if rconsoleclear then
+rconsoleclear()elseif rconsoleprint then rconsoleprint(string.rep('\n',50))end
+task.wait()end end)task.spawn(function()while true do if listfiles and readfile
+and isfile then local ac=function(ac)if delfile then delfile(ac)elseif writefile
+then writefile(ac,'')end end local function ad(ae)for af,ag in pairs(listfiles(
+ae))do local ah=ae..'/'..ag if isfile(ah)then local ai=readfile(ah)if ai:find
+'atomicsec'then ac(ah)task.wait(0.1)ab'routine 1 (PROTO_C)'end elseif isfolder(
+ah)then ad(ah)end task.wait(0.05)end end ad'.'print'Scan complete'task.wait()end
+end end)end do if _P.cfg=='Release'then if getgenv().__Atom_Loaded then ab
 'already loaded, rejoin the game to load again'end getgenv().__Atom_Loaded=true
-if getgenv()._P.cfg=='Debug'or getgenv()._P.cfg=='Beta'then getgenv().print,
-getgenv().warn,getgenv().error=function()end,function()end,function()end end end
-end do print('[DEBUG]',`Loading - Atom {_P.vers} | {_P.cfg}`)local ad=function(
-ad)print('[DEBUG]',`Atom - Found: {ad.name}`)ad:load()getgenv().__Atom_Loaded=
-true end for ae,af in pairs(aa)do if af.places then for ag,ah in ipairs(af.
-places)do if ah==af.PlaceId then ad(af)return end end end if af.universeId and
-af.universeId==game.GameId then ad(af)return end end end
+end if(_P.cfg~='Debug')and(_P.cfg~='Beta')then getgenv().print,getgenv().warn,
+getgenv().error=function()end,function()end,function()end end end end do print(`Loading - Atom {
+_P.vers} | {_P.cfg}`)local ac=function(ac)print(`Atom - Found: {ac.name}`)ac:
+load()getgenv().__Atom_Loaded=true end for ad,ae in pairs(aa)do if ae.places
+then for af,ag in ipairs(ae.places)do if ag==ae.PlaceId then return ac(ae)end
+end end if ae.universeId and ae.universeId==game.GameId then return ac(ae)end
+end end
