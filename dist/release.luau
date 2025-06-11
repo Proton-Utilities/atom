@@ -16,9 +16,9 @@ end
 atomicsec = atomicsec or {}
 
 _P = {
-    genDate = "2025-06-11T08:08:42.514219+00:00",
+    genDate = "2025-06-11T08:29:20.450998300+00:00",
     cfg = "Release",
-    vers = "v1.2.1"
+    vers = "v1.2.4"
 }
 
 local a a={cache={},load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
